@@ -1,0 +1,17 @@
+[
+    {
+        "id": "other",
+        "name": "Other",
+        "created_by": "system"
+    },
+    {
+        "id": "o2c",
+        "name": "O2C",
+        "created_by": "admin"
+    },
+    {
+        "id": "testing",
+        "name": "Testing",
+        "created_by": "admin"
+    }
+]

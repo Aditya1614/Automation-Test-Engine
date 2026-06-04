@@ -16,8 +16,7 @@ test-results/
 playwright-report/
 
 # Data and History (CRITICAL: Prevents uploading user emails, passwords, and test histories)
-data/
-saved_flows/
+
 
 # IDEs and OS files
 .vscode/

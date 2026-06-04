@@ -1,0 +1,72 @@
+[
+    {
+        "id": "MIGRASI19/SAMPLE",
+        "type": "Positive",
+        "scenario": "Create dan Complete Customer Offer",
+        "pre_conditions": "Pengguna berhasil login ke sistem Odoo dan memiliki akses ke modul Sales.",
+        "test_steps": "Masuk ke modul Sales.\nKlik tombol 'New'\nPilih Customer 'AGUS SUTIKNO/PBG'\nSet Order Date dengan tanggal saat ini\nSet Valid Date menjadi 14 hari dari tanggal saat ini\nKlik tombol 'Add a line' pada tab Order Lines\nPada wizard 'Create Product Detail', pilih Type 'OSS'\nPilih Product '[25555] PortoLady GLM-8 size 36-40 @48'\nInput Qty '10'\nKlik tombol 'Save & Close'\nKlik tombol 'Confirm'\nKlik tombol 'Ok'",
+        "test_step_detail": "",
+        "test_data": "URL: https://odoo19-dev.porto.co.id/\nEmail: it@porto.co.id\nPassword: testing-odoo19\nCustomer: AGUS SUTIKNO/PBG\nType: OSS\nProduct: [25555] PortoLady GLM-8 size 36-40 @48\nQty: 10",
+        "expected_results": "Customer Offer berhasil dibuat, status berubah dari 'Draft' menjadi 'Waiting Approval' setelah klik tombol confirm.",
+        "actual_results": "",
+        "passed": "",
+        "failed": "",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "04 Jun 2026, 09:49:16",
+                "action": "overwritten"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "04 Jun 2026, 09:49:16"
+    },
+    {
+        "id": "MIGRASI19/SLS/CO/001",
+        "type": "Positive",
+        "scenario": "Create Customer Offers OSS hingga Selesai. Sistem harus dapat menyimpan, dokumen Customer Offers tipe OSS.",
+        "pre_conditions": "- Memiliki akses sebagai Sales Person.\n- Master Customer (Agus Sutikno) beserta Pricelist, Sales Person, Alamat, Phone, dan Email sudah terkonfigurasi di Master.\n- Product Eva PortoLady tersedia dengan stok yang valid.",
+        "test_steps": "1. Create new CO dengan input Data CUSTOMER, ORDER DATE, VALID DATE\n2. Input PRODUCT dengan Type OSS\n3. Save, Confirm dan create SO",
+        "test_step_detail": "1. Klik module Sales\n2. Klik 'Sales' pada navbar\n3. Klik 'Customer Offers'\n4. Klik 'New'\n5. Pilih Customer\n6. Pilih Order date\n7. Pilih Valid date\n8. Klik 'Add a line' pada tab Order Lines\n9. Pilih Type\n10. Pilih Product\n11. Isi Qty\n12. Klik 'Save & Close'\n13. Klik 'Confirm'\n14. Klik 'Mark as Done'",
+        "test_data": "1. CUSTOMER: AGUS SUTIKNO/PBG\n2. Type: OSS\n3. PRODUCT: [25555] PortoLady GLM-8 size 36-40 @48\n4. ORDER DATE: current date\n5. VALID DATE: 14 days",
+        "expected_results": "1. Data customer terisi otomatis secara akurat (Address, Phone, Email, Sales Person, Currency, Pricelist)\n2. Wizard 'Create Product Detail' menampilkan field detail OSS dengan benar.\n3. Status dokumen berubah secara berurutan: Draft -> Waiting Approval (Manager) -> Waiting Approval Direksi -> Proses -> Done.\n4. Dokumen Sales Order (SO) berhasil digenerate saat klik 'Create SO'.",
+        "actual_results": "",
+        "passed": "0",
+        "failed": "0",
+        "dokumentasi": ""
+    },
+    {
+        "id": "MIGRASI19/SLS/CUST/002",
+        "type": "Positive",
+        "scenario": "Validasi membuat Customer Discount Level",
+        "pre_conditions": "Customer tersedia",
+        "test_steps": "1. Klik Add Discount pada tab sales & purchase\n2. pilih start date\n3. Pilih Discount Level \n4. klik confirm & add",
+        "test_step_detail": "",
+        "test_data": "1. customer : AGUS SUTIKNO/PBG\n2. Discount Level : Sandal : Level 1",
+        "expected_results": "Request Discount Level berhasil dibuat",
+        "actual_results": "",
+        "passed": "0",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "04 Jun 2026, 09:51:40",
+                "action": "created"
+            },
+            {
+                "user": "admin",
+                "date": "04 Jun 2026, 09:51:57",
+                "action": "overwritten"
+            },
+            {
+                "user": "aditya",
+                "date": "04 Jun 2026, 09:55:53",
+                "action": "overwritten"
+            }
+        ],
+        "uploaded_by": "aditya",
+        "uploaded_at": "04 Jun 2026, 09:55:53"
+    }
+]

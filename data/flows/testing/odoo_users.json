@@ -1,0 +1,16 @@
+{
+    "groups": [
+        {
+            "id": "default",
+            "name": "Default Group",
+            "users": [
+                {
+                    "name": "Admin (from .env)",
+                    "role": "Administrator",
+                    "email": "it@porto.co.id",
+                    "password": "testing-odoo19"
+                }
+            ]
+        }
+    ]
+}

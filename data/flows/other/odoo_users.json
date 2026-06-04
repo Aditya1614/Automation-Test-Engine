@@ -1,0 +1,28 @@
+{
+    "groups": [
+        {
+            "id": "default",
+            "name": "Default Group",
+            "users": [
+                {
+                    "name": "Admin",
+                    "role": "Administrator",
+                    "email": "it@porto.co.id",
+                    "password": "testing-odoo19"
+                }
+            ]
+        },
+        {
+            "id": "sales-gt",
+            "name": "Sales GT",
+            "users": [
+                {
+                    "name": "SLSPRT - Dewi Anggreini Yuswanto",
+                    "role": "National Sales Manager",
+                    "email": "veronica@porto.co.id",
+                    "password": "Dewi12345"
+                }
+            ]
+        }
+    ]
+}
