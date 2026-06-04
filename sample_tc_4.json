@@ -1,0 +1,10 @@
+{
+    "id": "TC-04",
+    "type": "Negative",
+    "scenario": "Memverifikasi sistem menampilkan error ketika field tanggal tidak diisi saat membuat Customer Offer.",
+    "title": "Create Customer Offer Gagal - Missing Required Field Tanggal",
+    "pre_conditions": "Pengguna berhasil login ke sistem Odoo dan memiliki akses ke modul Sales.",
+    "test_steps": "Buka URL 'https://odoo19-dev.porto.co.id/'.\nInput email 'it@porto.co.id' pada field email.\nInput password 'testing-odoo19' pada field password.\nKlik tombol login.\nVerifikasi pengguna berhasil masuk ke dashboard.\nMasuk ke modul Sales.\nPilih menu 'Customer Offers'.\nKlik tombol 'New'.\nPilih Customer 'AGUS SUTIKNO/PBG'.\nKlik tombol 'Add a line' pada tab Order Lines.\nPada wizard 'Create Product Detail', pilih Type 'OSS'.\nPilih Product '[25555] PortoLady GLM-8 size 36-40 @48'.\nInput Qty '10'.\nKlik tombol 'Save & Close'.\nKlik tombol 'Save'.\nKlik tombol 'OK' pada popup validasi jika muncul.\nVerifikasi sistem menampilkan error 'Missing Required Field'.",
+    "test_data": "URL: https://odoo19-dev.porto.co.id/\nEmail: it@porto.co.id\nPassword: testing-odoo19\nCustomer: AGUS SUTIKNO/PBG\nType: OSS\nProduct: [25555] PortoLady GLM-8 size 36-40 @48\nQty: 10",
+    "expected_results": "Sistem gagal menyimpan Customer Offer dan menampilkan pesan error terkait field tanggal yang wajib diisi (Missing Required Field)."
+}

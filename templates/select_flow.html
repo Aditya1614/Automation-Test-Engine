@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Flow - Automation Test Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f111a;
+            --panel-bg: rgba(20, 24, 39, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --success: #10b981;
+            --danger: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .flow-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 120px;
+        }
+
+        .flow-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.3);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .flow-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.25rem;
+            color: var(--text-main);
+        }
+
+        .flow-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="top-nav">
+            <h1>Automation Test Engine</h1>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div class="user-info" style="font-size: 14px; font-weight: 500;">
+                    👤 <span id="userNameDisplay">Loading...</span>
+                </div>
+                <button id="logoutBtn" class="btn btn-danger"
+                    style="padding: 6px 12px; font-size: 12px;">Logout</button>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h2 style="margin: 0; font-size: 1.5rem; font-weight: 600;">Select a Subset Flow</h2>
+            <button id="newFlowBtn" class="btn btn-success">+ Create New Flow</button>
+        </div>
+
+        <div class="grid" id="flowsGrid">
+            <!-- Populated by JS -->
+            <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px;">
+                Loading flows...
+            </div>
+        </div>
+    </div>
+
+    <!-- New Flow Modal -->
+    <div id="newFlowModal" class="modal hidden">
+        <div class="modal-content" style="width: 400px;">
+            <h2 style="color: var(--primary); margin-top: 0;">Create New Subset Flow</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+                Enter a name for the new subset flow (e.g. Sales, Procurement).
+            </p>
+            <input type="text" id="newFlowName" placeholder="Flow Name"
+                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); color: white; margin-bottom: 16px; box-sizing: border-box; font-size: 14px;" />
+            <div id="newFlowError" style="color: var(--danger); font-size: 13px; margin-bottom: 12px; display: none;">
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn" style="background: #475569;"
+                    onclick="document.getElementById('newFlowModal').classList.add('hidden')">Cancel</button>
+                <button class="btn btn-success" id="createFlowSubmitBtn">Create Flow</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userNameDisplay = document.getElementById('userNameDisplay');
+        const flowsGrid = document.getElementById('flowsGrid');
+        const newFlowBtn = document.getElementById('newFlowBtn');
+        const newFlowModal = document.getElementById('newFlowModal');
+        const createFlowSubmitBtn = document.getElementById('createFlowSubmitBtn');
+
+        async function initApp() {
+            try {
+                const res = await fetch('/api/me');
+                if (!res.ok) {
+                    window.location.href = '/login';
+                    return;
+                }
+                const currentUser = await res.json();
+                userNameDisplay.textContent = currentUser.display_name || currentUser.username;
+
+                await fetchFlowsSummary();
+            } catch (e) {
+                window.location.href = '/login';
+            }
+        }
+
+        async function fetchFlowsSummary() {
+            try {
+                const res = await fetch('/api/flows/summary');
+                const flows = await res.json();
+
+                flowsGrid.innerHTML = '';
+                flows.forEach(f => {
+                    const card = document.createElement('div');
+                    card.className = 'flow-card';
+                    card.innerHTML = `
+                        <div>
+                            <h3>${f.name}</h3>
+                            <p>Test Cases: <strong>${f.test_case_count}</strong></p>
+                        </div>
+                        <div style="margin-top: 16px; text-align: right; color: var(--primary); font-size: 14px; font-weight: 500;">
+                            Open Flow ➔
+                        </div>
+                    `;
+                    card.addEventListener('click', () => {
+                        sessionStorage.setItem('currentFlowId', f.id);
+                        window.location.href = '/';
+                    });
+                    flowsGrid.appendChild(card);
+                });
+
+                if (flows.length === 0) {
+                    flowsGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px;">No flows found. Create one to get started.</div>';
+                }
+            } catch (e) {
+                console.error("Failed to fetch flows", e);
+                flowsGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--danger); padding: 40px;">Failed to load flows.</div>';
+            }
+        }
+
+        logoutBtn.addEventListener('click', async () => {
+            await fetch('/api/logout', { method: 'POST' });
+            sessionStorage.removeItem('currentFlowId');
+            window.location.href = '/login';
+        });
+
+        newFlowBtn.addEventListener('click', () => {
+            document.getElementById('newFlowName').value = '';
+            document.getElementById('newFlowError').style.display = 'none';
+            newFlowModal.classList.remove('hidden');
+        });
+
+        createFlowSubmitBtn.addEventListener('click', async () => {
+            const name = document.getElementById('newFlowName').value.trim();
+            const errDiv = document.getElementById('newFlowError');
+            if (!name) {
+                errDiv.textContent = 'Name is required';
+                errDiv.style.display = 'block';
+                return;
+            }
+
+            try {
+                createFlowSubmitBtn.disabled = true;
+                createFlowSubmitBtn.textContent = 'Creating...';
+
+                const res = await fetch('/api/flows', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name })
+                });
+                const data = await res.json();
+                if (data.error) throw new Error(data.error);
+
+                sessionStorage.setItem('currentFlowId', data.flow.id);
+                window.location.href = '/'; // Go directly to the new flow
+            } catch (e) {
+                errDiv.textContent = e.message;
+                errDiv.style.display = 'block';
+                createFlowSubmitBtn.disabled = false;
+                createFlowSubmitBtn.textContent = 'Create Flow';
+            }
+        });
+
+        // Initialize
+        initApp();
+    </script>
+</body>
+
+</html>

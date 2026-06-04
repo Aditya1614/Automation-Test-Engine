@@ -1,0 +1,10 @@
+{
+    "id": "TC-03",
+    "type": "Edge",
+    "scenario": "Memverifikasi proses approval Sales Order berhasil dan status berubah menjadi waiting approval direksi.",
+    "title": "Approve Sales Order - Waiting Approval Direksi",
+    "pre_conditions": "Pengguna berada di halaman login Odoo dan memiliki akses ke modul Sales.",
+    "test_steps": "Buka URL 'https://odoo19-dev.porto.co.id/'.\nInput email 'it@porto.co.id' pada field email.\nInput password 'testing-odoo19' pada field password.\nKlik tombol login.\nVerifikasi pengguna berhasil masuk ke dashboard.\nKlik modul 'Sales'.\nKlik sales dengan nomor dokumen 'SQ/00050'.\nKlik tombol 'Approve'.\nKlik tombol 'OK'.\nVerifikasi status berubah menjadi 'Waiting Approval Direksi'.",
+    "test_data": "URL: https://odoo19-dev.porto.co.id/\nEmail: it@porto.co.id\nPassword: testing-odoo19\nNomor Dokumen: SQ/00050",
+    "expected_results": "Pengguna berhasil login ke sistem, Sales Order berhasil di-approve, dan status berubah menjadi 'Waiting Approval Direksi'."
+}

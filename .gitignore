@@ -1,0 +1,31 @@
+# Environments
+.env
+.venv/
+venv/
+ENV/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Playwright & Node (if applicable)
+node_modules/
+test-results/
+playwright-report/
+
+# Data and History (CRITICAL: Prevents uploading user emails, passwords, and test histories)
+data/
+saved_flows/
+
+# IDEs and OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+prompt-to-viz.json
+
+

@@ -1,0 +1,9 @@
+playwright
+google-adk
+google-genai
+python-dotenv
+jinja2
+beautifulsoup4
+openpyxl
+fastapi
+uvicorn

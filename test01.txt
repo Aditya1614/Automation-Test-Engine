@@ -1,0 +1,12 @@
+https://odoo19-dev.porto.co.id/
+
+login with email: it@porto.co.id & password: testing-odoo19
+
+1. Masuk ke modul Sales -> Menu Customer Offers -> Klik tombol 'New'.
+2. Pilih Customer: 'AGUS SUTIKNO/PBG'.
+3. Set Order Date 'current date' & Valid Date '14 days'
+4. Klik 'Add a line' pada tab Order Lines.
+5. Pada wizard 'Create Product Detail', pilih Type: 'OSS', lalu pilih Product: '[25555] PortoLady GLM-8 size 36-40 @48'.
+6. Isi Qty '10', lalu klik 'Save & Close'.
+7. Klik tombol 'Confirm'.
+8. Klik tombol 'Mark as Done'.

@@ -1,0 +1,10 @@
+{
+    "id": "TC-01",
+    "type": "Positive",
+    "scenario": "Memverifikasi fungsionalitas login yang berhasil dengan kredensial yang valid.",
+    "title": "Login Berhasil - Kredensial Valid",
+    "pre_conditions": "Pengguna berada di halaman login.",
+    "test_steps": "Input email yang valid pada field email.\nInput password yang valid pada field password.\nClick tombol 'Sign In'.\nVerifikasi sistem melakukan submit form ke endpoint /web/login.\nVerifikasi bahwa login berhasil.",
+    "test_data": "Email: it@porto.co.id\nPassword: testing-odoo19",
+    "expected_results": "Pengguna berhasil di-redirect ke halaman dashboard."
+}
