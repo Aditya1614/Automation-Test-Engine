@@ -1,0 +1,287 @@
+{
+    "test_case_id": "MIGRASI19/SAMPLE2",
+    "saved_at": "2026-06-05T09:52:22.741481",
+    "planned_steps": [
+        {
+            "step_num": 1,
+            "name": "Masuk Modul Sales",
+            "task": "Klik modul 'Sales'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 2,
+            "name": "Klik Tombol New",
+            "task": "Klik tombol 'New'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 3,
+            "name": "Pilih Customer",
+            "task": "Pilih Customer 'AGUS SUTIKNO/PBG'. Gunakan div[name='partner_id'] input.",
+            "action_hint": "fill_and_enter",
+            "value": "AGUS SUTIKNO/PBG",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 4,
+            "name": "Set Order Date",
+            "task": "Set Order Date dengan tanggal saat ini (06/05/2026). Gunakan div[name='date_order'] input.",
+            "action_hint": "fill",
+            "value": "06/05/2026",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 5,
+            "name": "Set Valid Date",
+            "task": "Set Valid Date menjadi '14 Days'. Gunakan div[name='validity_date'] input.",
+            "action_hint": "fill_and_enter",
+            "value": "14 Days",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6,
+            "name": "Klik Add a line",
+            "task": "Klik tombol 'Add a line' pada tab Order Lines.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 7,
+            "name": "Pilih Type OSS",
+            "task": "Pada wizard 'Create Product Detail', pilih Type 'OSS'. Gunakan div[name='type'] input.",
+            "action_hint": "fill_and_enter",
+            "value": "OSS",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 8,
+            "name": "Pilih Product",
+            "task": "Pilih Product '[25555] PortoLady GLM-8 size 36-40 @48'. Gunakan div[name='product_id'] input.",
+            "action_hint": "fill_and_enter",
+            "value": "[25555] PortoLady GLM-8 size 36-40 @48",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 9,
+            "name": "Input Quantity",
+            "task": "Input Quantity '10'. Gunakan div[name='product_uom_qty'] input.",
+            "action_hint": "fill",
+            "value": "10",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 10,
+            "name": "Klik Save & Close",
+            "task": "Klik tombol 'Save & Close'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 11,
+            "name": "Klik Confirm",
+            "task": "Klik tombol 'Confirm'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 12,
+            "name": "Klik OK Konfirmasi",
+            "task": "Klik tombol 'Ok' pada dialog konfirmasi.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": true
+        },
+        {
+            "step_num": 13,
+            "name": "Verifikasi Status",
+            "task": "Verifikasi bahwa Customer Offer berhasil dibuat dan status berubah dari 'Draft' menjadi 'Waiting Approval'.",
+            "action_hint": "verify",
+            "value": null,
+            "expected_result": "Status berubah menjadi 'Waiting Approval'.",
+            "optional": false
+        }
+    ],
+    "executed_actions": [
+        {
+            "selector": "input[name='login']",
+            "action": "fill",
+            "value": "veronica@porto.co.id",
+            "description": "Found the email input field with name 'login' and it is currently empty based on the screenshot, so filling it with the provided email address.",
+            "confidence": "high",
+            "step_num": 0.1,
+            "name": "Login Email"
+        },
+        {
+            "selector": "#password",
+            "action": "fill",
+            "value": "Dewi12345",
+            "description": "The password input field with id 'password' is present and empty in the DOM and screenshot, so filling it with the provided value.",
+            "confidence": "high",
+            "step_num": 0.2,
+            "name": "Login Password"
+        },
+        {
+            "selector": "button.btn-primary:has-text(\"Log in\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Log in' button as requested by the task.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 0.3,
+            "name": "Click Login"
+        },
+        {
+            "selector": "a.o_app:has-text(\"Sales\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the 'Sales' module by targeting the anchor tag with class 'o_app' and text content 'Sales'.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 1,
+            "name": "Masuk Modul Sales"
+        },
+        {
+            "selector": "button.o_list_button_add:has-text(\"New\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'New' button to create a new customer offer, identified by its text content and class name.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 2,
+            "name": "Klik Tombol New"
+        },
+        {
+            "selector": "div[name=\"customer_id\"] input",
+            "action": "fill_and_enter",
+            "value": "AGUS SUTIKNO/PBG",
+            "description": "The task requires selecting a customer. I located the customer input field using div[name=\"customer_id\"] input as specified, and the screenshot confirms it is empty. Therefore, I will fill it with 'AGUS SUTIKNO/PBG' and press Enter to select the customer.",
+            "confidence": "high",
+            "step_num": 3,
+            "name": "Pilih Customer"
+        },
+        {
+            "selector": "div[name='date_order'] input",
+            "action": "fill",
+            "value": "06/05/2026",
+            "description": "The 'Order Date' input field, identified by the parent div with name 'date_order', is currently empty in the screenshot. Filling it with the specified date '06/05/2026'.",
+            "confidence": "high",
+            "step_num": 4,
+            "name": "Set Order Date"
+        },
+        {
+            "selector": "div[name=\"valid_date\"] input",
+            "action": "fill_and_enter",
+            "value": "14 Days",
+            "description": "The task is to set 'Valid Date' to '14 Days'. The DOM shows a selection field with name 'valid_date' containing an input element. The screenshot does not show '14 Days' already present in the field. Using the specified selector and 'fill_and_enter' action with the given value.",
+            "confidence": "high",
+            "step_num": 5,
+            "name": "Set Valid Date"
+        },
+        {
+            "selector": "a:has-text(\"Add a line\")",
+            "action": "click",
+            "value": null,
+            "description": "Click the 'Add a line' button found within the 'Order' tab's list of order lines.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 6,
+            "name": "Klik Add a line"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Type' field in the 'Create Product Detail' wizard already contains the value 'OSS', so no action is needed.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 7,
+            "name": "Pilih Type OSS"
+        },
+        {
+            "selector": "div[name='product_id'] input",
+            "action": "fill_and_enter",
+            "value": "[25555] PortoLady GLM-8 size 36-40 @48",
+            "description": "The input field for 'Product' with name 'product_id' is empty as seen in the DOM and screenshot. Filling the field with the specified product and pressing Enter to select it.",
+            "confidence": "high",
+            "step_num": 8,
+            "name": "Pilih Product"
+        },
+        {
+            "selector": "div[name='qty_order'] input",
+            "action": "fill",
+            "value": "10",
+            "description": "The task requires inputting '10' into the quantity field. The DOM shows an input field within a div with name 'qty_order', and the screenshot indicates its current value is '0.00'. Therefore, filling the field with '10' is the correct action.",
+            "confidence": "high",
+            "step_num": 9,
+            "name": "Input Quantity"
+        },
+        {
+            "selector": "button:has-text(\"Save & Close\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Save & Close' button in the modal footer.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 10,
+            "name": "Klik Save & Close"
+        },
+        {
+            "selector": "button:has-text(\"Confirm\")",
+            "action": "click",
+            "value": null,
+            "description": "Click the 'Confirm' button as requested by the user. The button has the text 'Confirm' and is visible in the provided DOM.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 11,
+            "name": "Klik Confirm"
+        },
+        {
+            "selector": "button:has-text(\"Ok\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Ok' button within the confirmation dialog to proceed with the action.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 12,
+            "name": "Klik OK Konfirmasi"
+        },
+        {
+            "selector": "div.o_field_widget.o_field_statusbar[name=\"state\"] button.o_arrow_button_current:has-text(\"Waiting Approval\")",
+            "action": "verify",
+            "value": null,
+            "description": "Checked the status bar for the 'Waiting Approval' button with the 'o_arrow_button_current' class, which indicates the current status is 'Waiting Approval'. The element was found in the DOM.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 13,
+            "name": "Verifikasi Status"
+        }
+    ]
+}

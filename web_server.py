@@ -245,6 +245,56 @@ def get_flow_paths(flow_id: str):
         "saved_flows_dir": os.path.join(base_dir, "saved_flows")
     }
 
+def delete_history_attachments(entry: dict):
+    """Delete report HTML, screenshots dir, and videos dir for a history entry."""
+    report_path = entry.get("report_path", "")
+    if not report_path:
+        return
+    
+    # Delete the report HTML file
+    if os.path.exists(report_path):
+        # Parse the report to find screenshot and video directories
+        try:
+            with open(report_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            
+            # Find screenshot directory (e.g. screenshots/TEST_ID_TIMESTAMP/)
+            screenshot_dirs = set()
+            for match in re.finditer(r'(?:src|href)="(?:screenshots/([^/]+)/)', content):
+                screenshot_dirs.add(os.path.join("test-results", "screenshots", match.group(1)))
+            
+            # Find video directory (e.g. videos/TEST_ID_TIMESTAMP/)
+            video_dirs = set()
+            for match in re.finditer(r'src="videos/([^/]+)/', content):
+                video_dirs.add(os.path.join("test-results", "videos", match.group(1)))
+            
+            # Delete screenshot directories
+            for sdir in screenshot_dirs:
+                if os.path.exists(sdir) and os.path.isdir(sdir):
+                    try:
+                        shutil.rmtree(sdir)
+                        print(f"Deleted screenshot dir: {sdir}")
+                    except Exception as e:
+                        print(f"Failed to delete screenshot dir {sdir}: {e}")
+            
+            # Delete video directories
+            for vdir in video_dirs:
+                if os.path.exists(vdir) and os.path.isdir(vdir):
+                    try:
+                        shutil.rmtree(vdir)
+                        print(f"Deleted video dir: {vdir}")
+                    except Exception as e:
+                        print(f"Failed to delete video dir {vdir}: {e}")
+        except Exception as e:
+            print(f"Failed to parse report for attachments: {e}")
+        
+        # Delete the report HTML itself
+        try:
+            os.remove(report_path)
+            print(f"Deleted report: {report_path}")
+        except Exception as e:
+            print(f"Failed to delete report {report_path}: {e}")
+
 def load_test_cases(flow_id: str):
     paths = get_flow_paths(flow_id)
     if os.path.exists(paths["test_cases"]):
@@ -579,6 +629,8 @@ async def delete_history_entry(flow_id: str, index: int, user: str = Depends(get
                 history_data = json.load(f)
             
             if 0 <= index < len(history_data):
+                # Delete associated attachments (report, screenshots, videos)
+                delete_history_attachments(history_data[index])
                 del history_data[index]
                 with open(history_file, "w", encoding="utf-8") as f:
                     json.dump(history_data, f, indent=4)
@@ -595,6 +647,11 @@ async def clear_history(flow_id: str, user: str = Depends(get_current_user)):
     history_file = paths["history"]
     try:
         if os.path.exists(history_file):
+            # Delete all attachments before clearing
+            with open(history_file, "r", encoding="utf-8") as f:
+                history_data = json.load(f)
+            for entry in history_data:
+                delete_history_attachments(entry)
             with open(history_file, "w", encoding="utf-8") as f:
                 json.dump([], f)
         return {"status": "success"}

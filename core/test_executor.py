@@ -287,6 +287,7 @@ class TestExecutor:
             return False, str(e), None
 
     async def execute(self, test_case: dict, mode: str = "ai", saved_flow: dict = None, history_file: str = "test-results/history.json") -> dict:
+        video_dir = None
         try:
             test_id = test_case.get('id', 'Unknown')
             test_title = test_case.get('title', test_case.get('scenario', 'Unknown Test'))
@@ -418,7 +419,8 @@ class TestExecutor:
         except Exception as e:
             print(f"Test Execution Error: {e}")
             await self.pw.close()
-            self.report.set_video(video_dir)
+            if video_dir:
+                self.report.set_video(video_dir)
             report_path = self.report.generate()
             print(f"Automation finished with error. Check report at {report_path}")
             

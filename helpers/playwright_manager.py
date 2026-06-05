@@ -31,6 +31,9 @@ class PlaywrightManager:
         video_dir = f"test-results/videos/{test_name}_{timestamp}"
         os.makedirs(video_dir, exist_ok=True)
         
+        self.screenshot_dir = f"test-results/screenshots/{test_name}_{timestamp}"
+        os.makedirs(self.screenshot_dir, exist_ok=True)
+        
         self.context = await self.browser.new_context(
             viewport={'width': 1920, 'height': 1080},
             record_video_dir=video_dir,
@@ -77,7 +80,10 @@ class PlaywrightManager:
             return ""
             
         clean_name = step_name.replace(" ", "_").replace("/", "_").lower()
-        filename = f"test-results/screenshots/{step_number}-{clean_name}.png"
+        
+        # Use the unique screenshot directory if created, otherwise fallback to root screenshots
+        base_dir = getattr(self, 'screenshot_dir', 'test-results/screenshots')
+        filename = f"{base_dir}/{step_number}-{clean_name}.png"
         
         # Wait a bit for animations before screenshot
         await self.page.wait_for_timeout(500) 

@@ -1415,33 +1415,44 @@
                     body: JSON.stringify({ test_case: tc, mode: mode })
                 });
 
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.error || `HTTP error ${response.status}`);
+                }
+
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
 
                 let finalData = null;
+                let buffer = '';
 
                 while (true) {
                     const { value, done } = await reader.read();
                     if (done) break;
 
-                    const chunk = decoder.decode(value);
-                    const lines = chunk.split('\n');
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop(); // Keep the last incomplete line in the buffer
 
                     for (const line of lines) {
                         if (line.trim() === '') continue;
 
                         if (line.startsWith('data: ')) {
-                            const data = JSON.parse(line.substring(6));
-                            if (data.type === 'log') {
-                                let cssClass = 'system';
-                                if (data.message.includes('Error') || data.message.includes('ERROR:')) cssClass = 'error';
-                                else if (data.message.includes('AI suggests:')) cssClass = 'ai';
-                                else if (data.message.includes('Replay mode:')) cssClass = 'ai';
+                            try {
+                                const data = JSON.parse(line.substring(6));
+                                if (data.type === 'log') {
+                                    let cssClass = 'system';
+                                    if (data.message.includes('Error') || data.message.includes('ERROR:')) cssClass = 'error';
+                                    else if (data.message.includes('AI suggests:')) cssClass = 'ai';
+                                    else if (data.message.includes('Replay mode:')) cssClass = 'ai';
 
-                                appendLog(data.message, cssClass);
-                            } else if (data.type === 'done') {
-                                finalData = data;
-                                appendLog(`> Execution finished. Status: ${data.status}`, data.status === 'PASS' ? 'system' : 'error');
+                                    appendLog(data.message, cssClass);
+                                } else if (data.type === 'done') {
+                                    finalData = data;
+                                    appendLog(`> Execution finished. Status: ${data.status}`, data.status === 'PASS' ? 'system' : 'error');
+                                }
+                            } catch (err) {
+                                console.error("JSON Parse Error on line:", err, line);
                             }
                         }
                     }
