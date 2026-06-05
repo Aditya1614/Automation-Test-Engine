@@ -1,4 +1,4 @@
-# SIT Test Automation Web Runner
+# Software Test Automation Web Runner
 
 This project is an **Automation Test Engine** with a web-based user interface built on FastAPI. It leverages **Playwright** for browser automation and **Google Vertex AI / Gemini** to intelligently plan and execute test steps based on user-provided test cases.
 
