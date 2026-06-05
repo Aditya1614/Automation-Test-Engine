@@ -40,9 +40,7 @@ This project is an **Automation Test Engine** with a web-based user interface bu
    Create a `.env` file in the root of the project with the following structure:
    ```env
    # Odoo credentials (Default fallback for tests)
-   ODOO_URL=https://odoo19-dev.porto.co.id/
-   ODOO_EMAIL=it@porto.co.id
-   ODOO_PASSWORD=your-odoo-password
+   ODOO_URL=
 
    # Google AI / Gemini Configuration
    GOOGLE_APPLICATION_CREDENTIALS=prompt-to-viz.json
@@ -52,7 +50,7 @@ This project is an **Automation Test Engine** with a web-based user interface bu
    ```
 
 5. **Google Cloud Credentials**:
-   Place your GCP Service Account JSON key in the root directory and ensure its filename matches the `GOOGLE_APPLICATION_CREDENTIALS` variable in your `.env` (e.g., `prompt-to-viz.json`).
+   Place your GCP Service Account JSON key in the root directory and ensure its filename matches the `GOOGLE_APPLICATION_CREDENTIALS` variable in your `.env` (e.g., `service.json`).
 
 ## Running the Application
 
