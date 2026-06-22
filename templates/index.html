@@ -1322,14 +1322,19 @@
                     showDetailModal(idx);
                 };
 
-                let actionsHtml = `<button class="btn btn-sm" onclick="runTestCase(${idx}, 'ai')">▶ Run (AI)</button>`;
-
+                let actionsHtml = `<div style="display: flex; flex-direction: column; gap: 4px;">`;
+                actionsHtml += `<div style="display: flex; gap: 4px; flex-wrap: wrap;">`;
+                actionsHtml += `<button class="btn btn-sm" onclick="runTestCase(${idx}, 'ai')">▶ Run (AI)</button>`;
+                
                 if (hasFlow) {
-                    actionsHtml += `
-                        <button class="btn btn-sm btn-success" onclick="runTestCase(${idx}, 'replay')">▶ Run (Saved)</button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteFlow('${tc.id}')">🗑 Delete Flow</button>
-                    `;
+                    actionsHtml += `<button class="btn btn-sm btn-success" onclick="runTestCase(${idx}, 'replay')">▶ Run (Saved)</button>`;
                 }
+                actionsHtml += `</div>`;
+                
+                actionsHtml += `<div style="display: flex;">`;
+                actionsHtml += `<button class="btn btn-sm btn-danger" onclick="deleteTestCase('${tc.id}')">🗑 Delete</button>`;
+                actionsHtml += `</div>`;
+                actionsHtml += `</div>`;
 
                 tr.innerHTML = `
                     <td style="font-weight: 600;">${tc.id}</td>
@@ -1521,10 +1526,25 @@
             if (!confirm(`Are you sure you want to delete the saved flow for ${tcId}?`)) return;
 
             try {
-                const res = await fetch(`/api/flows/${currentFlowId}/saved-flow/${tcId}`, { method: 'DELETE' });
+                const res = await fetch(`/api/flows/${currentFlowId}/saved-flow/${encodeURIComponent(tcId)}`, { method: 'DELETE' });
                 await fetchSavedFlows();
             } catch (e) {
                 alert('Failed to delete flow: ' + e.message);
+            }
+        };
+
+        window.deleteTestCase = async function (tcId) {
+            if (!confirm(`Are you sure you want to delete test case ${tcId}?`)) return;
+
+            try {
+                const res = await fetch(`/api/flows/${currentFlowId}/test-cases/${encodeURIComponent(tcId)}`, { method: 'DELETE' });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.error || 'Failed to delete');
+                }
+                await fetchTestCases();
+            } catch (e) {
+                alert('Failed to delete test case: ' + e.message);
             }
         };
 

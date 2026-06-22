@@ -14,29 +14,6 @@
         "dokumentasi": ""
     },
     {
-        "id": "MIGRASI19/SLS/CUST/002",
-        "type": "Positive",
-        "scenario": "Validasi membuat Customer Discount Level",
-        "pre_conditions": "Customer tersedia",
-        "test_steps": "1. Klik Add Discount pada tab sales & purchase\n2. pilih start date\n3. Pilih Discount Level \n4. klik confirm & add",
-        "test_step_detail": "",
-        "test_data": "1. customer : AGUS SUTIKNO/PBG\n2. Discount Level : Sandal : Level 1",
-        "expected_results": "Request Discount Level berhasil dibuat",
-        "actual_results": "",
-        "passed": "0",
-        "failed": "0",
-        "dokumentasi": "",
-        "upload_history": [
-            {
-                "user": "admin",
-                "date": "05 Jun 2026, 09:46:16",
-                "action": "overwritten"
-            }
-        ],
-        "uploaded_by": "admin",
-        "uploaded_at": "05 Jun 2026, 09:46:16"
-    },
-    {
         "id": "MIGRASI19/SLS/CUST/003",
         "type": "Positive",
         "scenario": "Validasi status Discount Request setelah dibuat",

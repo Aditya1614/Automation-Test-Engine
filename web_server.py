@@ -378,6 +378,16 @@ async def merge_test_cases(flow_id: str, request: Request, user: str = Depends(g
     save_test_cases(flow_id, final_cases)
     return {"status": "success", "test_cases": final_cases}
 
+@app.delete("/api/flows/{flow_id}/test-cases/{tc_id:path}")
+async def delete_test_case(flow_id: str, tc_id: str, user: str = Depends(get_current_user)):
+    existing_cases = load_test_cases(flow_id)
+    initial_count = len(existing_cases)
+    existing_cases = [tc for tc in existing_cases if tc.get('id') != tc_id]
+    
+    if len(existing_cases) < initial_count:
+        save_test_cases(flow_id, existing_cases)
+        return {"status": "success"}
+    return JSONResponse(status_code=404, content={"error": "Test case not found"})
 
 # --- Odoo Users CRUD API ---
 def get_odoo_users_path(flow_id: str):
@@ -600,7 +610,7 @@ async def get_saved_flows(flow_id: str, user: str = Depends(get_current_user)):
     flow_manager = FlowManager(saved_flows_dir=paths["saved_flows_dir"])
     return flow_manager.list_flows()
 
-@app.delete("/api/flows/{flow_id}/saved-flow/{test_case_id}")
+@app.delete("/api/flows/{flow_id}/saved-flow/{test_case_id:path}")
 async def delete_saved_flow(flow_id: str, test_case_id: str, user: str = Depends(get_current_user)):
     paths = get_flow_paths(flow_id)
     flow_manager = FlowManager(saved_flows_dir=paths["saved_flows_dir"])

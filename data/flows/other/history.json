@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "date": "08 Jun 2026, 11:26:28",
+        "test_id": "MIGRASI19/SAMPLE",
+        "scenario": "Create dan Complete Customer Offer",
+        "status": "PASS",
+        "report_path": "test-results/report-20260608_112628.html"
+    }
+]
