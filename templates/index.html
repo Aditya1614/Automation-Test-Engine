@@ -382,6 +382,39 @@
             font-family: inherit;
             font-size: 13px;
         }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: rgba(20, 24, 39, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px;
+            min-width: 150px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 8px 12px;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
 </style>
 </head>
 
@@ -400,7 +433,13 @@
                     </select>
                 </div>
                 <button id="newFlowBtn" class="btn btn-sm btn-success">+ New Flow</button>
-                <button id="listUserBtn" class="btn btn-sm" style="background: #3b82f6; color: white;">👥 List User</button>
+                <div class="test-data-dropdown" style="position: relative;">
+                    <button id="testDataBtn" class="btn btn-sm" style="background: #3b82f6; color: white;">📦 Test Data ▾</button>
+                    <div id="testDataMenu" class="dropdown-menu hidden">
+                        <button id="listUserBtn" class="dropdown-item">👥 List User</button>
+                        <button id="listFileBtn" class="dropdown-item">📁 List File</button>
+                    </div>
+                </div>
                 <div style="height: 24px; width: 1px; background: var(--border-color);"></div>
                 <div class="user-info" style="font-size: 14px; font-weight: 500;">
                     👤 <span id="userNameDisplay">Loading...</span>
@@ -664,7 +703,285 @@
         </div>
     </div>
 
+    <!-- File List Modal -->
+    <div id="fileListModal" class="modal hidden">
+        <div class="modal-content" style="width: 800px; height: 70vh; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 16px;">
+                <h2 style="margin: 0; color: var(--primary);">Test Data Files <span id="fileListFlowName" style="font-size: 16px; color: var(--text-muted); font-weight: normal; margin-left: 8px;"></span></h2>
+                <button class="btn btn-sm btn-danger" onclick="document.getElementById('fileListModal').classList.add('hidden')">✕ Close</button>
+            </div>
+            
+            <div class="upload-area" id="fileUploadArea" style="padding: 20px; margin-bottom: 16px;">
+                <div class="upload-icon" style="font-size: 2rem; margin-bottom: 5px;">📁</div>
+                <h4 style="margin: 0 0 5px 0;">Drag & Drop Files Here</h4>
+                <p class="text-muted" style="margin: 0; font-size: 13px;">or click to browse (Max 100MB per file)</p>
+                <input type="file" id="multiFileInput" multiple style="display: none;" />
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h4 style="margin: 0;">Uploaded Files</h4>
+                <input type="text" id="fileSearch" placeholder="Search file..." class="form-control" style="width: 200px;" />
+            </div>
+            
+            <div style="flex: 1; overflow-y: auto;">
+                <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <th style="padding: 8px;">Filename</th>
+                            <th style="padding: 8px;">Size</th>
+                            <th style="padding: 8px;">Uploaded By</th>
+                            <th style="padding: 8px;">Date</th>
+                            <th style="padding: 8px; width: 100px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fileTableBody">
+                        <tr><td colspan="5" style="text-align: center;">Loading files...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Conflict Modal -->
+    <div id="fileConflictModal" class="modal hidden">
+        <div class="modal-content">
+            <h2 style="color: var(--danger);">Duplicate Files Detected</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Some files already exist. Please select how to handle them.</p>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                <button class="btn btn-sm btn-danger" onclick="setAllFileConflicts('overwrite')">Overwrite All</button>
+                <button class="btn btn-sm" onclick="setAllFileConflicts('skip')">Skip All</button>
+            </div>
+
+            <div id="fileConflictList" class="conflict-list">
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+                <button class="btn" onclick="closeFileConflictModal()">Cancel</button>
+                <button class="btn btn-success" onclick="confirmFileMerge()">Confirm & Upload</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // --- Test Data Dropdown ---
+        const testDataBtn = document.getElementById('testDataBtn');
+        const testDataMenu = document.getElementById('testDataMenu');
+        const listFileBtn = document.getElementById('listFileBtn');
+        
+        if (testDataBtn) {
+            testDataBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                testDataMenu.classList.toggle('hidden');
+            });
+            document.addEventListener('click', (e) => {
+                if (!testDataBtn.contains(e.target)) {
+                    testDataMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // --- File Management ---
+        const fileListModal = document.getElementById('fileListModal');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const multiFileInput = document.getElementById('multiFileInput');
+        const fileTableBody = document.getElementById('fileTableBody');
+        const fileSearch = document.getElementById('fileSearch');
+        
+        const fileConflictModal = document.getElementById('fileConflictModal');
+        const fileConflictList = document.getElementById('fileConflictList');
+        
+        let currentFiles = [];
+        let pendingFilesToUpload = [];
+
+        if (listFileBtn) {
+            listFileBtn.addEventListener('click', () => {
+                document.getElementById('fileListFlowName').textContent = `(Flow: ${currentFlowId})`;
+                testDataMenu.classList.add('hidden');
+                loadFlowFiles();
+                fileListModal.classList.remove('hidden');
+            });
+        }
+
+        async function loadFlowFiles() {
+            try {
+                const res = await fetch(`/api/flows/${currentFlowId}/files`);
+                currentFiles = await res.json();
+                renderFileList();
+            } catch (e) {
+                console.error("Failed to load files", e);
+            }
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (!+bytes) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+        }
+
+        function renderFileList() {
+            fileTableBody.innerHTML = '';
+            let filtered = currentFiles;
+            const q = fileSearch.value.toLowerCase();
+            if (q) {
+                filtered = filtered.filter(f => f.filename.toLowerCase().includes(q));
+            }
+
+            if (!filtered.length) {
+                fileTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 20px; color: var(--text-muted);">No files found.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(f => {
+                const tr = document.createElement('tr');
+                tr.style = 'border-bottom: 1px solid rgba(255,255,255,0.05);';
+                tr.innerHTML = `
+                    <td style="padding: 8px;">${f.filename}</td>
+                    <td style="padding: 8px;">${formatBytes(f.size_bytes)}</td>
+                    <td style="padding: 8px;">${f.uploaded_by}</td>
+                    <td style="padding: 8px; font-size: 12px; color: var(--text-muted);">${f.uploaded_at}</td>
+                    <td style="padding: 8px;">
+                        <span style="cursor: pointer; margin-right: 8px; color: var(--primary);" onclick="window.open('/api/flows/${currentFlowId}/files/${encodeURIComponent(f.filename)}', '_blank')">⬇️</span>
+                        <span style="cursor: pointer; color: var(--danger);" onclick="deleteFlowFile('${f.filename}')">🗑️</span>
+                    </td>
+                `;
+                fileTableBody.appendChild(tr);
+            });
+        }
+
+        if (fileSearch) {
+            fileSearch.addEventListener('input', renderFileList);
+        }
+
+        if (fileUploadArea) {
+            fileUploadArea.addEventListener('click', () => multiFileInput.click());
+            fileUploadArea.addEventListener('dragover', e => { e.preventDefault(); fileUploadArea.classList.add('dragover'); });
+            fileUploadArea.addEventListener('dragleave', e => { e.preventDefault(); fileUploadArea.classList.remove('dragover'); });
+            fileUploadArea.addEventListener('drop', e => {
+                e.preventDefault();
+                fileUploadArea.classList.remove('dragover');
+                if (e.dataTransfer.files.length) {
+                    handleFileListUpload(Array.from(e.dataTransfer.files));
+                }
+            });
+            multiFileInput.addEventListener('change', e => {
+                if (e.target.files.length) {
+                    handleFileListUpload(Array.from(e.target.files));
+                }
+                multiFileInput.value = '';
+            });
+        }
+
+        function handleFileListUpload(files) {
+            const MAX_SIZE = 100 * 1024 * 1024; // 100MB
+            
+            // Check sizes
+            for(let f of files) {
+                if(f.size > MAX_SIZE) {
+                    alert(`File ${f.name} exceeds the 100MB limit.`);
+                    return;
+                }
+            }
+            
+            pendingFilesToUpload = files;
+            const existingNames = currentFiles.map(f => f.filename);
+            const conflicts = files.filter(f => existingNames.includes(f.name)).map(f => f.name);
+            
+            if (conflicts.length > 0) {
+                showFileConflictModal(conflicts);
+            } else {
+                submitFileMerge([]);
+            }
+        }
+
+        function showFileConflictModal(conflicts) {
+            fileConflictList.innerHTML = '';
+            conflicts.forEach(name => {
+                fileConflictList.innerHTML += `
+                    <div class="conflict-item">
+                        <strong style="color: white; word-break: break-all;">${name}</strong>
+                        <select class="dropdown file-conflict-select" data-name="${name}">
+                            <option value="skip">Skip (Keep existing)</option>
+                            <option value="overwrite">Overwrite (Use new)</option>
+                        </select>
+                    </div>
+                `;
+            });
+            fileConflictModal.classList.remove('hidden');
+        }
+
+        window.setAllFileConflicts = function(val) {
+            document.querySelectorAll('.file-conflict-select').forEach(sel => sel.value = val);
+        };
+
+        window.closeFileConflictModal = function() {
+            fileConflictModal.classList.add('hidden');
+            pendingFilesToUpload = [];
+        };
+
+        window.confirmFileMerge = function() {
+            const overwriteNames = [];
+            document.querySelectorAll('.file-conflict-select').forEach(sel => {
+                if (sel.value === 'overwrite') overwriteNames.push(sel.dataset.name);
+            });
+            fileConflictModal.classList.add('hidden');
+            submitFileMerge(overwriteNames);
+        };
+
+        async function submitFileMerge(overwriteNames) {
+            const existingNames = currentFiles.map(f => f.filename);
+            const finalFiles = pendingFilesToUpload.filter(f => {
+                if (existingNames.includes(f.name)) {
+                    return overwriteNames.includes(f.name);
+                }
+                return true;
+            });
+            
+            pendingFilesToUpload = [];
+            
+            if (finalFiles.length === 0) return;
+            
+            const formData = new FormData();
+            finalFiles.forEach(f => formData.append('files', f));
+            
+            fileUploadArea.innerHTML = '<h4>Uploading...</h4>';
+            
+            try {
+                const res = await fetch(`/api/flows/${currentFlowId}/files`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (data.error) throw new Error(data.error);
+                
+                currentFiles = data.files;
+                renderFileList();
+            } catch(e) {
+                alert("Upload failed: " + e.message);
+            } finally {
+                fileUploadArea.innerHTML = `
+                    <div class="upload-icon" style="font-size: 2rem; margin-bottom: 5px;">📁</div>
+                    <h4 style="margin: 0 0 5px 0;">Drag & Drop Files Here</h4>
+                    <p class="text-muted" style="margin: 0; font-size: 13px;">or click to browse (Max 100MB per file)</p>
+                `;
+            }
+        }
+
+        window.deleteFlowFile = async function(filename) {
+            if (!confirm(`Delete file '${filename}'?`)) return;
+            try {
+                const res = await fetch(`/api/flows/${currentFlowId}/files/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                if(res.ok) {
+                    loadFlowFiles();
+                } else {
+                    const data = await res.json();
+                    alert(data.error || 'Delete failed');
+                }
+            } catch(e) { console.error(e); }
+        };
 
         // --- Odoo User Management ---
         const listUserBtn = document.getElementById('listUserBtn');
@@ -675,6 +992,7 @@
         if (listUserBtn) {
             listUserBtn.addEventListener('click', () => {
                 document.getElementById('userListFlowName').textContent = `(Flow: ${currentFlowId})`;
+                if(testDataMenu) testDataMenu.classList.add('hidden');
                 loadOdooUsers();
                 userListModal.classList.remove('hidden');
             });

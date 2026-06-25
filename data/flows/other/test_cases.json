@@ -105,5 +105,79 @@
         ],
         "uploaded_by": "admin",
         "uploaded_at": "05 Jun 2026, 09:46:16"
+    },
+    {
+        "id": "MIGRASI19/SLS/CUST/002",
+        "type": "Positive",
+        "scenario": "Validasi membuat Customer Discount Level",
+        "pre_conditions": "Customer tersedia",
+        "test_steps": "1. Klik Add Discount pada tab sales & purchase\n2. pilih start date\n3. Pilih Discount Level \n4. klik confirm & add",
+        "test_step_detail": "",
+        "test_data": "1. customer : AGUS SUTIKNO/PBG\n2. Discount Level : Sandal : Level 1",
+        "expected_results": "Request Discount Level berhasil dibuat",
+        "actual_results": "",
+        "passed": "0",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "22 Jun 2026, 11:32:25",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "22 Jun 2026, 11:32:25"
+    },
+    {
+        "id": "MIGRASI19/P2P/VENDCLASS/003",
+        "type": "Positive",
+        "scenario": "Import Vendor Classification file yang sesuai",
+        "pre_conditions": "View list Vendor Classification",
+        "test_steps": "1. Upload file\n2. Pilih file excel/csv\n3. Import file",
+        "test_step_detail": "1. Login sebagai PROC-Adline\n2. Klik modul Purchase\n3. Pada tab Master, klik Vendor Classification pada menu Partner\n4. Klik Logo Gear > Klik Import Records > Klik Upload Data File\n5. Klik File, Klik Open\n6. Klik Test > Klik Import",
+        "test_data": "File: MIGRASI19-P2P-VENDCLASS-005.csv\nLogin: PROC-Adline",
+        "expected_results": "Sistem meng-importasi file menjadi line Vendor Classification baru",
+        "actual_results": "",
+        "passed": "1",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "22 Jun 2026, 11:32:25",
+                "action": "created"
+            },
+            {
+                "user": "admin",
+                "date": "22 Jun 2026, 11:55:25",
+                "action": "overwritten"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "22 Jun 2026, 11:55:25"
+    },
+    {
+        "id": "MIGRASI19/SLS/SQ/004",
+        "type": "Positive",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "pre_conditions": "",
+        "test_steps": "- Buka menu Sales\n- Master Pricelist.\n- Input price pada Produk A agar memiliki harga aktif (misal: 100k)",
+        "test_step_detail": "- Login sebagai: SLSPRT - Sugiarti Nurul Hidayah\n- klik sales\n- klik quotations\n- klik new\n- isi sale type\n- isi customer\n- isi sale stock\n- isi type delivery\n- klik add a product\n- isi product\n- isi quantity\n- klik save & close\n- klik save\n\n\n\n- Login sebagai: Login sebagai:\nBOD - Heriyanto \n- klik modul sales\n- klik sales\n- klik pricelist\n- klik pricelist public pricelist\n- klik edit\n- klik product \nEVA Porto 1042M-1 Navy GP size 40-43 @48\n- klik add pricelist\n- isi price\n- isi start date\n- isi end date\n- klik save\n- klik validate\n- klik ok\n\n\n- klik sales\n- klik quotations\n- masuk ke sale quotations yg sudah dibuat\n- klik update prices",
+        "test_data": "- isi sale type: Merchant\n- isi customer: Agus Sutikno/PB\n- isi sale stock: HOGT\n- isi type delivery: Delivery\n- klik add a product:\n- isi product: product EVA Porto 1042M-1 Navy GP size 40-43 @48 \n- isi quantity: 2\n\npricelist\n- product EVA Porto 1042M-1 Navy GP size 40-43 @48 dengan price 10.000- start date:6/11/2026- end date: 7/11/2026",
+        "expected_results": "pricelisy yg di set oleh direkis/administrator akan otomatis terbuat/tanpa approval",
+        "actual_results": "",
+        "passed": "0",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 09:41:00",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "25 Jun 2026, 09:41:00"
     }
 ]

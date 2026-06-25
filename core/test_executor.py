@@ -202,6 +202,15 @@ class TestExecutor:
                 used_sel = await try_action(do_select, selector)
                 if used_sel != selector:
                     print(f"  [Fallback] Used selector: {used_sel}")
+            elif action == "upload_file":
+                file_path = task_details.get('file_path')
+                if not file_path or not os.path.exists(file_path):
+                    raise Exception(f"File not found for upload: {file_path}")
+                async def do_upload(sel):
+                    await page.locator(sel).first.set_input_files(file_path, timeout=timeout_ms)
+                used_sel = await try_action(do_upload, selector)
+                if used_sel != selector:
+                    print(f"  [Fallback] Used selector: {used_sel}")
             elif action == "verify":
                  if not result:
                      # Only apply secondary DOM check for NEGATIVE test cases
@@ -286,7 +295,7 @@ class TestExecutor:
             )
             return False, str(e), None
 
-    async def execute(self, test_case: dict, mode: str = "ai", saved_flow: dict = None, history_file: str = "test-results/history.json") -> dict:
+    async def execute(self, test_case: dict, mode: str = "ai", saved_flow: dict = None, history_file: str = "test-results/history.json", files_dir: str = None) -> dict:
         video_dir = None
         try:
             test_id = test_case.get('id', 'Unknown')
@@ -348,6 +357,16 @@ class TestExecutor:
             
             # Execute Dynamic Steps
             steps = test_case.get('steps', [])
+            
+            # Resolve file paths for upload_file actions
+            for step in steps:
+                if step.get('action_hint') == 'upload_file':
+                    filename = step.get('value')
+                    if filename and files_dir:
+                        step['file_path'] = os.path.join(files_dir, filename)
+                    else:
+                        raise Exception(f"Upload step missing filename or files_dir not provided. Step: {step}")
+                        
             all_passed = True
             final_actual_result = ""
             

@@ -21,6 +21,30 @@
                     "role": "National Sales Manager",
                     "email": "veronica@porto.co.id",
                     "password": "Dewi12345"
+                },
+                {
+                    "name": "BOD - Heriyanto",
+                    "role": "BOD",
+                    "email": "heriyanto@porto.co.id",
+                    "password": "Heriyanto12345"
+                },
+                {
+                    "name": "SLSPRT - Sugiarti Nurul Hidayah",
+                    "role": "Administration Staff",
+                    "email": "sugiarti.nurul@porto.co.id",
+                    "password": "Sugiarti12345"
+                }
+            ]
+        },
+        {
+            "id": "proc",
+            "name": "proc",
+            "users": [
+                {
+                    "name": "PROC - Adline",
+                    "role": "Procurement Lokal Staff",
+                    "email": "adline.balqis@porto.co.id",
+                    "password": "Adline12345"
                 }
             ]
         }

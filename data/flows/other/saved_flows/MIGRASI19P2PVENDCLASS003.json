@@ -1,0 +1,251 @@
+{
+    "test_case_id": "MIGRASI19/P2P/VENDCLASS/003",
+    "saved_at": "2026-06-22T13:20:19.582942",
+    "planned_steps": [
+        {
+            "step_num": 1,
+            "name": "Click Purchase Module",
+            "task": "Klik modul 'Purchase'.",
+            "action_hint": "click",
+            "value": "Purchase",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 2,
+            "name": "Click Master Tab",
+            "task": "Klik tab 'Master'.",
+            "action_hint": "click",
+            "value": "Master",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 2.1,
+            "name": "Click Partner Menu",
+            "task": "Pada menu 'Master', klik 'Partner'.",
+            "action_hint": "click",
+            "value": "Partner",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 2.2,
+            "name": "Click Vendor Classification",
+            "task": "Pada menu 'Partner', klik 'Vendor Classification'.",
+            "action_hint": "click",
+            "value": "Vendor Classification",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 3,
+            "name": "Click Gear Icon",
+            "task": "Klik ikon 'Gear' (pengaturan) yang biasanya berada di samping tombol 'Create' atau 'New'.",
+            "action_hint": "click",
+            "value": "Gear",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 3.1,
+            "name": "Click Import Records",
+            "task": "Dari menu dropdown ikon 'Gear', klik 'Import Records'.",
+            "action_hint": "click",
+            "value": "Import Records",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 3.2,
+            "name": "Click Upload Data File",
+            "task": "Pada halaman import, klik tombol 'Upload Data File'.",
+            "action_hint": "click",
+            "value": "Upload Data File",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 4,
+            "name": "Upload File",
+            "task": "Unggah file 'MIGRASI19-P2P-VENDCLASS-005.csv'. Cari elemen input file (biasanya dengan tipe='file').",
+            "action_hint": "upload_file",
+            "value": "MIGRASI19-P2P-VENDCLASS-005.csv",
+            "expected_result": null,
+            "optional": false,
+            "file_path": "data\\flows\\other\\files\\MIGRASI19-P2P-VENDCLASS-005.csv"
+        },
+        {
+            "step_num": 5,
+            "name": "Click Test Button",
+            "task": "Setelah file diunggah, klik tombol 'Test' untuk memverifikasi validitas file.",
+            "action_hint": "click",
+            "value": "Test",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 5.1,
+            "name": "Click Import Button",
+            "task": "Setelah hasil tes berhasil, klik tombol 'Import' untuk memulai proses import data.",
+            "action_hint": "click",
+            "value": "Import",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6,
+            "name": "Verify Import Success",
+            "task": "Verifikasi bahwa sistem berhasil mengimpor file dan membuat baris Vendor Classification baru. Ini dapat diverifikasi dengan mencari pesan sukses atau memeriksa keberadaan data yang baru diimpor dalam daftar Vendor Classification.",
+            "action_hint": "verify",
+            "value": null,
+            "expected_result": "Sistem berhasil mengimpor file menjadi baris Vendor Classification baru.",
+            "optional": false
+        }
+    ],
+    "executed_actions": [
+        {
+            "selector": "input[name=\"login\"]",
+            "action": "fill",
+            "value": "adline.balqis@porto.co.id",
+            "description": "The email input field with name 'login' is identified. Based on the screenshot, the field is empty, so the value 'adline.balqis@porto.co.id' needs to be filled.",
+            "confidence": "high",
+            "step_num": 0.1,
+            "name": "Login Email"
+        },
+        {
+            "selector": "input[name='password']",
+            "action": "fill",
+            "value": "Adline12345",
+            "description": "Found the password input field by its 'name' attribute and filled it with the provided password.",
+            "confidence": "high",
+            "step_num": 0.2,
+            "name": "Login Password"
+        },
+        {
+            "selector": "button:has-text(\"Log in\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Log in' button as requested by the task.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 0.3,
+            "name": "Click Login"
+        },
+        {
+            "selector": "a[data-menu-xmlid=\"purchase.menu_purchase_root\"]",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the 'Purchase' module by targeting its specific data-menu-xmlid attribute, as visible in the DOM and screenshot.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 1,
+            "name": "Click Purchase Module"
+        },
+        {
+            "selector": "button:has-text(\"Master\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Master' tab based on its text content and the provided DOM structure.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 2,
+            "name": "Click Master Tab"
+        },
+        {
+            "selector": "div.dropdown-header:has-text(\"Partner\")",
+            "action": "click",
+            "value": null,
+            "description": "The user wants to click on 'Partner' from the 'Master' menu. The 'Master' menu is already open, revealing a dropdown. Within this dropdown, 'Partner' is displayed as a header for a group of menu items (e.g., 'Vendors', 'Vendor Classification'). Although 'dropdown-header' elements are typically not interactive, the task explicitly instructs to 'klik Partner' and use 'Partner' as the value, implying a direct click on the 'Partner' text. Therefore, the selector targets this header element.",
+            "confidence": "medium",
+            "step_num": 2.1,
+            "name": "Click Partner Menu"
+        },
+        {
+            "selector": "a.dropdown-item.o-navigable.o_dropdown_menu_group_entry[data-menu-xmlid='purchase.menu_purchase_vendor_cassification']:has-text('Vendor Classification')",
+            "action": "click",
+            "value": "Vendor Classification",
+            "description": "Clicked on 'Vendor Classification' link within the 'Partner' dropdown menu, identified by its text and data-menu-xmlid.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 2.2,
+            "name": "Click Vendor Classification"
+        },
+        {
+            "selector": "button[aria-label='Actions menu']",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Gear' icon (settings) which has the aria-label 'Actions menu' and contains a 'fa-cog' icon, as requested.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 3,
+            "name": "Click Gear Icon"
+        },
+        {
+            "selector": "span.o_import_menu:has-text(\"Import records\")",
+            "action": "click",
+            "description": "Click the 'Import records' option visible in the open dropdown menu.",
+            "confidence": "high",
+            "step_num": 3.1,
+            "name": "Click Import Records"
+        },
+        {
+            "selector": "button:has-text(\"Upload Data File\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Upload Data File' button to proceed with file import, as identified by its text content and class.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 3.2,
+            "name": "Click Upload Data File"
+        },
+        {
+            "selector": "input[type=\"file\"]",
+            "action": "upload_file",
+            "value": "MIGRASI19-P2P-VENDCLASS-005.csv",
+            "description": "Found the file input element with type='file' and class 'o_input_file' which is part of the file upload mechanism.",
+            "confidence": "high",
+            "step_num": 4,
+            "name": "Upload File"
+        },
+        {
+            "selector": "button.btn-primary:has-text(\"Test\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Test' button to verify the file's validity, as requested by the task.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 5,
+            "name": "Click Test Button"
+        },
+        {
+            "selector": "button.btn-primary:has-text(\"Import\")",
+            "action": "click",
+            "value": null,
+            "description": "The task requires clicking the 'Import' button after a successful test. The screenshot shows 'Everything seems valid.', indicating a successful test, and a primary button labeled 'Import' is available in the DOM.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 5.1,
+            "name": "Click Import Button"
+        },
+        {
+            "selector": ".o_notification.bg-success .o_notification_content:has-text(\"2 records successfully imported\")",
+            "action": "verify",
+            "value": null,
+            "description": "Found a green success notification bar with the text '2 records successfully imported', indicating that the file import was successful and the new Vendor Classification lines have been created as confirmed by the listed items 'Kelas D' and 'Kelas E'.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 6,
+            "name": "Verify Import Success"
+        }
+    ]
+}

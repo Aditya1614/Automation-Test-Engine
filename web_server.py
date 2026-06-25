@@ -8,10 +8,11 @@ import contextlib
 import traceback
 import shutil
 from fastapi import FastAPI, Request, UploadFile, File, Depends, HTTPException, status
-from fastapi.responses import HTMLResponse, StreamingResponse, JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, StreamingResponse, JSONResponse, RedirectResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
+from typing import List
 
 from core.excel_parser import TestCaseParser
 from core.step_planner_agent import StepPlannerAgent
@@ -85,7 +86,7 @@ def initialize_data():
                     pass
 
 
-    # Seed odoo_users.json for all flows
+    # Seed odoo_users.json and files for all flows
     odoo_email = os.getenv("ODOO_EMAIL", "admin@example.com")
     odoo_password = os.getenv("ODOO_PASSWORD", "admin")
     flows_dir = os.path.join(DATA_DIR, "flows")
@@ -93,6 +94,7 @@ def initialize_data():
         for flow_id in os.listdir(flows_dir):
             flow_path = os.path.join(flows_dir, flow_id)
             if os.path.isdir(flow_path):
+                # Init odoo_users.json
                 users_path = os.path.join(flow_path, "odoo_users.json")
                 if not os.path.exists(users_path):
                     with open(users_path, "w") as f:
@@ -112,6 +114,14 @@ def initialize_data():
                                 }
                             ]
                         }, f, indent=4)
+                
+                # Init files directory
+                files_dir = os.path.join(flow_path, "files")
+                os.makedirs(files_dir, exist_ok=True)
+                files_meta_path = os.path.join(flow_path, "files_meta.json")
+                if not os.path.exists(files_meta_path):
+                    with open(files_meta_path, "w") as f:
+                        json.dump([], f)
 
 initialize_data()
 
@@ -227,12 +237,15 @@ async def create_flow(request: Request, user: str = Depends(get_current_user)):
     flow_dir = os.path.join(DATA_DIR, "flows", flow_id)
     os.makedirs(flow_dir, exist_ok=True)
     os.makedirs(os.path.join(flow_dir, "saved_flows"), exist_ok=True)
+    os.makedirs(os.path.join(flow_dir, "files"), exist_ok=True)
     with open(os.path.join(flow_dir, "test_cases.json"), "w") as f:
         json.dump([], f)
     with open(os.path.join(flow_dir, "history.json"), "w") as f:
         json.dump([], f)
     with open(os.path.join(flow_dir, "odoo_users.json"), "w") as f:
         json.dump({"groups": []}, f)
+    with open(os.path.join(flow_dir, "files_meta.json"), "w") as f:
+        json.dump([], f)
         
     return {"status": "success", "flow": {"id": flow_id, "name": name, "created_by": user}}
 
@@ -242,7 +255,9 @@ def get_flow_paths(flow_id: str):
     return {
         "test_cases": os.path.join(base_dir, "test_cases.json"),
         "history": os.path.join(base_dir, "history.json"),
-        "saved_flows_dir": os.path.join(base_dir, "saved_flows")
+        "saved_flows_dir": os.path.join(base_dir, "saved_flows"),
+        "files_dir": os.path.join(base_dir, "files"),
+        "files_meta": os.path.join(base_dir, "files_meta.json")
     }
 
 def delete_history_attachments(entry: dict):
@@ -494,17 +509,103 @@ async def delete_odoo_user(flow_id: str, group_id: str, user_index: int, user: s
         return {"status": "success", "groups": users_data["groups"]}
     return JSONResponse(status_code=404, content={"error": "User not found"})
 
+# --- Files API ---
+def load_files_meta(flow_id: str):
+    paths = get_flow_paths(flow_id)
+    if os.path.exists(paths["files_meta"]):
+        try:
+            with open(paths["files_meta"], "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return []
+    return []
+
+def save_files_meta(flow_id: str, data: list):
+    paths = get_flow_paths(flow_id)
+    with open(paths["files_meta"], "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
+
+@app.get("/api/flows/{flow_id}/files")
+async def get_files(flow_id: str, user: str = Depends(get_current_user)):
+    return load_files_meta(flow_id)
+
+@app.post("/api/flows/{flow_id}/files")
+async def upload_files(flow_id: str, files: List[UploadFile] = File(...), user: str = Depends(get_current_user)):
+    MAX_FILE_SIZE = 100 * 1024 * 1024
+    from datetime import datetime
+    paths = get_flow_paths(flow_id)
+    files_dir = paths["files_dir"]
+    os.makedirs(files_dir, exist_ok=True)
+    
+    meta = load_files_meta(flow_id)
+    meta_map = {m["filename"]: m for m in meta}
+    
+    current_time = datetime.now().strftime("%d %b %Y, %H:%M:%S")
+    
+    for file in files:
+        contents = await file.read()
+        if len(contents) > MAX_FILE_SIZE:
+            return JSONResponse(status_code=413, content={"error": f"File {file.filename} exceeds 100MB limit"})
+            
+        file_path = os.path.join(files_dir, file.filename)
+        with open(file_path, "wb") as f:
+            f.write(contents)
+            
+        meta_map[file.filename] = {
+            "filename": file.filename,
+            "size_bytes": len(contents),
+            "mime_type": file.content_type,
+            "uploaded_by": user,
+            "uploaded_at": current_time
+        }
+        
+    final_meta = list(meta_map.values())
+    save_files_meta(flow_id, final_meta)
+    return {"status": "success", "files": final_meta}
+
+@app.get("/api/flows/{flow_id}/files/{filename:path}")
+async def download_file(flow_id: str, filename: str, user: str = Depends(get_current_user)):
+    paths = get_flow_paths(flow_id)
+    file_path = os.path.join(paths["files_dir"], filename)
+    if os.path.exists(file_path):
+        return FileResponse(file_path, filename=filename)
+    return JSONResponse(status_code=404, content={"error": "File not found"})
+
+@app.delete("/api/flows/{flow_id}/files/{filename:path}")
+async def delete_file(flow_id: str, filename: str, user: str = Depends(get_current_user)):
+    paths = get_flow_paths(flow_id)
+    file_path = os.path.join(paths["files_dir"], filename)
+    
+    meta = load_files_meta(flow_id)
+    meta = [m for m in meta if m["filename"] != filename]
+    save_files_meta(flow_id, meta)
+    
+    if os.path.exists(file_path):
+        try:
+            os.remove(file_path)
+        except Exception:
+            pass
+            
+    return {"status": "success"}
+
+
 
 def resolve_odoo_credentials(flow_id: str, test_case: dict) -> tuple[str, str]:
     users_data = load_odoo_users(flow_id)
     
     # 1. Check for user name in test_case
     search_text = (test_case.get("pre_conditions", "") + " " + test_case.get("test_data", "")).lower()
+    search_text_no_space = re.sub(r'\s+', '', search_text)
     
     for group in users_data.get("groups", []):
         for u in group.get("users", []):
             name = u.get("name", "").lower()
             if name and name in search_text:
+                return u.get("email"), u.get("password")
+            
+            # fallback: without whitespace
+            name_no_space = re.sub(r'\s+', '', name)
+            if name_no_space and name_no_space in search_text_no_space:
                 return u.get("email"), u.get("password")
                 
     # 2. Check for inline Email: / Password:
@@ -559,8 +660,8 @@ async def run_test(flow_id: str, request: Request, user: str = Depends(get_curre
                         test_case['steps'] = planned_steps
                         
                     executor = TestExecutor(odoo_email, odoo_password)
-                    # PASS history_file here!
-                    result = await executor.execute(test_case, mode=mode, saved_flow=saved_flow, history_file=paths["history"])
+                    # PASS history_file and files_dir here!
+                    result = await executor.execute(test_case, mode=mode, saved_flow=saved_flow, history_file=paths["history"], files_dir=paths["files_dir"])
                     
                     queue.put_nowait({
                         "type": "done",

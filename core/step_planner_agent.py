@@ -11,7 +11,7 @@ Each object must represent a single interaction step, matching this schema:
     "step_num": float, // e.g., 1, 1.1, 2, 3
     "name": "string", // Short name, e.g., "Input Email"
     "task": "string", // Detailed instruction in Indonesian on what to do. Include hints for Odoo field names if applicable.
-    "action_hint": "string", // One of: "click", "fill", "fill_and_enter", "verify"
+    "action_hint": "string", // One of: "click", "fill", "fill_and_enter", "verify", "upload_file"
     "value": "string or null", // The data to fill, if action_hint is fill or fill_and_enter
     "expected_result": "string or null", // Required if action_hint is "verify". The condition to check.
     "optional": boolean // Default false. Set true ONLY for steps that handle popups/dialogs that may or may not appear.
@@ -36,8 +36,17 @@ Rules & Odoo 19 Knowledge:
    - Expiration Date = 'validity_date'
    - Quantity = 'product_uom_qty'
 6. Be smart about correlating "Test Data" lines to the "Test Steps".
-7. DETERMINISM: Only generate steps that are EXPLICITLY described in the test case "Test Steps". Do NOT invent extra anticipatory steps like "Click OK if popup appears" unless the test steps explicitly mention it. If a confirmation popup is part of the expected flow (e.g., after clicking "Confirm"), mark that step as "optional": true.
-8. Return ONLY the JSON array.
+7. DETERMINISM: Only generate steps that are EXPLICITLY described in the test case "Test Steps" or "Test Step Detail". Do NOT invent extra anticipatory steps like "Click OK if popup appears" unless they are explicitly mentioned. If a confirmation popup is part of the expected flow (e.g., after clicking "Confirm"), mark that step as "optional": true.
+8. MENU NAVIGATION: If a step requires navigating through multiple menu levels (e.g., "Pada tab Master, klik Vendor Classification pada menu Partner"), you MUST break this down into separate, consecutive 'click' steps for each level. The DOM Analyzer can only perform ONE click per step. Example:
+   - Step 1: Click 'Master'
+   - Step 2: Click 'Partner'
+   - Step 3: Click 'Vendor Classification'
+9. FILE UPLOAD STEPS: If the test steps mention uploading a file (e.g., "Upload file MIGRASI19-P2P-VENDCLASS-005.csv"), generate a step with:
+   - action_hint: "upload_file"
+   - value: "<exact filename>" (e.g., "MIGRASI19-P2P-VENDCLASS-005.csv")
+   - task: Description of the upload action and the file input selector to target.
+   The automation engine will resolve the file path from the flow's managed file store.
+10. Return ONLY the JSON array.
 """
 
 class StepPlannerAgent:
@@ -50,7 +59,7 @@ class StepPlannerAgent:
         current_date_str = datetime.now().strftime("%m/%d/%Y")
         
         dynamic_instruction = PLANNER_INSTRUCTION + f"""
-9. DATE vs DROPDOWN RULES (CRITICAL - DO NOT VIOLATE):
+11. DATE vs DROPDOWN RULES (CRITICAL - DO NOT VIOLATE):
    - 'Order Date' (date_order): This is a DATE PICKER. Current date = {current_date_str}. Use action_hint "fill" with the date in MM/DD/YYYY format.
    - 'Valid Date' / 'Expiration' (validity_date): This is a DROPDOWN, NOT a date picker! NEVER compute a date for this field!
      You MUST use action_hint "fill_and_enter" with the LITERAL dropdown option text from the test case (e.g., "14 Days", "30 Days").
@@ -61,8 +70,12 @@ class StepPlannerAgent:
         
         prompt = f"""
         Pre-Conditions: {test_case.get('pre_conditions', '')}
+        
         Test Steps: 
         {test_case.get('test_steps', '')}
+        
+        Test Step Detail:
+        {test_case.get('test_step_detail', '')}
         
         Test Data: 
         {test_case.get('test_data', '')}
@@ -70,7 +83,7 @@ class StepPlannerAgent:
         Expected Results: 
         {test_case.get('expected_results', '')}
         
-        Generate the JSON array of steps.
+        Generate the JSON array of steps. Use Test Steps and Test Step Detail to figure out the exact granular actions.
         """
         
         response = await self.client.aio.models.generate_content(

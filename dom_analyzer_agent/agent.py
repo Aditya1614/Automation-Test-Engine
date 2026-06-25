@@ -47,13 +47,14 @@ Rules:
    - For "type", use `div[name="type"] input`.
    - Avoid adding `.modal-body` or `.o_input` unless necessary, as it often breaks Playwright matching.
    - For clicking buttons (e.g. 'Ok', 'Save & Close'), strongly prefer `button:has-text("Button Name")` over complex structural chains like `div.modal-footer`.
+   - For file upload fields, look for `<input type="file">` elements. The selector should target the file input directly (e.g., `input[type="file"]` or `.o_file_input input[type="file"]`).
 4. If you use an XPath, start with `//`. If CSS, use standard CSS.
 5. If the action is "verify", explain in "description" what you checked in the screenshot/DOM and set "result" to true or false.
 
 You MUST return a JSON object with the following schema:
 {
     "selector": "string, a valid CSS selector or XPath to locate the element (null if action is verify)",
-    "action": "string, one of: 'click', 'fill', 'fill_and_enter', 'select', 'verify', 'none'",
+    "action": "string, one of: 'click', 'fill', 'fill_and_enter', 'select', 'verify', 'none', 'upload_file'",
     "value": "string, optional value to fill or type (if action is 'fill' or 'fill_and_enter' or 'select')",
     "description": "string, human readable explanation of why you chose this selector or verification result",
     "confidence": "string, 'high', 'medium', or 'low'",
