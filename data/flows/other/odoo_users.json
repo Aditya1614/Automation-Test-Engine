@@ -9,6 +9,12 @@
                     "role": "Administrator",
                     "email": "it@porto.co.id",
                     "password": "testing-odoo19"
+                },
+                {
+                    "name": "FIN - Tan Cang Hau",
+                    "role": "Finance Supervisor",
+                    "email": "lilies@porto.co.id",
+                    "password": "Tan12345"
                 }
             ]
         },
@@ -33,6 +39,12 @@
                     "role": "Administration Staff",
                     "email": "sugiarti.nurul@porto.co.id",
                     "password": "Sugiarti12345"
+                },
+                {
+                    "name": "SLSPRT - Mirza Azkia",
+                    "role": "Associate Nasional Sales Manager",
+                    "email": "mirza.azkia@porto.co.id",
+                    "password": "Mirza12345"
                 }
             ]
         },

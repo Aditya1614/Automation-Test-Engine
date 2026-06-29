@@ -1,0 +1,250 @@
+{
+    "test_case_id": "MIGRASI19/SLS/CUST/007",
+    "saved_at": "2026-06-25T11:42:33.704052",
+    "planned_steps": [
+        {
+            "step_num": 1,
+            "name": "Click Sales Module",
+            "task": "Klik modul Sales",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 2,
+            "name": "Click Master Tab",
+            "task": "Klik tab 'Master'",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 3,
+            "name": "Click Customer Menu",
+            "task": "Klik menu 'Customer' di bawah 'Partner'",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 4,
+            "name": "Search for Customer",
+            "task": "Cari customer 'AGUS SUTIKNO/PBG' di kolom pencarian daftar (input.o_searchview_input)",
+            "action_hint": "fill_and_enter",
+            "value": "AGUS SUTIKNO/PBG",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 5,
+            "name": "Select Customer AGUS SUTIKNO/PBG",
+            "task": "Pilih customer 'AGUS SUTIKNO/PBG' dari hasil pencarian",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6,
+            "name": "Click Payment Information Tab",
+            "task": "Klik tab 'Payment Information'",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 7,
+            "name": "Click Add Credit Limit",
+            "task": "Klik tombol 'Add Credit Limit'",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 8,
+            "name": "Select Start Date",
+            "task": "Pilih tanggal mulai (Start Date) untuk credit limit. Gunakan format MM/DD/YYYY.",
+            "action_hint": "fill",
+            "value": "06/25/2026",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 9,
+            "name": "Fill Bottom Limit",
+            "task": "Isi nilai 'Bottom Limit' (div[name='bottom_limit'] input)",
+            "action_hint": "fill",
+            "value": "8000000",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 10,
+            "name": "Click Confirm & Add",
+            "task": "Klik tombol 'Confirm & Add'",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 11,
+            "name": "Verify Top Limit",
+            "task": "Verifikasi bahwa nilai 'Top Limit' (div[name='top_limit'] input) sama dengan 'Bottom Limit' (8,000,000)",
+            "action_hint": "verify",
+            "value": null,
+            "expected_result": "8,000,000",
+            "optional": false
+        }
+    ],
+    "executed_actions": [
+        {
+            "selector": "input[name='login']",
+            "action": "fill",
+            "value": "lilies@porto.co.id",
+            "description": "Found the email input field by its 'name' attribute and filled it with the specified email address as it was empty.",
+            "confidence": "high",
+            "step_num": 0.1,
+            "name": "Login Email"
+        },
+        {
+            "selector": "input[name=\"password\"]",
+            "action": "fill",
+            "value": "Tan12345",
+            "description": "The task is to fill the password field. The DOM contains an input element with `name=\"password\"` which is the target element. The screenshot shows the password field is empty, so it needs to be filled.",
+            "confidence": "high",
+            "step_num": 0.2,
+            "name": "Login Password"
+        },
+        {
+            "selector": "button:has-text(\"Log in\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Log in' button to submit the login form.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 0.3,
+            "name": "Click Login"
+        },
+        {
+            "selector": "a[data-menu-xmlid='sale.sale_menu_root']",
+            "action": "click",
+            "value": null,
+            "description": "Clicking on the 'Sales' module link, identified by its data-menu-xmlid attribute and the visible text 'Sales'.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 1,
+            "name": "Click Sales Module"
+        },
+        {
+            "selector": "button[data-menu-xmlid=\"erp_sales.menu_sale_master_action\"]:has-text(\"Master\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the 'Master' tab based on its text content and data-menu-xmlid attribute in the header navigation.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 2,
+            "name": "Click Master Tab"
+        },
+        {
+            "selector": "a.o-dropdown-item.dropdown-item.o-navigable.o_dropdown_menu_group_entry:has-text(\"Customer\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Customer' menu item within the 'Partner' group in the open dropdown menu.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 3,
+            "name": "Click Customer Menu"
+        },
+        {
+            "selector": "input.o_searchview_input",
+            "action": "fill_and_enter",
+            "value": "AGUS SUTIKNO/PBG",
+            "description": "Fill the search input field with 'AGUS SUTIKNO/PBG' and press Enter to perform the search.",
+            "confidence": "high",
+            "step_num": 4,
+            "name": "Search for Customer"
+        },
+        {
+            "selector": "td[name=\"complete_name\"]:has-text(\"AGUS SUTIKNO/PBG\")",
+            "action": "click",
+            "value": null,
+            "description": "Click the 'AGUS SUTIKNO/PBG' customer in the list view to select it.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 5,
+            "name": "Select Customer AGUS SUTIKNO/PBG"
+        },
+        {
+            "selector": "a[name='payment_information'][role='tab']:has-text('Payment Information')",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Payment Information' tab to navigate to the payment details section.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 6,
+            "name": "Click Payment Information Tab"
+        },
+        {
+            "selector": "button:has-text(\"Add Credit Limit\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Add Credit Limit' button as requested by the task.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 7,
+            "name": "Click Add Credit Limit"
+        },
+        {
+            "selector": "div[name=\"date\"] input",
+            "action": "fill",
+            "value": "06/25/2026",
+            "description": "The task requires filling the 'Start Date' for the credit limit with '06/25/2026'. The input field for 'Start Date' is identified by its parent div with `name=\"date\"` and its own `data-field=\"date\"` attribute. I am directly filling the input field as per the critical hint.",
+            "confidence": "high",
+            "step_num": 8,
+            "name": "Select Start Date"
+        },
+        {
+            "selector": "div[name='bottom_limit'] input",
+            "action": "fill",
+            "value": "8000000",
+            "description": "The 'Bottom Limit' input field in the 'Add Credit Limit' modal currently shows '0'. Filling it with '8000000' as requested.",
+            "confidence": "high",
+            "step_num": 9,
+            "name": "Fill Bottom Limit"
+        },
+        {
+            "selector": "button[name=\"action_add_creditlimit\"]:has-text(\"Add\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Add' button within the 'Add Credit Limit' modal, which corresponds to 'Confirm & Add' in this context.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 10,
+            "name": "Click Confirm & Add"
+        },
+        {
+            "selector": "div.o_dialog div[name=\"top_limit\"] span",
+            "action": "verify",
+            "value": "8,000,000",
+            "description": "Verify that the 'Top Limit' field inside the 'Add Credit Limit' modal displays the value '8,000,000'. The DOM shows '8,000,000' as the text content of the span within div[name=\"top_limit\"].",
+            "confidence": "high",
+            "result": true,
+            "step_num": 11,
+            "name": "Verify Top Limit"
+        }
+    ]
+}

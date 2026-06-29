@@ -163,7 +163,7 @@
         "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
         "pre_conditions": "",
         "test_steps": "- Buka menu Sales\n- Master Pricelist.\n- Input price pada Produk A agar memiliki harga aktif (misal: 100k)",
-        "test_step_detail": "- Login sebagai: SLSPRT - Sugiarti Nurul Hidayah\n- klik sales\n- klik quotations\n- klik new\n- isi sale type\n- isi customer\n- isi sale stock\n- isi type delivery\n- klik add a product\n- isi product\n- isi quantity\n- klik save & close\n- klik save\n\n\n\n- Login sebagai: Login sebagai:\nBOD - Heriyanto \n- klik modul sales\n- klik sales\n- klik pricelist\n- klik pricelist public pricelist\n- klik edit\n- klik product \nEVA Porto 1042M-1 Navy GP size 40-43 @48\n- klik add pricelist\n- isi price\n- isi start date\n- isi end date\n- klik save\n- klik validate\n- klik ok\n\n\n- klik sales\n- klik quotations\n- masuk ke sale quotations yg sudah dibuat\n- klik update prices",
+        "test_step_detail": "- Login sebagai: SLSPRT - Sugiarti Nurul Hidayah\n- klik modul sales\n- klik sales\n- klik quotations\n- klik quotations\n- klik new\n- isi sale type\n- isi customer\n- isi sale stock\n- isi type delivery\n- klik add a product\n- isi product\n- isi quantity\n- klik save & close\n- klik save\n\n\n\n- Login sebagai: Login sebagai:\nBOD - Heriyanto \n- klik modul sales\n- klik sales\n- klik pricelist\n- klik pricelist public pricelist\n- klik edit\n- klik product \nEVA Porto 1042M-1 Navy GP size 40-43 @48\n- klik add pricelist\n- isi price\n- isi start date\n- isi end date\n- klik save\n- klik validate\n- klik ok\n\n\n- klik sales\n- klik quotations\n- masuk ke sale quotations yg sudah dibuat\n- klik update prices",
         "test_data": "- isi sale type: Merchant\n- isi customer: Agus Sutikno/PB\n- isi sale stock: HOGT\n- isi type delivery: Delivery\n- klik add a product:\n- isi product: product EVA Porto 1042M-1 Navy GP size 40-43 @48 \n- isi quantity: 2\n\npricelist\n- product EVA Porto 1042M-1 Navy GP size 40-43 @48 dengan price 10.000- start date:6/11/2026- end date: 7/11/2026",
         "expected_results": "pricelisy yg di set oleh direkis/administrator akan otomatis terbuat/tanpa approval",
         "actual_results": "",
@@ -175,9 +175,198 @@
                 "user": "admin",
                 "date": "25 Jun 2026, 09:41:00",
                 "action": "created"
+            },
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 10:51:18",
+                "action": "overwritten"
             }
         ],
         "uploaded_by": "admin",
-        "uploaded_at": "25 Jun 2026, 09:41:00"
+        "uploaded_at": "25 Jun 2026, 10:51:18"
+    },
+    {
+        "id": "MIGRASI19/SLS/CUST/004",
+        "type": "Positive",
+        "scenario": "Validasi approval Discount Request 2 layer oleh Sales Manager & Direksi",
+        "pre_conditions": "Request Customer Discount status Process",
+        "test_steps": "1. Login Sales Manager / Direksi\n2. Buka menu master customer, pilih tab sales & purchase\n3. Approve Discount sebagai Sales Manager\n4. Approve Discount sebagai Direksi",
+        "test_step_detail": "1. Login sebagai SLSPRT - Mirza Azkia & BOD - Tjoa\n2. Masuk ke modul sales\n3. klik tab master\n4. klik customer pada partner\n5. pilih  customer : AGUS SUTIKNO/PBG\n6. pilih tab 'sales & purchase'\n7. pada bagian customer discount\n8. list discount tertera di customer discount\n9. klik salah satu discount level berstatus process\n10..klik first approval\n12. status approvall  akan berubah menjadi 'need to be approved by Direksi'\n13. masuk sebagai BOD - Tjoa\n14. klik second approval\n15. status berubah menjadi done",
+        "test_data": "1. customer : AGUS SUTIKNO/PBG\n2. Discount Level : Sandal : Level 3",
+        "expected_results": "1. Status berubah menjadi Waiting Director Approval\n2. Status berubah menjadi done, discount sudah aktif",
+        "actual_results": "",
+        "passed": "",
+        "failed": "",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 11:14:22",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "25 Jun 2026, 11:14:22"
+    },
+    {
+        "id": "MIGRASI19/SLS/CUST/005",
+        "type": "Positive",
+        "scenario": "Validasi membuat Credit Limit customer",
+        "pre_conditions": "Customer tersedia",
+        "test_steps": "1. buka tab payment information\n2. pilih add credit limit\n3. pilih start date\n4. tentukan botton limit & top limit ratio nya, nanti top limitnya akan terbentuk\n5. klik confirm & add",
+        "test_step_detail": "1. Login sebagai FIN - Tan Cang Hau\n2. Masuk ke modul sales\n3. klik tab master\n4. klik customer pada partner\n5. pilih  customer : AGUS SUTIKNO/PBG\n6. pilih tab 'payment information'\n7. pilih add credit limit\n8. pilih start date\n9. tentukan botton limit : 1,000,000 & top limit ratio nya : 3,000,000., top limitnya akan mengkalkulasi.\n10. klik add & confirm",
+        "test_data": "1. customer : AGUS SUTIKNO/PBG\n2. Credit limit : bottom 1,000,000 & ratio 3,000,000",
+        "expected_results": "Request Credit Limit berhasil dibuat",
+        "actual_results": "",
+        "passed": "0",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 11:14:22",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "25 Jun 2026, 11:14:22"
+    },
+    {
+        "id": "MIGRASI19/SLS/CUST/006",
+        "type": "Positive",
+        "scenario": "Validasi approval Credit Limit 2 layer oleh Sales Manager & Direksi",
+        "pre_conditions": "Request Credit Limit status Process",
+        "test_steps": "1. Login Sales Manager / Direksi\n2. Buka menu master customer, pilih tab payment information\n3. Approve Discount sebagai Sales Manager\n4. Approve Discount sebagai Direksi",
+        "test_step_detail": "1. Login sebagai SLSPRT - Mirza Azkia / BOD - Tjoa\n2. Masuk ke modul sales\n3. klik tab master\n4. klik customer pada partner\n5. pilih  customer : AGUS SUTIKNO/PBG\n6. pilih tab 'payment information'\n7. pada bagian credit limit\n8. list & informasi credit limit tertera di halaman tersebut.\n9. klik salah satu credit limit berstatus process\n10..klik first approval\n12. status approvall  akan berubah menjadi 'need to be approved by Direksi'\n13. masuk sebagai BOD - Tjoa\n14. klik second approval\n15. status berubah menjadi done",
+        "test_data": "1. customer : AGUS SUTIKNO/PBG\n2. Credit limit : bottom 1,000,000 & ratio 3,000,000",
+        "expected_results": "1. Status berubah menjadi Waiting Director Approval\n2. Status berubah menjadi done, discount sudah aktif",
+        "actual_results": "",
+        "passed": "1",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 11:14:22",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "25 Jun 2026, 11:14:22"
+    },
+    {
+        "id": "MIGRASI19/SLS/CUST/007",
+        "type": "Positive",
+        "scenario": "Membuat Credit limit hanya mengisi button limitnya saja.",
+        "pre_conditions": "Customer tersedia",
+        "test_steps": "1. buka tab payment information\n2. pilih add credit limit\n3. pilih start date\n4. isi botton limit \n5. klik confirm & add",
+        "test_step_detail": "1. Login sebagai FIN - Tan Cang Hau\n2. Masuk ke modul sales\n3. klik tab master\n4. klik customer pada partner\n5. pilih  customer : AGUS SUTIKNO/PBG\n6. pilih tab 'payment information'\n7. pilih add credit limit\n8. pilih start date\n9. tentukan botton limit \n10. klik add & confirm",
+        "test_data": "1. customer : AGUS SUTIKNO/PBG\n2. Credit limit : bottom 8,000,000",
+        "expected_results": "Top limit akan otomatis mengikuti nominal button limit",
+        "actual_results": "",
+        "passed": "0",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 11:14:22",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "25 Jun 2026, 11:14:22"
+    },
+    {
+        "id": "MIGRASI19/SLS/CO/008",
+        "type": "Positive",
+        "scenario": "Validasi Wizard Product Detail OSS. Memastikan wizard produk hanya menampilkan field yang relevan untuk tipe OSS.",
+        "pre_conditions": "User sedang membuat/mengedit dokumen Customer Offer tipe OSS.",
+        "test_steps": "1. Klik Add a line pada bagian produk.\n2. Buka wizard Create Product Detail.",
+        "test_step_detail": "1. Login sebagai SLSOSS - Intan Syahputri Sihombing\n2. Klik module Sales\n3. Klik 'Sales' pada navbar\n4. Klik 'Customer Offers'\n5. Pilih dokumen OSS draft\n6. Klik 'Edit'\n7. Klik 'Add a line'\n8. Input data pada create product detail\n9. Klik 'Save & Close'\n10. Klik 'Save'",
+        "test_data": "1. no doc : SQ/00040\n2. customer : Agus Sutikno\n3. status doc : draft",
+        "expected_results": "Wizard hanya menampilkan tab Details dan Attachment. Tab Details berisi list field seperti Supplier, Color Selection, dan Hardness.",
+        "actual_results": "",
+        "passed": "0",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 14:15:09",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "25 Jun 2026, 14:15:09"
+    },
+    {
+        "id": "MIGRASI19/SLS/CO/009",
+        "type": "Positive",
+        "scenario": "Validasi Wizard Product Detail IBD. Memastikan wizard produk menampilkan tab informasi logistik (IBD Properties).",
+        "pre_conditions": "User sedang membuat/mengedit dokumen Customer Offer tipe IBD.",
+        "test_steps": "1. Klik Add a line pada bagian produk.\n2. Buka wizard Create Product Detail.",
+        "test_step_detail": "1. Login sebagai IBD - Hanna Victoria Hutasoit\n2. Klik module Sales\n3. Klik 'Sales' pada navbar\n4. Klik 'Customer Offers'\n5. Pilih dokumen IBD draft\n6. Klik 'Edit'\n7. Klik 'Add a line'\n8. Input data pada create product detail\n9. Klik 'Save & Close'\n10. Klik 'Save'",
+        "test_data": "1. customer : Bob Barker Company\n2. status doc : draft\n3. no doc : SQ/00041",
+        "expected_results": "Wizard hanya menampilkan tab Details, IBD Properties (Product & Packaging Information - Weight Information\n), dan Attachment",
+        "actual_results": "",
+        "passed": "0",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 14:15:09",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "25 Jun 2026, 14:15:09"
+    },
+    {
+        "id": "MIGRASI19/P2P/PRN/001",
+        "type": "Positive",
+        "scenario": "Return barang dari satu Invoice",
+        "pre_conditions": "RI sudah diterima dan Bill sudah diposting.",
+        "test_steps": "1. Masuk module Purchase Return\n2. Create new\n3. Input Vendor\n4. Input tanggal return\n5. Input Warehouse\n6. Input Operation type\n7. Input invoice\n8. Input currency\n9. Input PRN items",
+        "test_step_detail": "",
+        "test_data": "1. Vendor: Abadi Mitra Teknologi PT\n2. tanggal return: current date\n3. Warehouse: HO\n4. Operation type: HO: Return Logistik to Customer\n5. invoice: 00038 (-)\n6. currency: IDR\n7. PRN items: EVA Material Warna Dreamy Blue",
+        "expected_results": "- Dokumen diproses untuk pengembalian barang.\n- Status PRN: Waiting for Approval",
+        "actual_results": "",
+        "passed": "1",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 14:15:09",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "25 Jun 2026, 14:15:09"
+    },
+    {
+        "id": "MIGRASI19/P2P/PRN/002",
+        "type": "Negative",
+        "scenario": "Input No Invoice salah/tidak sesuai",
+        "pre_conditions": "Vendor A dipilih.",
+        "test_steps": "1. Masuk module Purchase Return\n2. Create new\n3. Input Vendor\n4. Input tanggal return\n5. Input Warehouse\n6. Input Operation type\n7. Masukkan No. Invoice milik Vendor B.\n8. Input currency\n9. Input PRN items",
+        "test_step_detail": "",
+        "test_data": "1. Vendor A: Abadi Mitra Teknologi PT; Vendor B: CLC Vendors\n2. tanggal return: current date\n3. Warehouse: HO\n4. Operation type: HO: Return Logistik to Customer\n5. invoice A: 00038 (-); invoice B: \n6. currency: IDR\n7. PRN items: EVA Material Warna Dreamy Blue",
+        "expected_results": "- Sistem memberikan Warning bahwa invoice tidak sesuai vendor.\n- Transaksi diblokir.",
+        "actual_results": "",
+        "passed": "1",
+        "failed": "0",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "25 Jun 2026, 14:15:09",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "25 Jun 2026, 14:15:09"
     }
 ]

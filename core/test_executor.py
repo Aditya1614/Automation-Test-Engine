@@ -14,7 +14,7 @@ from dom_analyzer_agent.agent import dom_agent
 load_dotenv()
 
 class TestExecutor:
-    def __init__(self, odoo_email: str, odoo_password: str):
+    def __init__(self, credentials: list[dict]):
         self.pw = PlaywrightManager(headless=False)
         self.report = ReportGenerator()
         
@@ -23,13 +23,16 @@ class TestExecutor:
         self.total_tokens_session = 0
         
         self.odoo_url = os.getenv("ODOO_URL")
-        self.odoo_email = odoo_email
-        self.odoo_password = odoo_password
+        self.credentials = credentials
+        
+        if not self.credentials:
+            raise ValueError("Odoo credentials not provided")
+            
+        self.odoo_email = self.credentials[0]["email"]
+        self.odoo_password = self.credentials[0]["password"]
         
         if not self.odoo_url:
             raise ValueError("Odoo URL not set in .env")
-        if not self.odoo_email or not self.odoo_password:
-            raise ValueError("Odoo credentials not provided")
 
     async def get_ai_action(self, task_desc: str, dom_html: str, image_bytes: bytes, session, user_id: str):
         prompt = f"""
@@ -76,6 +79,59 @@ class TestExecutor:
         except Exception as e:
             print(f"Failed to parse JSON from AI: {final_text}")
             raise e
+
+    async def perform_user_switch(self, target_user_name: str, step_num: float):
+        target_creds = None
+        for cred in self.credentials:
+            if cred["name"].lower() == target_user_name.lower():
+                target_creds = cred
+                break
+            if target_user_name.lower() in cred["name"].lower() or cred["name"].lower() in target_user_name.lower():
+                target_creds = cred
+                break
+        
+        if not target_creds:
+            raise ValueError(f"Cannot switch user: '{target_user_name}' not found in credentials list")
+        
+        page = self.pw.get_page()
+        
+        logout_url = self.odoo_url.rstrip('/') + '/web/session/logout'
+        await page.goto(logout_url)
+        await page.wait_for_timeout(2000)
+        
+        login_url = self.odoo_url.rstrip('/') + '/web/login'
+        await page.goto(login_url)
+        await page.wait_for_timeout(2000)
+        
+        self.odoo_email = target_creds["email"]
+        self.odoo_password = target_creds["password"]
+        
+        screenshot_path = await self.pw.take_screenshot(
+            str(step_num).replace(".", "_"), 
+            f"switch_to_{target_user_name.replace(' ', '_')}"
+        )
+        self.report.add_result(
+            step_num=step_num,
+            step_name=f"Switch to {target_user_name}",
+            task=f"Logout and login as {target_user_name}",
+            status="PASS", selector="-", action="switch_user",
+            confidence="-", screenshot_path=screenshot_path
+        )
+        
+        await self.run_step(step_num + 0.1, "Login Email", {
+            "task": "Isi field email login", "action_hint": "fill",
+            "value": self.odoo_email, "optional": True
+        }, None, "test_user_01")
+        
+        await self.run_step(step_num + 0.2, "Login Password", {
+            "task": "Isi field password login", "action_hint": "fill",
+            "value": self.odoo_password, "optional": True
+        }, None, "test_user_01")
+        
+        await self.run_step(step_num + 0.3, "Click Login", {
+            "task": "Klik tombol Log in", "action_hint": "click",
+            "optional": True
+        }, None, "test_user_01")
 
     async def run_step(self, step_num: float, step_name: str, task_details: dict, session, user_id: str, saved_action: dict = None):
         print(f"\n--- Executing Step {step_num}: {step_name} ---")
@@ -174,6 +230,7 @@ class TestExecutor:
             if action == "click":
                 async def do_click(sel):
                     await page.locator(sel).first.click(timeout=timeout_ms)
+                    await page.wait_for_timeout(1500)
                 used_sel = await try_action(do_click, selector)
                 if used_sel != selector:
                     print(f"  [Fallback] Used selector: {used_sel}")
@@ -199,6 +256,7 @@ class TestExecutor:
             elif action == "select":
                 async def do_select(sel):
                     await page.locator(sel).first.select_option(value, timeout=timeout_ms)
+                    await page.wait_for_timeout(1500)
                 used_sel = await try_action(do_select, selector)
                 if used_sel != selector:
                     print(f"  [Fallback] Used selector: {used_sel}")
@@ -240,6 +298,13 @@ class TestExecutor:
                      else:
                          # Positive test case - no override, fail honestly
                          raise Exception(f"Verification Failed: {ai_response.get('description')}")
+            elif action == "none":
+                if str(result).lower() == "true":
+                    print(f"  [SKIPPED] AI chose 'none' (already satisfied): {ai_response.get('description')}")
+                elif not task_details.get('optional', False):
+                    raise Exception(f"AI returned 'none' (unable to perform action on current DOM): {ai_response.get('description')}")
+                else:
+                    print(f"  [OPTIONAL] AI chose 'none' for optional step: {ai_response.get('description')}")
             
             if wait_for:
                  try:
@@ -372,6 +437,13 @@ class TestExecutor:
             
             for step in steps:
                 step_num = step.get('step_num')
+                
+                if step.get('action_hint') == 'switch_user':
+                    target_user = step.get('value', '')
+                    print(f"\n=== SWITCHING USER TO: {target_user} ===\n")
+                    await self.perform_user_switch(target_user, step_num)
+                    continue
+                    
                 saved_act = saved_actions_map.get(step_num) if mode == "replay" else None
                 
                 passed, desc, ai_act = await self.run_step(

@@ -68,7 +68,8 @@ Rules:
 - If you need to match by text, use Playwright's text selector format: `text="Log in"` or `button:has-text("Log in")`, OR use a standard CSS/XPath.
 - If the task requires typing something and then pressing Enter (e.g., to select from a dropdown or search), use the action 'fill_and_enter'.
 - If the task is about logging in (e.g., filling email/password or clicking login button), but you can see from the screenshot/DOM that the user is ALREADY logged in (e.g., you see the Odoo dashboard or menu instead of the login screen), you MUST return action 'none' with a description saying 'Already logged in, skipping step'.
-- If you cannot find a suitable element, set confidence to 'low' and provide the best guess, or set action to 'none'.
+- DO NOT attempt to auto-correct missing navigation steps! If the task tells you to click a button (e.g., 'New') but you don't see it because you are on the wrong page, DO NOT click a random menu item instead. You MUST return action 'none'.
+- If you cannot find a suitable element that exactly matches the intent of the task in the current DOM, you MUST set action to 'none'. Do not guess unrelated elements.
 - Your output MUST be valid JSON.
 """
 

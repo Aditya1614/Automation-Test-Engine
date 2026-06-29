@@ -1,5 +1,152 @@
 [
     {
+        "date": "25 Jun 2026, 14:18:13",
+        "test_id": "MIGRASI19/SLS/CUST/006",
+        "scenario": "Validasi approval Credit Limit 2 layer oleh Sales Manager & Direksi",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260625_141813.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:59:01",
+        "test_id": "MIGRASI19/SLS/CUST/004",
+        "scenario": "Validasi approval Discount Request 2 layer oleh Sales Manager & Direksi",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_115901.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:55:58",
+        "test_id": "MIGRASI19/SLS/CUST/005",
+        "scenario": "Validasi membuat Credit Limit customer",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_115558.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:51:39",
+        "test_id": "MIGRASI19/SLS/CUST/006",
+        "scenario": "Validasi approval Credit Limit 2 layer oleh Sales Manager & Direksi",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_115139.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:46:17",
+        "test_id": "MIGRASI19/SLS/CUST/006",
+        "scenario": "Validasi approval Credit Limit 2 layer oleh Sales Manager & Direksi",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_114617.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:42:29",
+        "test_id": "MIGRASI19/SLS/CUST/007",
+        "scenario": "Membuat Credit limit hanya mengisi button limitnya saja.",
+        "status": "PASS",
+        "report_path": "test-results/report-20260625_114229.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:34:46",
+        "test_id": "MIGRASI19/SLS/CUST/007",
+        "scenario": "Membuat Credit limit hanya mengisi button limitnya saja.",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_113446.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:30:07",
+        "test_id": "MIGRASI19/SLS/CUST/007",
+        "scenario": "Membuat Credit limit hanya mengisi button limitnya saja.",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_113007.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:23:10",
+        "test_id": "MIGRASI19/SLS/CUST/007",
+        "scenario": "Membuat Credit limit hanya mengisi button limitnya saja.",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_112310.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:19:49",
+        "test_id": "MIGRASI19/SLS/CUST/007",
+        "scenario": "Membuat Credit limit hanya mengisi button limitnya saja.",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_111949.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:14:19",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_111419.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:06:37",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_110637.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:04:17",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_110417.html"
+    },
+    {
+        "date": "25 Jun 2026, 11:00:15",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_110015.html"
+    },
+    {
+        "date": "25 Jun 2026, 10:55:38",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260625_105538.html"
+    },
+    {
+        "date": "25 Jun 2026, 10:53:19",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260625_105319.html"
+    },
+    {
+        "date": "25 Jun 2026, 10:48:32",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260625_104832.html"
+    },
+    {
+        "date": "25 Jun 2026, 10:40:02",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260625_104002.html"
+    },
+    {
+        "date": "25 Jun 2026, 10:36:10",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260625_103610.html"
+    },
+    {
+        "date": "25 Jun 2026, 10:31:10",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260625_103110.html"
+    },
+    {
+        "date": "25 Jun 2026, 10:06:59",
+        "test_id": "MIGRASI19/SLS/SQ/004",
+        "scenario": "Pricelist yang di validasi Direksi/Administrator ikut berubah di dokumen SO sesuai pricelist yang di validasi",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260625_100659.html"
+    },
+    {
         "date": "22 Jun 2026, 13:20:16",
         "test_id": "MIGRASI19/P2P/VENDCLASS/003",
         "scenario": "Import Vendor Classification file yang sesuai",

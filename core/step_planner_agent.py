@@ -19,28 +19,39 @@ Each object must represent a single interaction step, matching this schema:
 
 Rules & Odoo 19 Knowledge:
 1. Always translate the steps literally but optimize for the UI (e.g., if a step says "Input email", action_hint should be "fill", and provide the email value from Test Data).
-2. CRITICAL: The test executor AUTOMATICALLY handles login and navigates to Odoo. You must NEVER generate steps for:
-   - Opening/navigating to any URL
-   - Inputting email/password for login
-   - Clicking the "Log in" button
-   - Verifying login success
-   Your first step should be the FIRST REAL action AFTER login (e.g., clicking "Sales" module).
+2. CRITICAL LOGIN RULES:
+   - The test executor AUTOMATICALLY handles the INITIAL login. Your first step should be the FIRST REAL action AFTER login (e.g., clicking "Sales" module).
+   - NEVER generate steps for inputting email/password or clicking "Log in".
+   - If the test_step_detail contains multiple "Login sebagai: <name>" directives, it means the test requires SWITCHING USERS mid-test. For each user switch AFTER the first login, generate a single step with:
+     "action_hint": "switch_user", "value": "<exact user name>", "name": "Switch to <user name>"
+   - The executor will handle the actual logout/login automatically.
+   - Continue generating normal action steps after the switch_user step.
 3. The final step MUST ALWAYS be a "verify" step that checks the "Expected Results". For negative test cases (where failure/error is expected), the "verify" step should check that the specific error message is shown.
 4. For Odoo Many2one dropdowns (like Customer or Product), use action_hint: "fill_and_enter" so the automation presses Enter to trigger the dropdown search.
 5. Odoo field naming hints you should include in the "task" description to help the DOM Analyzer:
    - For any field, explicitly tell the AI to use: `div[name='<field_name>'] input`
-   - Customer = 'partner_id'
+   - Customer = 'partner_id' (ONLY use this when filling a form view to create/edit a record. DO NOT use this when searching for a customer in a list view).
    - Product = 'product_id'
    - Type = 'type'
    - Order Date = 'date_order'
    - Expiration Date = 'validity_date'
    - Quantity = 'product_uom_qty'
+   - LIST VIEW SEARCHES: If the step involves finding or selecting a record immediately after opening a menu (which implies a list view), you MUST generate TWO SEPARATE STEPS:
+     1. Search step: action_hint="fill_and_enter", using the main search bar selector `input.o_searchview_input` with the search value.
+     2. Click result step: action_hint="click", with a task description to click the specific record in the search results to open its form view.
+   - For standard Odoo buttons, include these CSS selectors in the task description:
+     - 'New' button (creating new record) = `button.o_list_button_add`
+     - 'Add a product' / 'Add a line' = `a:has-text("Add a product"), a:has-text("Add a line")`
 6. Be smart about correlating "Test Data" lines to the "Test Steps".
 7. DETERMINISM: Only generate steps that are EXPLICITLY described in the test case "Test Steps" or "Test Step Detail". Do NOT invent extra anticipatory steps like "Click OK if popup appears" unless they are explicitly mentioned. If a confirmation popup is part of the expected flow (e.g., after clicking "Confirm"), mark that step as "optional": true.
-8. MENU NAVIGATION: If a step requires navigating through multiple menu levels (e.g., "Pada tab Master, klik Vendor Classification pada menu Partner"), you MUST break this down into separate, consecutive 'click' steps for each level. The DOM Analyzer can only perform ONE click per step. Example:
-   - Step 1: Click 'Master'
-   - Step 2: Click 'Partner'
-   - Step 3: Click 'Vendor Classification'
+8. ODOO 19 MENU NAVIGATION (CRITICAL): Odoo 19 uses a top navigation bar.
+   - If the user explicitly defines intermediate tabs or menus (e.g., "klik tab master", "klik customer pada partner"), you MUST generate individual steps for EACH click exactly as specified. Do NOT abstract or skip intermediate tabs.
+   - Example: If the instructions say "Masuk ke modul sales", "klik tab master", "klik customer", you must generate:
+     1. Click 'Sales' module
+     2. Click 'master' tab
+     3. Click 'customer' menu
+   - If the user simply says "Click menu X under Y", then generate two steps (Click Y, then Click X). DO NOT combine them into one step.
+   - Note: In the Odoo 19 Sales module, 'Quotations' is typically under the 'Sales' top menu.
 9. FILE UPLOAD STEPS: If the test steps mention uploading a file (e.g., "Upload file MIGRASI19-P2P-VENDCLASS-005.csv"), generate a step with:
    - action_hint: "upload_file"
    - value: "<exact filename>" (e.g., "MIGRASI19-P2P-VENDCLASS-005.csv")
