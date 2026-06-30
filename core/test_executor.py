@@ -253,6 +253,96 @@ class TestExecutor:
                 used_sel = await try_action(do_fill_enter, selector)
                 if used_sel != selector:
                     print(f"  [Fallback] Used selector: {used_sel}")
+            elif action == "fill_and_choose":
+                intended_value = task_details.get('value')
+                val_to_fill = intended_value if intended_value is not None else (value or '')
+                async def do_fill_choose(sel):
+                    loc = page.locator(sel).first
+                    await loc.click(timeout=timeout_ms)
+                    await loc.fill("", timeout=timeout_ms)
+                    # Simulate human typing to trigger Odoo's autocomplete event listeners
+                    await loc.press_sequentially(val_to_fill, delay=50)
+                    await page.wait_for_timeout(2000)
+                    
+                    item_selectors = [
+                        f'.dropdown-item:has-text("{val_to_fill}")',
+                        f'.o-autocomplete--dropdown-menu li:has-text("{val_to_fill}")',
+                        f'ul.ui-autocomplete li:has-text("{val_to_fill}")',
+                        f'a:has-text("{val_to_fill}")',
+                        f'li.o_m2o_dropdown_option:has-text("{val_to_fill}")'
+                    ]
+                    
+                    clicked = False
+                    for item_sel in item_selectors:
+                        try:
+                            item_loc = page.locator(item_sel).first
+                            if await item_loc.is_visible(timeout=500):
+                                await item_loc.click(timeout=timeout_ms)
+                                clicked = True
+                                break
+                        except Exception:
+                            continue
+                            
+                    if not clicked:
+                        print(f"  [Warning] Exact match failed. Trying fuzzy match fallback for '{val_to_fill}'...")
+                        import difflib
+                        
+                        # Fallback: type the words of val_to_fill one by one from the end (to catch generic names like 'level')
+                        words = val_to_fill.split()
+                        words.reverse() # try last word, then second to last...
+                        
+                        dropdown_items_sel = 'li.o_m2o_dropdown_option, .dropdown-item, .o-autocomplete--dropdown-menu li'
+                        found_options = []
+                        
+                        # First try opening default list just in case
+                        await loc.click()
+                        await page.keyboard.press("ArrowDown")
+                        await page.wait_for_timeout(1000)
+                        
+                        # Read current options
+                        options_loc = page.locator(dropdown_items_sel)
+                        count = await options_loc.count()
+                        for i in range(count):
+                            text = await options_loc.nth(i).text_content()
+                            if text and "No records" not in text and "Search more" not in text:
+                                found_options.append(text.strip())
+                                
+                        if not found_options:
+                            # Try typing words
+                            for word in words:
+                                if len(word) <= 1 and len(words) > 1: continue
+                                await loc.fill("", timeout=timeout_ms)
+                                await loc.press_sequentially(word, delay=50)
+                                await page.wait_for_timeout(1500)
+                                count = await options_loc.count()
+                                for i in range(count):
+                                    text = await options_loc.nth(i).text_content()
+                                    if text and "No records" not in text and "Search more" not in text:
+                                        found_options.append(text.strip())
+                                if found_options:
+                                    break
+                                    
+                        if found_options:
+                            # Fuzzy match
+                            lower_options = [o.lower() for o in found_options]
+                            best_match = difflib.get_close_matches(val_to_fill.lower(), lower_options, n=1, cutoff=0.4)
+                            if best_match:
+                                matched_text = found_options[lower_options.index(best_match[0])]
+                                print(f"  [Fallback] Fuzzy matched '{val_to_fill}' to '{matched_text}'")
+                                # Click the matched item
+                                await page.locator(f'{dropdown_items_sel}:has-text("{matched_text}")').first.click(timeout=timeout_ms)
+                                clicked = True
+                                
+                        if not clicked:
+                            print(f"  [Error] Could not find dropdown item for '{val_to_fill}', falling back to Enter")
+                            await page.keyboard.press("ArrowDown")
+                            await page.wait_for_timeout(500)
+                            await page.keyboard.press("Enter")
+                    
+                    await page.wait_for_timeout(2000)
+                used_sel = await try_action(do_fill_choose, selector)
+                if used_sel != selector:
+                    print(f"  [Fallback] Used selector: {used_sel}")
             elif action == "select":
                 async def do_select(sel):
                     await page.locator(sel).first.select_option(value, timeout=timeout_ms)

@@ -7,7 +7,7 @@ import io
 import contextlib
 import traceback
 import shutil
-from fastapi import FastAPI, Request, UploadFile, File, Depends, HTTPException, status
+from fastapi import FastAPI, Request, UploadFile, File, Depends, HTTPException, status, Body
 from fastapi.responses import HTMLResponse, StreamingResponse, JSONResponse, RedirectResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -392,6 +392,37 @@ async def merge_test_cases(flow_id: str, request: Request, user: str = Depends(g
     final_cases = list(existing_map.values())
     save_test_cases(flow_id, final_cases)
     return {"status": "success", "test_cases": final_cases}
+
+@app.put("/api/flows/{flow_id}/test-cases/{tc_id:path}")
+async def update_test_case(flow_id: str, tc_id: str, updated_data: dict = Body(...), user: str = Depends(get_current_user)):
+    from datetime import datetime
+    test_cases = load_test_cases(flow_id)
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    for i, tc in enumerate(test_cases):
+        if tc.get("id") == tc_id:
+            tc["scenario"] = updated_data.get("scenario", tc.get("scenario"))
+            tc["pre_conditions"] = updated_data.get("pre_conditions", tc.get("pre_conditions"))
+            tc["test_steps"] = updated_data.get("test_steps", tc.get("test_steps"))
+            tc["test_step_detail"] = updated_data.get("test_step_detail", tc.get("test_step_detail"))
+            tc["test_data"] = updated_data.get("test_data", tc.get("test_data"))
+            tc["expected_results"] = updated_data.get("expected_results", tc.get("expected_results"))
+            
+            if "upload_history" not in tc:
+                tc["upload_history"] = []
+                
+            tc["upload_history"].append({
+                "date": current_time,
+                "user": user,
+                "action": "updated"
+            })
+            tc["uploaded_by"] = user
+            tc["uploaded_at"] = current_time
+
+            save_test_cases(flow_id, test_cases)
+            return {"message": "Test case updated successfully", "test_case": tc}
+            
+    return JSONResponse(status_code=404, content={"error": "Test case not found"})
 
 @app.delete("/api/flows/{flow_id}/test-cases/{tc_id:path}")
 async def delete_test_case(flow_id: str, tc_id: str, user: str = Depends(get_current_user)):

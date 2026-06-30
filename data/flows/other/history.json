@@ -1,5 +1,12 @@
 [
     {
+        "date": "30 Jun 2026, 09:48:41",
+        "test_id": "MIGRASI19/SAMPLE",
+        "scenario": "Create dan Complete Customer Offer",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260630_094841.html"
+    },
+    {
         "date": "25 Jun 2026, 14:18:13",
         "test_id": "MIGRASI19/SLS/CUST/006",
         "scenario": "Validasi approval Credit Limit 2 layer oleh Sales Manager & Direksi",

@@ -11,8 +11,8 @@ Each object must represent a single interaction step, matching this schema:
     "step_num": float, // e.g., 1, 1.1, 2, 3
     "name": "string", // Short name, e.g., "Input Email"
     "task": "string", // Detailed instruction in Indonesian on what to do. Include hints for Odoo field names if applicable.
-    "action_hint": "string", // One of: "click", "fill", "fill_and_enter", "verify", "upload_file"
-    "value": "string or null", // The data to fill, if action_hint is fill or fill_and_enter
+    "action_hint": "string", // One of: "click", "fill", "fill_and_enter", "fill_and_choose", "verify", "upload_file"
+    "value": "string or null", // The data to fill, if action_hint is fill, fill_and_enter, or fill_and_choose
     "expected_result": "string or null", // Required if action_hint is "verify". The condition to check.
     "optional": boolean // Default false. Set true ONLY for steps that handle popups/dialogs that may or may not appear.
 }
@@ -27,7 +27,7 @@ Rules & Odoo 19 Knowledge:
    - The executor will handle the actual logout/login automatically.
    - Continue generating normal action steps after the switch_user step.
 3. The final step MUST ALWAYS be a "verify" step that checks the "Expected Results". For negative test cases (where failure/error is expected), the "verify" step should check that the specific error message is shown.
-4. For Odoo Many2one dropdowns (like Customer or Product), use action_hint: "fill_and_enter" so the automation presses Enter to trigger the dropdown search.
+4. For Odoo Many2one dropdowns (like Customer or Product), use action_hint: "fill_and_choose" so the automation types the value, waits for the dropdown, and clicks the matching option.
 5. Odoo field naming hints you should include in the "task" description to help the DOM Analyzer:
    - For any field, explicitly tell the AI to use: `div[name='<field_name>'] input`
    - Customer = 'partner_id' (ONLY use this when filling a form view to create/edit a record. DO NOT use this when searching for a customer in a list view).
@@ -43,13 +43,17 @@ Rules & Odoo 19 Knowledge:
      - 'New' button (creating new record) = `button.o_list_button_add`
      - 'Add a product' / 'Add a line' = `a:has-text("Add a product"), a:has-text("Add a line")`
 6. Be smart about correlating "Test Data" lines to the "Test Steps".
-7. DETERMINISM: Only generate steps that are EXPLICITLY described in the test case "Test Steps" or "Test Step Detail". Do NOT invent extra anticipatory steps like "Click OK if popup appears" unless they are explicitly mentioned. If a confirmation popup is part of the expected flow (e.g., after clicking "Confirm"), mark that step as "optional": true.
+7. DETERMINISM & STRICT ORDERING (CRITICAL):
+   - You MUST generate steps in the EXACT same sequence as they appear in the "Test Step Detail".
+   - DO NOT reorder steps under any circumstances (e.g. do not move a step before another if it was written after).
+   - DO NOT combine or skip any manual actions. If there are multiple actions listed, generate separate steps for EACH distinct action.
+   - Only generate steps that are EXPLICITLY described. Do NOT invent anticipatory steps.
 8. ODOO 19 MENU NAVIGATION (CRITICAL): Odoo 19 uses a top navigation bar.
-   - If the user explicitly defines intermediate tabs or menus (e.g., "klik tab master", "klik customer pada partner"), you MUST generate individual steps for EACH click exactly as specified. Do NOT abstract or skip intermediate tabs.
-   - Example: If the instructions say "Masuk ke modul sales", "klik tab master", "klik customer", you must generate:
+   - If the user explicitly defines intermediate tabs, menus, or navbar items (e.g., "klik tab master", "Klik 'Sales' pada navbar"), you MUST generate individual steps for EACH click exactly as specified. Do NOT assume a navbar click is redundant with a module click. Do NOT abstract, combine, or skip intermediate tabs/navbars.
+   - Example: If the instructions say "Klik module Sales", "Klik 'Sales' pada navbar", "Klik 'Customer Offers'", you MUST generate 3 separate steps:
      1. Click 'Sales' module
-     2. Click 'master' tab
-     3. Click 'customer' menu
+     2. Click 'Sales' on navbar
+     3. Click 'Customer Offers' menu
    - If the user simply says "Click menu X under Y", then generate two steps (Click Y, then Click X). DO NOT combine them into one step.
    - Note: In the Odoo 19 Sales module, 'Quotations' is typically under the 'Sales' top menu.
 9. FILE UPLOAD STEPS: If the test steps mention uploading a file (e.g., "Upload file MIGRASI19-P2P-VENDCLASS-005.csv"), generate a step with:
@@ -57,7 +61,8 @@ Rules & Odoo 19 Knowledge:
    - value: "<exact filename>" (e.g., "MIGRASI19-P2P-VENDCLASS-005.csv")
    - task: Description of the upload action and the file input selector to target.
    The automation engine will resolve the file path from the flow's managed file store.
-10. Return ONLY the JSON array.
+10. CHECKBOXES: If the step says "centang" or "check" a specific field, use action_hint "click" and specifically mention in the task to "Klik checkbox [Name of Checkbox]". Do NOT use the partner_id or other input selectors for checkboxes.
+11. Return ONLY the JSON array.
 """
 
 class StepPlannerAgent:
@@ -70,8 +75,8 @@ class StepPlannerAgent:
         current_date_str = datetime.now().strftime("%m/%d/%Y")
         
         dynamic_instruction = PLANNER_INSTRUCTION + f"""
-11. DATE vs DROPDOWN RULES (CRITICAL - DO NOT VIOLATE):
-   - 'Order Date' (date_order): This is a DATE PICKER. Current date = {current_date_str}. Use action_hint "fill" with the date in MM/DD/YYYY format.
+12. DATE vs DROPDOWN RULES (CRITICAL - DO NOT VIOLATE):
+   - 'Order Date' (date_order): This is a DATE PICKER. Current date = {current_date_str}. Use action_hint "fill_and_enter" with the date in MM/DD/YYYY format so the picker popup closes.
    - 'Valid Date' / 'Expiration' (validity_date): This is a DROPDOWN, NOT a date picker! NEVER compute a date for this field!
      You MUST use action_hint "fill_and_enter" with the LITERAL dropdown option text from the test case (e.g., "14 Days", "30 Days").
      If the test says "14 Days", use value "14 Days". If it says "30 Days", use value "30 Days".

@@ -580,7 +580,12 @@
                     <h2 id="detailTitle" style="margin: 0; color: var(--primary);">Test Case Details</h2>
                     <span id="detailType" class="status-badge" style="margin-top: 8px; display: inline-block;"></span>
                 </div>
-                <button class="btn btn-sm btn-danger" onclick="closeDetailModal()">✕ Close</button>
+                <div style="display: flex; gap: 8px;">
+                    <button id="editDetailBtn" class="btn btn-sm btn-primary" onclick="toggleEditMode()">✏️ Edit</button>
+                    <button id="discardDetailBtn" class="btn btn-sm btn-secondary hidden" onclick="cancelEditMode()">✕ Discard</button>
+                    <button id="saveDetailBtn" class="btn btn-sm btn-success hidden" onclick="saveDetail()">💾 Save</button>
+                    <button class="btn btn-sm btn-danger" onclick="closeDetailModal()">✕ Close</button>
+                </div>
             </div>
 
             <div style="overflow-y: auto; max-height: 60vh; padding-right: 8px;">
@@ -1669,7 +1674,14 @@
             }
         }
 
+        let isEditMode = false;
+        let currentDetailTcIndex = -1;
+
         function showDetailModal(idx) {
+            currentDetailTcIndex = idx;
+            isEditMode = false;
+            updateEditModeUI();
+            
             const tc = currentTestCases[idx];
             document.getElementById('detailTitle').textContent = tc.id;
 
@@ -1717,6 +1729,70 @@
 
         function closeDetailModal() {
             document.getElementById('detailModal').classList.add('hidden');
+        }
+
+        function toggleEditMode() {
+            isEditMode = true;
+            updateEditModeUI();
+        }
+
+        function cancelEditMode() {
+            isEditMode = false;
+            updateEditModeUI();
+            showDetailModal(currentDetailTcIndex); // revert data
+        }
+
+        function updateEditModeUI() {
+            const fields = ['detailScenario', 'detailPreConditions', 'detailSteps', 'detailStepDetail', 'detailData', 'detailExpected'];
+            
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (isEditMode) {
+                    const text = el.textContent === '-' ? '' : el.textContent;
+                    el.innerHTML = `<textarea class="form-control" style="width: 100%; min-height: 80px; resize: vertical;">${text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')}</textarea>`;
+                }
+            });
+            
+            document.getElementById('editDetailBtn').classList.toggle('hidden', isEditMode);
+            document.getElementById('discardDetailBtn').classList.toggle('hidden', !isEditMode);
+            document.getElementById('saveDetailBtn').classList.toggle('hidden', !isEditMode);
+        }
+
+        async function saveDetail() {
+            if (currentDetailTcIndex === -1) return;
+            const tc = currentTestCases[currentDetailTcIndex];
+            
+            const updatedData = {
+                scenario: document.querySelector('#detailScenario textarea').value,
+                pre_conditions: document.querySelector('#detailPreConditions textarea').value,
+                test_steps: document.querySelector('#detailSteps textarea').value,
+                test_step_detail: document.querySelector('#detailStepDetail textarea').value,
+                test_data: document.querySelector('#detailData textarea').value,
+                expected_results: document.querySelector('#detailExpected textarea').value
+            };
+            
+            try {
+                const response = await fetch(`/api/flows/${currentFlowId}/test-cases/${encodeURIComponent(tc.id)}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedData)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    currentTestCases[currentDetailTcIndex] = result.test_case;
+                    isEditMode = false;
+                    showDetailModal(currentDetailTcIndex);
+                    renderTestCases(currentTestCases);
+                    appendLog(`> Successfully updated test case ${tc.id}`, 'system');
+                } else {
+                    const err = await response.text();
+                    alert("Failed to update test case: " + err);
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Error updating test case.");
+            }
         }
 
         // ---- Execute Test Case ----

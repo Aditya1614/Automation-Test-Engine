@@ -19,13 +19,22 @@
         "scenario": "Validasi status Discount Request setelah dibuat",
         "pre_conditions": "Request Discount dibuat",
         "test_steps": "1. Buka data master customer\n2. klik tab sales & purchase\n3. lalu check customer discount",
-        "test_step_detail": "",
+        "test_step_detail": "tes",
         "test_data": "1. customer : AGUS SUTIKNO/PBG\n2. Discount Level : Sandal : Level 2",
         "expected_results": "Status request menjadi Draft/Process",
         "actual_results": "",
         "passed": "0",
         "failed": "0",
-        "dokumentasi": ""
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "date": "2026-06-29 11:30:48",
+                "user": "admin",
+                "action": "updated"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "2026-06-29 11:30:48"
     },
     {
         "id": "MIGRASI19/SAMPLE",

@@ -54,8 +54,8 @@ Rules:
 You MUST return a JSON object with the following schema:
 {
     "selector": "string, a valid CSS selector or XPath to locate the element (null if action is verify)",
-    "action": "string, one of: 'click', 'fill', 'fill_and_enter', 'select', 'verify', 'none', 'upload_file'",
-    "value": "string, optional value to fill or type (if action is 'fill' or 'fill_and_enter' or 'select')",
+    "action": "string, one of: 'click', 'fill', 'fill_and_enter', 'fill_and_choose', 'select', 'verify', 'none', 'upload_file'",
+    "value": "string, optional value to fill or type (if action is 'fill' or 'fill_and_enter' or 'fill_and_choose' or 'select')",
     "description": "string, human readable explanation of why you chose this selector or verification result",
     "confidence": "string, 'high', 'medium', or 'low'",
     "wait_for": "string, optional CSS selector to wait for AFTER the action is performed",
@@ -66,7 +66,8 @@ Rules:
 - STRICT RULE: DO NOT guess field names or IDs. You MUST only use selectors that actually exist in the provided DOM string. For example, Odoo uses 'partner_id' for customers, do not hallucinate 'customer_id'.
 - DO NOT use jQuery pseudo-classes like :contains(). Playwright will throw an error.
 - If you need to match by text, use Playwright's text selector format: `text="Log in"` or `button:has-text("Log in")`, OR use a standard CSS/XPath.
-- If the task requires typing something and then pressing Enter (e.g., to select from a dropdown or search), use the action 'fill_and_enter'.
+- If the task requires typing something and then pressing Enter (e.g., to search), use the action 'fill_and_enter'.
+- If the task requires typing something and then choosing it from an autocomplete dropdown, use the action 'fill_and_choose'.
 - If the task is about logging in (e.g., filling email/password or clicking login button), but you can see from the screenshot/DOM that the user is ALREADY logged in (e.g., you see the Odoo dashboard or menu instead of the login screen), you MUST return action 'none' with a description saying 'Already logged in, skipping step'.
 - DO NOT attempt to auto-correct missing navigation steps! If the task tells you to click a button (e.g., 'New') but you don't see it because you are on the wrong page, DO NOT click a random menu item instead. You MUST return action 'none'.
 - If you cannot find a suitable element that exactly matches the intent of the task in the current DOM, you MUST set action to 'none'. Do not guess unrelated elements.

@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 
 class ReportGenerator:
     def __init__(self, template_dir="templates"):
-        self.env = Environment(loader=FileSystemLoader(template_dir))
+        self.env = Environment(loader=FileSystemLoader(template_dir), autoescape=True)
         self.template = self.env.get_template("report.html")
         self.results = []
         self.test_info = {
