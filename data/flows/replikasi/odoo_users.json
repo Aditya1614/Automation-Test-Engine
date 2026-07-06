@@ -1,0 +1,16 @@
+{
+    "groups": [
+        {
+            "id": "admin",
+            "name": "Admin",
+            "users": [
+                {
+                    "name": "BOD - Heriyanto",
+                    "role": "BOD",
+                    "email": "heriyanto@porto.co.id",
+                    "password": "Heri12345"
+                }
+            ]
+        }
+    ]
+}

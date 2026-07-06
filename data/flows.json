@@ -13,5 +13,15 @@
         "id": "testing",
         "name": "Testing",
         "created_by": "admin"
+    },
+    {
+        "id": "repli",
+        "name": "Repli",
+        "created_by": "admin"
+    },
+    {
+        "id": "replikasi",
+        "name": "Replikasi",
+        "created_by": "admin"
     }
 ]

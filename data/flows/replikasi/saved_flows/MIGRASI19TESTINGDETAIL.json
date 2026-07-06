@@ -1,0 +1,591 @@
+{
+    "test_case_id": "MIGRASI19/TESTING/DETAIL",
+    "saved_at": "2026-07-03T17:56:02.307821",
+    "planned_steps": [
+        {
+            "step_num": 1,
+            "name": "Klik Modul Sales",
+            "task": "Klik modul 'Sales' pada navigasi utama Odoo.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 2,
+            "name": "Klik Menu Sales",
+            "task": "Klik menu 'Sales' pada navigasi bar di dalam modul Sales.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 3,
+            "name": "Klik Menu Quotation",
+            "task": "Klik menu 'Quotation' untuk melihat daftar penawaran.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 4,
+            "name": "Klik Tombol New",
+            "task": "Klik tombol 'New' untuk membuat Quotation baru. Gunakan selector `button.o_list_button_add`.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 5,
+            "name": "Input Sale Type",
+            "task": "Input 'Merchant' pada field 'Sale Type'. Gunakan selector `div[name='sale_type'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "Merchant",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6,
+            "name": "Input Customer",
+            "task": "Input '39 TK/JBG' pada field 'Customer'. Gunakan selector `div[name='partner_id'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "39 TK/JBG",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 7,
+            "name": "Input Sale Stock",
+            "task": "Input 'HO MT' pada field 'Sale Stock'. Gunakan selector `div[name='x_studio_sale_stock'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "HO MT",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 8,
+            "name": "Input Invoice Address",
+            "task": "Input '39 TK/JBG JL.WAHID HASYIM 176 Kabupaten Jombang JI Indonesia' pada field 'Invoice Address'. Gunakan selector `div[name='partner_invoice_id'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "39 TK/JBG JL.WAHID HASYIM 176 Kabupaten Jombang JI Indonesia",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 9,
+            "name": "Input Delivery Address",
+            "task": "Input '39 TK/JBG JL.WAHID HASYIM 176 Kabupaten Jombang JI Indonesia' pada field 'Delivery Address'. Gunakan selector `div[name='partner_shipping_id'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "39 TK/JBG JL.WAHID HASYIM 176 Kabupaten Jombang JI Indonesia",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 10,
+            "name": "Input Expiration Date",
+            "task": "Input '08/02/2026' pada field 'Expiration'. Gunakan selector `div[name='validity_date'] input`. (Catatan: Meskipun aturan umum menyatakan ini dropdown, test case ini secara spesifik meminta 'date picker' dengan format tanggal).",
+            "action_hint": "fill_and_enter",
+            "value": "08/02/2026",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 11,
+            "name": "Input Type Delivery",
+            "task": "Input 'Delivery' pada field 'Type Delivery'. Gunakan selector `div[name='x_studio_type_delivery'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "Delivery",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 12,
+            "name": "Input Pricelist",
+            "task": "Input 'Public Pricelist (IDR)' pada field 'Pricelist'. Gunakan selector `div[name='pricelist_id'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "Public Pricelist (IDR)",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 13,
+            "name": "Input Payment Terms",
+            "task": "Input 'Net 45' pada field 'Payment Terms'. Gunakan selector `div[name='payment_term_id'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "Net 45",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 14,
+            "name": "Input Customer Reference",
+            "task": "Input nilai kosong pada field 'Customer Reference'. Gunakan selector `div[name='client_order_ref'] input`.",
+            "action_hint": "fill",
+            "value": "",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 15,
+            "name": "Input Sale Voucher",
+            "task": "Input nilai kosong pada field 'Sale Voucher'. Karena nilai kosong, tidak ada pilihan yang akan dipilih dari dropdown. Gunakan selector `div[name='x_studio_sale_voucher'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 16,
+            "name": "Input Transfer To",
+            "task": "Input '5739492 - Porto' pada field 'Transfer To'. Gunakan selector `div[name='x_studio_transfer_to'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "5739492 - Porto",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 17,
+            "name": "Tambah Produk 1",
+            "task": "Klik 'Add a product' atau 'Add a line' untuk menambahkan produk pertama. Gunakan selector `a:has-text(\"Add a product\"), a:has-text(\"Add a line\")`.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 17.1,
+            "name": "Input Produk 1",
+            "task": "Input '[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)' pada field 'Product'. Gunakan selector `div[name='product_id'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 17.2,
+            "name": "Input Kuantitas Produk 1",
+            "task": "Input '10' pada field 'Quantity'. Gunakan selector `div[name='product_uom_qty'] input`.",
+            "action_hint": "fill",
+            "value": "10",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 17.3,
+            "name": "Input Deskripsi Produk 1",
+            "task": "Input '[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)' pada field 'Description'. Gunakan selector `div[name='name'] textarea` atau `div[name='description'] textarea`.",
+            "action_hint": "fill",
+            "value": "[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 17.4,
+            "name": "Simpan & Tutup Produk 1",
+            "task": "Klik tombol 'Save & Close' pada modal penambahan produk.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 18,
+            "name": "Tambah Produk 2",
+            "task": "Klik 'Add a product' atau 'Add a line' untuk menambahkan produk kedua. Gunakan selector `a:has-text(\"Add a product\"), a:has-text(\"Add a line\")`.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 18.1,
+            "name": "Input Produk 2",
+            "task": "Input '[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)' pada field 'Product'. Gunakan selector `div[name='product_id'] input`.",
+            "action_hint": "fill_and_choose",
+            "value": "[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 18.2,
+            "name": "Input Kuantitas Produk 2",
+            "task": "Input '20' pada field 'Quantity'. Gunakan selector `div[name='product_uom_qty'] input`.",
+            "action_hint": "fill",
+            "value": "20",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 18.3,
+            "name": "Input Deskripsi Produk 2",
+            "task": "Input '[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)' pada field 'Description'. Gunakan selector `div[name='name'] textarea` atau `div[name='description'] textarea`.",
+            "action_hint": "fill",
+            "value": "[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 18.4,
+            "name": "Simpan & Tutup Produk 2",
+            "task": "Klik tombol 'Save & Close' pada modal penambahan produk.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 19,
+            "name": "Klik Confirm Order",
+            "task": "Klik tombol 'Confirm Order' untuk mengkonfirmasi pesanan.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 20,
+            "name": "Verifikasi Status dan Produk",
+            "task": "Verifikasi bahwa status dokumen telah berubah menjadi 'Sale Order' pada status bar. Pastikan juga daftar produk di 'Order Lines' sesuai dengan yang telah diinput sebelumnya.",
+            "action_hint": "verify",
+            "value": null,
+            "expected_result": "Status dokumen adalah 'Sale Order' dan daftar produk di Order Lines sesuai dengan input: '[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)' dengan kuantitas 10, dan '[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)' dengan kuantitas 20.",
+            "optional": false
+        }
+    ],
+    "executed_actions": [
+        {
+            "selector": "input[name='login']",
+            "action": "fill",
+            "value": "heriyanto@porto.co.id",
+            "description": "Found the email input field by its name 'login' and filled it with the specified email address.",
+            "confidence": "high",
+            "step_num": 0.1,
+            "name": "Login Email"
+        },
+        {
+            "selector": "input[name='password']",
+            "action": "fill",
+            "value": "Heri12345",
+            "description": "Found the password input field by its name attribute and filled it with the provided value.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 0.2,
+            "name": "Login Password"
+        },
+        {
+            "selector": "button:has-text(\"Log in\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Log in' button to proceed with authentication.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 0.3,
+            "name": "Click Login"
+        },
+        {
+            "selector": "a.o_app.o_menuitem:has-text(\"Sales\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Sales' module link, identified by its text content and class.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 1,
+            "name": "Klik Modul Sales"
+        },
+        {
+            "selector": "button[data-menu-xmlid='sale.sale_order_menu']:has-text('Sales')",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Sales' menu button in the navigation bar, identified by its data-menu-xmlid and text content.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 2,
+            "name": "Klik Menu Sales"
+        },
+        {
+            "selector": "a[data-menu-xmlid=\"sale.menu_sale_quotations\"]:has-text(\"Quotations\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the 'Quotations' link in the open dropdown menu to view the list of quotations.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 3,
+            "name": "Klik Menu Quotation"
+        },
+        {
+            "selector": "button.o_list_button_add",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'New' button to create a new quotation based on the provided CSS selector.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 4,
+            "name": "Klik Tombol New"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Sale Type' field already contains the value 'Merchant', as seen in the screenshot. The task is already satisfied.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 5,
+            "name": "Input Sale Type"
+        },
+        {
+            "selector": "div[name='partner_id'] input",
+            "action": "fill_and_choose",
+            "value": "39 TK/JBG",
+            "description": "The Customer field (div[name='partner_id'] input) currently has no value and requires input. The task is to fill it with '39 TK/JBG' and choose from the dropdown.",
+            "confidence": "high",
+            "step_num": 6,
+            "name": "Input Customer"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Sale Stock' field already contains the value 'HO MT' as seen in the screenshot, so no action is needed.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 7,
+            "name": "Input Sale Stock"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Invoice Address' field already contains the specified value '39 TK/JBG JL.WAHID HASYIM 176 Kabupaten Jombang JI Indonesia', as observed in the screenshot.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 8,
+            "name": "Input Invoice Address"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The task requested to input a value into the 'Delivery Address' field. Although the provided selector `div[name='partner_shipping_id'] input` does not exist in the DOM (the corresponding field is `div[name=\"delivery_address_id\"] input`), the content of the 'Delivery Address' field visible in the screenshot, '39 TK/JBG JL.WAHID HASYIM 176 Kabupaten Jombang JI Indonesia', already matches the requested value. Therefore, no action is needed as per the critical hint.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 9,
+            "name": "Input Delivery Address"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Expiration' field (div[name='validity_date']) already contains the value '08/02/2026' as seen in the DOM and screenshot. Therefore, no action is needed.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 10,
+            "name": "Input Expiration Date"
+        },
+        {
+            "selector": "div[name=\"type_delivery\"] input",
+            "action": "fill_and_choose",
+            "value": "Delivery",
+            "description": "The task explicitly states to input 'Delivery' into the 'Type Delivery' field. Although the user provided a selector with `x_studio_type_delivery`, the DOM clearly shows the name of the field is `type_delivery`. The input field is currently empty, so 'fill_and_choose' action is appropriate.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 11,
+            "name": "Input Type Delivery"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Pricelist' field already contains the value 'Public Pricelist (IDR)' as seen in the screenshot and DOM.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 12,
+            "name": "Input Pricelist"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Payment Terms' field already contains the value 'Net 45' as seen in the screenshot and indicated by the OCR result, so no action is needed.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 13,
+            "name": "Input Payment Terms"
+        },
+        {
+            "selector": "div[name='client_order_ref'] input",
+            "action": "fill",
+            "value": "",
+            "description": "Filling the 'Customer Reference' field with an empty value as requested. The selector `div[name='client_order_ref'] input` precisely targets the input field for 'Customer Reference'.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 14,
+            "name": "Input Customer Reference"
+        },
+        {
+            "selector": "div[name='sale_voucher_id'] input",
+            "action": "fill_and_choose",
+            "value": "",
+            "description": "The user wants to input an empty value into the 'Sale Voucher' field. The correct selector for this field, based on the DOM, is `div[name='sale_voucher_id'] input`. The action 'fill_and_choose' is used as specified in the task, even though the value is empty, to ensure the field is cleared or confirmed as empty.",
+            "confidence": "high",
+            "step_num": 15,
+            "name": "Input Sale Voucher"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Transfer To' field already contains the value '5739492 - Porto' as seen in the screenshot, so no action is needed.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 16,
+            "name": "Input Transfer To"
+        },
+        {
+            "selector": "a:has-text(\"Add a product\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Add a product' link to add the first product as requested.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 17,
+            "name": "Tambah Produk 1"
+        },
+        {
+            "selector": "div[name='product_id'] input",
+            "action": "fill_and_choose",
+            "value": "[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)",
+            "description": "The 'Product' field is currently empty, so I am filling it with the specified product name and choosing it from the autocomplete suggestions.",
+            "confidence": "high",
+            "step_num": 17.1,
+            "name": "Input Produk 1"
+        },
+        {
+            "selector": "div[name='product_uom_qty'] input",
+            "action": "fill",
+            "value": "10",
+            "description": "The 'Quantity' field currently has a value of '1.00', so filling it with '10' as requested.",
+            "confidence": "high",
+            "step_num": 17.2,
+            "name": "Input Kuantitas Produk 1"
+        },
+        {
+            "selector": "div[name='name'] textarea",
+            "action": "fill",
+            "value": "[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)",
+            "description": "The 'Description' field, identified by div[name='name'] textarea, is currently empty. Filling it with the provided value.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": false,
+            "step_num": 17.3,
+            "name": "Input Deskripsi Produk 1"
+        },
+        {
+            "selector": "button:has-text(\"Save & Close\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Save & Close' button in the 'Create Order Lines' modal to save the product details and close the modal.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 17.4,
+            "name": "Simpan & Tutup Produk 1"
+        },
+        {
+            "selector": "a:has-text(\"Add a product\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Add a product' link to add another product line.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 18,
+            "name": "Tambah Produk 2"
+        },
+        {
+            "selector": "div[name='product_id'] input",
+            "action": "fill_and_choose",
+            "value": "[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)",
+            "description": "Filling the 'Product' field within the 'Create Order Lines' modal with the specified product code and name. The field currently appears empty based on the DOM and screenshot.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 18.1,
+            "name": "Input Produk 2"
+        },
+        {
+            "selector": "div[name='product_uom_qty'] input",
+            "action": "fill",
+            "value": "20",
+            "description": "Inputting '20' into the 'Quantity' field as requested, since the current value is '1.00'.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 18.2,
+            "name": "Input Kuantitas Produk 2"
+        },
+        {
+            "selector": "div[name='name'] textarea",
+            "action": "fill",
+            "value": "[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)",
+            "description": "The task requires filling the 'Description' field. The provided DOM shows a textarea within a div with `name='name'`, which is labeled 'Description'. The field is currently empty, so the 'fill' action is appropriate.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": false,
+            "step_num": 18.3,
+            "name": "Input Deskripsi Produk 2"
+        },
+        {
+            "selector": "button:has-text(\"Save & Close\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Save & Close' button in the modal to save the product and close the modal.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 18.4,
+            "name": "Simpan & Tutup Produk 2"
+        },
+        {
+            "selector": "button:has-text(\"Confirm Order\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Confirm Order' button to confirm the sale order.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 19,
+            "name": "Klik Confirm Order"
+        },
+        {
+            "selector": null,
+            "action": "verify",
+            "value": null,
+            "description": "Verified that the document status bar displays 'Sales Order'. Also, confirmed that the 'Order Lines' table contains the product '[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)' with a quantity of 10.00 and the product '[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)' with a quantity of 20.00.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 20,
+            "name": "Verifikasi Status dan Produk"
+        }
+    ]
+}

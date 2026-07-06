@@ -260,6 +260,11 @@ class TestExecutor:
                     loc = page.locator(sel).first
                     await loc.click(timeout=timeout_ms)
                     await loc.fill("", timeout=timeout_ms)
+                    
+                    if not val_to_fill:
+                        await page.keyboard.press("Tab")
+                        return
+                        
                     # Simulate human typing to trigger Odoo's autocomplete event listeners
                     await loc.press_sequentially(val_to_fill, delay=50)
                     await page.wait_for_timeout(2000)
@@ -303,9 +308,10 @@ class TestExecutor:
                         options_loc = page.locator(dropdown_items_sel)
                         count = await options_loc.count()
                         for i in range(count):
-                            text = await options_loc.nth(i).text_content()
-                            if text and "No records" not in text and "Search more" not in text:
-                                found_options.append(text.strip())
+                            if await options_loc.nth(i).is_visible():
+                                text = await options_loc.nth(i).text_content()
+                                if text and "No records" not in text and "Search more" not in text:
+                                    found_options.append(text.strip())
                                 
                         if not found_options:
                             # Try typing words
@@ -316,9 +322,10 @@ class TestExecutor:
                                 await page.wait_for_timeout(1500)
                                 count = await options_loc.count()
                                 for i in range(count):
-                                    text = await options_loc.nth(i).text_content()
-                                    if text and "No records" not in text and "Search more" not in text:
-                                        found_options.append(text.strip())
+                                    if await options_loc.nth(i).is_visible():
+                                        text = await options_loc.nth(i).text_content()
+                                        if text and "No records" not in text and "Search more" not in text:
+                                            found_options.append(text.strip())
                                 if found_options:
                                     break
                                     
@@ -330,7 +337,8 @@ class TestExecutor:
                                 matched_text = found_options[lower_options.index(best_match[0])]
                                 print(f"  [Fallback] Fuzzy matched '{val_to_fill}' to '{matched_text}'")
                                 # Click the matched item
-                                await page.locator(f'{dropdown_items_sel}:has-text("{matched_text}")').first.click(timeout=timeout_ms)
+                                fuzzy_sel = ', '.join([f'{s.strip()}:has-text("{matched_text}")' for s in dropdown_items_sel.split(',')])
+                                await page.locator(fuzzy_sel).first.click(timeout=timeout_ms)
                                 clicked = True
                                 
                         if not clicked:

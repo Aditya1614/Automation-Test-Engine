@@ -59,7 +59,7 @@ You MUST return a JSON object with the following schema:
     "description": "string, human readable explanation of why you chose this selector or verification result",
     "confidence": "string, 'high', 'medium', or 'low'",
     "wait_for": "string, optional CSS selector to wait for AFTER the action is performed",
-    "result": "boolean, true if verify condition is met, false otherwise (ONLY if action is 'verify')"
+    "result": "boolean, true if verify condition is met OR if action 'none' is because the task is already satisfied (e.g. field already contains the correct value), false otherwise"
 }
 
 Rules:
@@ -68,9 +68,10 @@ Rules:
 - If you need to match by text, use Playwright's text selector format: `text="Log in"` or `button:has-text("Log in")`, OR use a standard CSS/XPath.
 - If the task requires typing something and then pressing Enter (e.g., to search), use the action 'fill_and_enter'.
 - If the task requires typing something and then choosing it from an autocomplete dropdown, use the action 'fill_and_choose'.
-- If the task is about logging in (e.g., filling email/password or clicking login button), but you can see from the screenshot/DOM that the user is ALREADY logged in (e.g., you see the Odoo dashboard or menu instead of the login screen), you MUST return action 'none' with a description saying 'Already logged in, skipping step'.
-- DO NOT attempt to auto-correct missing navigation steps! If the task tells you to click a button (e.g., 'New') but you don't see it because you are on the wrong page, DO NOT click a random menu item instead. You MUST return action 'none'.
-- If you cannot find a suitable element that exactly matches the intent of the task in the current DOM, you MUST set action to 'none'. Do not guess unrelated elements.
+- If the task is about logging in (e.g., filling email/password or clicking login button), but you can see from the screenshot/DOM that the user is ALREADY logged in (e.g., you see the Odoo dashboard or menu instead of the login screen), you MUST return action 'none' with a description saying 'Already logged in, skipping step' and set result to true.
+- If a task instructs you to fill a field with a specific value, but that field ALREADY contains that exact value, you MUST return action 'none' and set result to true.
+- DO NOT attempt to auto-correct missing navigation steps! If the task tells you to click a button (e.g., 'New') but you don't see it because you are on the wrong page, DO NOT click a random menu item instead. You MUST return action 'none' and set result to false.
+- If you cannot find a suitable element that exactly matches the intent of the task in the current DOM, you MUST set action to 'none' and set result to false. Do not guess unrelated elements.
 - Your output MUST be valid JSON.
 """
 

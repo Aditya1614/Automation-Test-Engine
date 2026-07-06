@@ -1,0 +1,53 @@
+[
+    {
+        "id": "MIGRASI19/TESTING",
+        "type": "Positive",
+        "scenario": "Input Sales Offer dengan 2 produk",
+        "pre_conditions": "Login",
+        "test_steps": "klik modul sales\nklik sales\nklik quotation\nklik new\ninput Customer dengan ketik lalu pilih value dari list dropdown yang tampil\ninput Type Delivery dengan ketik lalu pilih value dari list dropdown yang tampil\n\n<ulangi step ini untuk setiap list produk>\nklik Add a product\ninput Product dengan ketik lalu pilih value dari list dropdown yang tampil\ninput Quantity dengan diketik\nklik tombol Save & Close\n<akhir perulangan>\n\nklik tombol Confirm Order",
+        "test_step_detail": "klik modul sales\nklik sales\nklik quotation\nklik new\ninput Customer dengan ketik lalu pilih value dari list dropdown yang tampil\ninput Type Delivery dengan ketik lalu pilih value dari list dropdown yang tampil\n\n<ulangi step ini untuk setiap list produk>\nklik Add a product\ninput Product dengan ketik lalu pilih value dari list dropdown yang tampil\ninput Quantity dengan diketik\nklik tombol Save & Close\n<akhir perulangan>\n\nklik tombol Confirm Order",
+        "test_data": "Login = BOD - Heriyanto\nCustomer = 39 TK/JBG\nType Delivery = Delivery\nProduct = [\"[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)\", \"[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)\"]\nQuantity = [10,20]",
+        "expected_results": "Verifikasi bahwa status dokumen berubah dari Draft menjadi Sale Order ditandai dengan Status Bar menunjukan Sale Order True. Lalu list product di Order Lines sesuai dengan yang diinput sebelumnya.",
+        "actual_results": "",
+        "passed": "",
+        "failed": "",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "03 Jul 2026, 16:17:51",
+                "action": "created"
+            },
+            {
+                "user": "admin",
+                "date": "03 Jul 2026, 17:00:38",
+                "action": "overwritten"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "03 Jul 2026, 17:00:38"
+    },
+    {
+        "id": "MIGRASI19/TESTING/DETAIL",
+        "type": "Positive",
+        "scenario": "Input Sales Offer dengan 2 produk lebih detail",
+        "pre_conditions": "Login",
+        "test_steps": "klik modul sales\nklik sales\nklik quotation\nklik new\ncek nilai Sale Type jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Sale Type dengan ketik lalu pilih value dari list dropdown yang tampil\ninput Customer dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Sale Stock jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Sale Stock dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Invoice Address jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Invoice Address dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Delivery Address jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Delivery Address dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Expiration jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Expiration dengan date picker\ninput Type Delivery dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Pricelist jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Pricelist dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Payment Terms jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Payment Terms dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Customer Reference jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Customer Reference dengan ketik\ncek nilai Sale Voucher jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Sale Voucher dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Transfer To jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Transfer To dengan ketik lalu pilih value dari list dropdown yang tampil\n\n<ulangi step ini untuk setiap list produk>\nklik Add a product\ninput Product dengan ketik lalu pilih value dari list dropdown yang tampil\ninput Quantity dengan diketik\ncek nilai Description To jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Description dengan ketik lalu pilih value dari list dropdown yang tampil\nklik tombol Save & Close\n<akhir perulangan>\n\nklik tombol Confirm Order",
+        "test_step_detail": "klik modul sales\nklik sales\nklik quotation\nklik new\ncek nilai Sale Type jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Sale Type dengan ketik lalu pilih value dari list dropdown yang tampil\ninput Customer dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Sale Stock jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Sale Stock dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Invoice Address jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Invoice Address dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Delivery Address jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Delivery Address dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Expiration jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Expiration dengan date picker\ninput Type Delivery dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Pricelist jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Pricelist dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Payment Terms jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Payment Terms dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Customer Reference jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Customer Reference dengan ketik\ncek nilai Sale Voucher jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Sale Voucher dengan ketik lalu pilih value dari list dropdown yang tampil\ncek nilai Transfer To jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Transfer To dengan ketik lalu pilih value dari list dropdown yang tampil\n\n<ulangi step ini untuk setiap list produk>\nklik Add a product\ninput Product dengan ketik lalu pilih value dari list dropdown yang tampil\ninput Quantity dengan diketik\ncek nilai Description To jika sudah sama dengan Test Data maka lanjut ke step berikutnya, jika beda input Description dengan ketik lalu pilih value dari list dropdown yang tampil\nklik tombol Save & Close\n<akhir perulangan>\n\nklik tombol Confirm Order",
+        "test_data": "Login = BOD - Heriyanto\nSale type = Merchant\nCustomer = 39 TK/JBG\nSale Stock = HO MT\nInvoice Address = 39 TK/JBG\nJL.WAHID HASYIM 176\nKabupaten Jombang JI\nIndonesia\nDelivery Address = 39 TK/JBG\nJL.WAHID HASYIM 176\nKabupaten Jombang JI\nIndonesia\nExpiration = 08/02/2026\nType Delivery = Delivery\nPricelist = Public Pricelist (IDR)\nPayment Terms = Net 45\nCustomer Reference = \nSale Voucher = \nTransfer To = 5739492 - Porto\nProduct = [\"[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)\", \"[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)\"]\nQuantity = [10,20]\nDescription = [\"[007S_0009_33_UP] 007S Black White - Size 33 (Black White, 33)\", \"[007S_0010_30_UP] 007S Black Red - Size 30 (Black Red, 30)\"]",
+        "expected_results": "Verifikasi bahwa status dokumen berubah dari Draft menjadi Sale Order ditandai dengan Status Bar menunjukan Sale Order True. Lalu list product di Order Lines sesuai dengan yang diinput sebelumnya.",
+        "actual_results": "",
+        "passed": "",
+        "failed": "",
+        "dokumentasi": "",
+        "upload_history": [
+            {
+                "user": "admin",
+                "date": "03 Jul 2026, 17:00:38",
+                "action": "created"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "03 Jul 2026, 17:00:38"
+    }
+]
