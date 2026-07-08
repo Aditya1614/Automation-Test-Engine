@@ -408,6 +408,9 @@ async def update_test_case(flow_id: str, tc_id: str, updated_data: dict = Body(.
             tc["test_data"] = updated_data.get("test_data", tc.get("test_data"))
             tc["expected_results"] = updated_data.get("expected_results", tc.get("expected_results"))
             
+            if "scenarios" in updated_data:
+                tc["scenarios"] = updated_data["scenarios"]
+            
             if "upload_history" not in tc:
                 tc["upload_history"] = []
                 
@@ -636,6 +639,9 @@ def resolve_all_odoo_credentials(flow_id: str, test_case: dict) -> list[dict]:
                 }
                 
     test_step_detail = test_case.get("test_step_detail", "")
+    if "scenarios" in test_case:
+        test_step_detail = " ".join(s.get("test_step_detail", "") for s in test_case["scenarios"])
+        
     cleaned = re.sub(r'(Login sebagai\s*:\s*)+', 'Login sebagai: ', test_step_detail, flags=re.IGNORECASE)
     matches = re.findall(r'Login sebagai\s*:\s*(.+)', cleaned, re.IGNORECASE)
     
@@ -659,7 +665,9 @@ def resolve_all_odoo_credentials(flow_id: str, test_case: dict) -> list[dict]:
         if credentials_list:
             return credentials_list
             
-    search_text = (test_case.get("pre_conditions", "") + " " + test_case.get("test_data", "") + " " + test_case.get("test_step_detail", "")).lower()
+    search_text = (test_case.get("pre_conditions", "") + " " + test_case.get("test_data", "") + " " + test_step_detail).lower()
+    if "scenarios" in test_case:
+        search_text += " ".join(s.get("test_data", "") for s in test_case["scenarios"]).lower()
     search_text_no_space = re.sub(r'\s+', '', search_text)
     
     for group in users_data.get("groups", []):
@@ -678,6 +686,14 @@ def resolve_all_odoo_credentials(flow_id: str, test_case: dict) -> list[dict]:
     
     if email_match and pass_match:
         return [{"name": "inline", "email": email_match.group(1), "password": pass_match.group(1)}]
+        
+    if "scenarios" in test_case:
+        for s in test_case["scenarios"]:
+            test_data_s = s.get("test_data", "")
+            e_match = re.search(r'Email:\s*([^\s\n]+)', test_data_s, re.IGNORECASE)
+            p_match = re.search(r'Password:\s*([^\s\n]+)', test_data_s, re.IGNORECASE)
+            if e_match and p_match:
+                return [{"name": "inline", "email": e_match.group(1), "password": p_match.group(1)}]
         
     raise ValueError("No Odoo credentials found for this test case. Please check pre_conditions, test_data, or test_step_detail, or add the user to the User List.")
 
@@ -715,12 +731,22 @@ async def run_test(flow_id: str, request: Request, user: str = Depends(get_curre
                             queue.put_nowait({"type": "done", "status": "ERROR", "report_path": None, "recorded_actions": []})
                             return
                     else:
-                        print(f"--- Planning Steps for Test Case: {test_case.get('id', 'Unknown')} ---")
-                        planner = StepPlannerAgent()
-                        planned_steps = await planner.plan_steps(test_case)
-                        print("Planned Steps:")
-                        print(json.dumps(planned_steps, indent=2))
-                        test_case['steps'] = planned_steps
+                        if "scenarios" in test_case:
+                            scenarios = test_case["scenarios"]
+                            print(f"--- Planning Steps for {len(scenarios)} scenarios ---")
+                            planner = StepPlannerAgent()
+                            planned_steps = await planner.plan_steps_for_scenarios(scenarios)
+                            print("Planned Steps:")
+                            print(json.dumps(planned_steps, indent=2))
+                            test_case['steps'] = planned_steps
+                            test_case['_scenarios_meta'] = scenarios
+                        else:
+                            print(f"--- Planning Steps for Test Case: {test_case.get('id', 'Unknown')} ---")
+                            planner = StepPlannerAgent()
+                            planned_steps = await planner.plan_steps(test_case)
+                            print("Planned Steps:")
+                            print(json.dumps(planned_steps, indent=2))
+                            test_case['steps'] = planned_steps
                         
                     executor = TestExecutor(credentials)
                     # PASS history_file and files_dir here!
@@ -731,7 +757,8 @@ async def run_test(flow_id: str, request: Request, user: str = Depends(get_curre
                         "status": result.get("status"),
                         "report_path": result.get("report_path"),
                         "recorded_actions": result.get("recorded_actions", []),
-                        "planned_steps": test_case.get("steps", [])
+                        "planned_steps": test_case.get("steps", []),
+                        "total_tokens": result.get("total_tokens", 0) if result else 0
                     })
             except Exception as e:
                 traceback.print_exc(file=log_stream)

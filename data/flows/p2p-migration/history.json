@@ -1,0 +1,240 @@
+[
+    {
+        "date": "08 Jul 2026, 11:24:42",
+        "test_id": "MIGRASI19-P2P-001-COMBINED",
+        "scenario": "P2P Migration Validation - Combined",
+        "status": "PASS",
+        "report_path": "test-results/report-20260708_112442.html"
+    },
+    {
+        "date": "08 Jul 2026, 10:45:41",
+        "test_id": "MIGRASI19-P2P-001-COMBINED",
+        "scenario": "P2P Migration Validation - Combined",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260708_104541.html"
+    },
+    {
+        "date": "08 Jul 2026, 10:27:08",
+        "test_id": "MIGRASI19-P2P-001-COMBINED",
+        "scenario": "P2P Migration Validation - Combined",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260708_102708.html"
+    },
+    {
+        "date": "08 Jul 2026, 09:16:31",
+        "test_id": "MIGRASI19-P2P-001-COMBINED",
+        "scenario": "P2P Migration Validation - Combined",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260708_091631.html"
+    },
+    {
+        "date": "07 Jul 2026, 18:51:15",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "PASS",
+        "report_path": "test-results/report-20260707_185115.html"
+    },
+    {
+        "date": "07 Jul 2026, 18:41:42",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_184142.html"
+    },
+    {
+        "date": "07 Jul 2026, 18:34:50",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_183450.html"
+    },
+    {
+        "date": "07 Jul 2026, 18:08:06",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_180806.html"
+    },
+    {
+        "date": "07 Jul 2026, 18:01:04",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_180104.html"
+    },
+    {
+        "date": "07 Jul 2026, 17:58:44",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_175844.html"
+    },
+    {
+        "date": "07 Jul 2026, 17:50:05",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_175005.html"
+    },
+    {
+        "date": "07 Jul 2026, 17:38:25",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_173825.html"
+    },
+    {
+        "date": "07 Jul 2026, 17:33:27",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_173327.html"
+    },
+    {
+        "date": "07 Jul 2026, 17:27:53",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_172753.html"
+    },
+    {
+        "date": "07 Jul 2026, 17:22:00",
+        "test_id": "MIGRASI19-P2P-001-4",
+        "scenario": "P2P Migration Validation - Full Flow - Vendor Bill",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_172200.html"
+    },
+    {
+        "date": "07 Jul 2026, 17:18:36",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_171836.html"
+    },
+    {
+        "date": "07 Jul 2026, 17:11:28",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_171128.html"
+    },
+    {
+        "date": "07 Jul 2026, 16:27:19",
+        "test_id": "MIGRASI19-P2P-001-3",
+        "scenario": "P2P Migration Validation - Full Flow - Jurnal RI checking",
+        "status": "PASS",
+        "report_path": "test-results/report-20260707_162719.html"
+    },
+    {
+        "date": "07 Jul 2026, 16:23:25",
+        "test_id": "MIGRASI19-P2P-001-3",
+        "scenario": "P2P Migration Validation - Full Flow - Jurnal RI checking",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_162325.html"
+    },
+    {
+        "date": "07 Jul 2026, 16:21:12",
+        "test_id": "MIGRASI19-P2P-001-3",
+        "scenario": "P2P Migration Validation - Full Flow - Jurnal RI checking",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_162112.html"
+    },
+    {
+        "date": "07 Jul 2026, 16:18:52",
+        "test_id": "MIGRASI19-P2P-001-3",
+        "scenario": "P2P Migration Validation - Full Flow - Jurnal RI checking",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_161852.html"
+    },
+    {
+        "date": "07 Jul 2026, 16:14:17",
+        "test_id": "MIGRASI19-P2P-001-1",
+        "scenario": "P2P Migration Validation - Full Flow - Create PO",
+        "status": "PASS",
+        "report_path": "test-results/report-20260707_161417.html"
+    },
+    {
+        "date": "07 Jul 2026, 15:59:56",
+        "test_id": "MIGRASI19-P2P-001-1",
+        "scenario": "P2P Migration Validation - Full Flow - Create PO",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_155956.html"
+    },
+    {
+        "date": "07 Jul 2026, 15:47:53",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_154753.html"
+    },
+    {
+        "date": "07 Jul 2026, 15:36:11",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_153611.html"
+    },
+    {
+        "date": "07 Jul 2026, 15:25:16",
+        "test_id": "MIGRASI19-P2P-001-2",
+        "scenario": "P2P Migration Validation - Full Flow - Create RI",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_152516.html"
+    },
+    {
+        "date": "07 Jul 2026, 15:20:13",
+        "test_id": "MIGRASI19-P2P-001-1",
+        "scenario": "P2P Migration Validation - Full Flow - Create PO",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260707_152013.html"
+    },
+    {
+        "date": "07 Jul 2026, 15:12:01",
+        "test_id": "MIGRASI19-P2P-001",
+        "scenario": "P2P Migration Validation - Full Flow",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_151201.html"
+    },
+    {
+        "date": "07 Jul 2026, 15:04:14",
+        "test_id": "MIGRASI19-P2P-001",
+        "scenario": "P2P Migration Validation - Full Flow",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_150414.html"
+    },
+    {
+        "date": "07 Jul 2026, 14:53:25",
+        "test_id": "MIGRASI19-P2P-001",
+        "scenario": "P2P Migration Validation - Full Flow",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_145325.html"
+    },
+    {
+        "date": "07 Jul 2026, 14:39:13",
+        "test_id": "MIGRASI19-P2P-001",
+        "scenario": "P2P Migration Validation - Full Flow",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_143913.html"
+    },
+    {
+        "date": "07 Jul 2026, 14:26:08",
+        "test_id": "MIGRASI19-P2P-001",
+        "scenario": "P2P Migration Validation - Full Flow",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_142608.html"
+    },
+    {
+        "date": "07 Jul 2026, 14:19:26",
+        "test_id": "MIGRASI19-P2P-001",
+        "scenario": "P2P Migration Validation - Full Flow",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_141926.html"
+    },
+    {
+        "date": "07 Jul 2026, 14:07:17",
+        "test_id": "MIGRASI19-P2P-001",
+        "scenario": "P2P Migration Validation - Full Flow",
+        "status": "ERROR",
+        "report_path": "test-results/report-20260707_140717.html"
+    }
+]

@@ -1,0 +1,625 @@
+{
+    "test_case_id": "MIGRASI19-P2P-001-1",
+    "saved_at": "2026-07-07T16:14:46.274052",
+    "planned_steps": [
+        {
+            "step_num": 2,
+            "name": "Klik module Purchase",
+            "task": "Klik pada module 'Purchase' di halaman utama Odoo.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 3,
+            "name": "Klik Orders pada navbar",
+            "task": "Klik menu 'Orders' pada navigation bar di dalam module Purchase.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 4,
+            "name": "Klik Purchase Order",
+            "task": "Klik menu item 'Purchase Order' di bawah 'Orders'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 5,
+            "name": "Klik New",
+            "task": "Klik tombol 'New' untuk membuat Purchase Order baru. Gunakan selector: button.o_list_button_add",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.1,
+            "name": "Input Purchase Type",
+            "task": "Isi field 'Purchase Type' dengan 'Manual PO'. Gunakan selector: div[name='type_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "Manual PO",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.2,
+            "name": "Pilih PO Type Local",
+            "task": "Klik radio button 'Local' untuk PO Type.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.3,
+            "name": "Input Vendor",
+            "task": "Isi field 'Vendor' dengan 'Abadi Mitra Teknologi PT'. Gunakan selector: div[name='partner_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "Abadi Mitra Teknologi PT",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.4,
+            "name": "Input Currency",
+            "task": "Isi field 'Currency' dengan 'IDR'. Gunakan selector: div[name='currency_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "IDR",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.5,
+            "name": "Input Currency Rate",
+            "task": "Isi field 'Currency Rate' dengan '1.00'.",
+            "action_hint": "fill",
+            "value": "1.00",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.6,
+            "name": "Input Down Payment Info",
+            "task": "Isi field 'Down Payment Info' dengan 'Percentage'.",
+            "action_hint": "fill_and_choose",
+            "value": "Percentage",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.7,
+            "name": "Input Down Payment Percentage",
+            "task": "Isi field 'Down Payment Percentage' dengan '5.00'.",
+            "action_hint": "fill",
+            "value": "5.00",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.8,
+            "name": "Input Expected Arrival",
+            "task": "Isi field 'Expected Arrival' dengan tanggal '05/12/2026'.",
+            "action_hint": "fill_and_enter",
+            "value": "05/12/2026",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.9,
+            "name": "Input Payment Terms",
+            "task": "Isi field 'Payment Terms' dengan '30 Days'. Gunakan selector: div[name='payment_term_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "30 Days",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.1,
+            "name": "Input Delivery To",
+            "task": "Isi field 'Delivery To' dengan 'Depo SBY'. Gunakan selector: div[name='dest_address_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "Depo SBY",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.11,
+            "name": "Input Unit Company",
+            "task": "Isi field 'Unit Company' dengan 'PT Porto Indonesia Sejahtera'. Gunakan selector: div[name='company_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "PT Porto Indonesia Sejahtera",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.12,
+            "name": "Input Estimated Time Delivery",
+            "task": "Isi field 'Estimated Time Delivery' dengan tanggal '05/27/2026'.",
+            "action_hint": "fill_and_enter",
+            "value": "05/27/2026",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.13,
+            "name": "Input Estimated Time Arrival",
+            "task": "Isi field 'Estimated Time Arrival' dengan tanggal '05/25/2026'.",
+            "action_hint": "fill_and_enter",
+            "value": "05/25/2026",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.14,
+            "name": "Centang SPJE",
+            "task": "Klik checkbox 'SPJE'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.15,
+            "name": "Klik Add a product",
+            "task": "Klik tombol 'Add a product' atau 'Add a line' untuk menambahkan produk. Gunakan selector: a:has-text(\"Add a product\"), a:has-text(\"Add a line\")",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.16,
+            "name": "Input Product",
+            "task": "Isi field 'Product' dengan '[PSM-B0091] Karung Bagor (Lebar 150 cm)'. Gunakan selector: div[name='product_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "[PSM-B0091] Karung Bagor (Lebar 150 cm)",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.17,
+            "name": "Input Quantity",
+            "task": "Isi field 'Quantity' dengan '20'. Gunakan selector: div[name='product_qty'] input",
+            "action_hint": "fill",
+            "value": "20",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.18,
+            "name": "Input UoM",
+            "task": "Isi field 'UoM' dengan 'meter'. Gunakan selector: div[name='product_uom'] input",
+            "action_hint": "fill_and_choose",
+            "value": "meter",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6.19,
+            "name": "Input Unit Price",
+            "task": "Isi field 'Unit Price' dengan '200000'. Gunakan selector: div[name='price_unit'] input",
+            "action_hint": "fill",
+            "value": "200000",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 7,
+            "name": "Klik Save",
+            "task": "Klik tombol 'Save' untuk menyimpan Purchase Order.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 8,
+            "name": "Klik Confirm",
+            "task": "Klik tombol 'Confirm' untuk mengkonfirmasi Purchase Order.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 9,
+            "name": "Klik Ok",
+            "task": "Klik tombol 'Ok' pada dialog konfirmasi.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": true
+        },
+        {
+            "step_num": 10,
+            "name": "Klik First Approval",
+            "task": "Klik tombol 'First Approval'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 11,
+            "name": "Klik Ok",
+            "task": "Klik tombol 'Ok' pada dialog konfirmasi.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": true
+        },
+        {
+            "step_num": 12,
+            "name": "Klik Second Approval",
+            "task": "Klik tombol 'Second Approval'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 13,
+            "name": "Klik Ok",
+            "task": "Klik tombol 'Ok' pada dialog konfirmasi.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": true
+        },
+        {
+            "step_num": 14,
+            "name": "Verifikasi Status Purchase Order",
+            "task": "Verifikasi bahwa status Purchase Order saat ini adalah 'Process' pada statusbar.",
+            "action_hint": "verify",
+            "value": null,
+            "expected_result": "Status Purchase Order adalah 'Process'",
+            "optional": false
+        }
+    ],
+    "executed_actions": [
+        {
+            "selector": "input#login",
+            "action": "fill",
+            "value": "it@porto.co.id",
+            "description": "Filling the email input field with 'it@porto.co.id' as requested by the task. The field is identified by its id 'login' and appears empty based on the screenshot.",
+            "confidence": "high",
+            "step_num": 0.1,
+            "name": "Login Email"
+        },
+        {
+            "selector": "input[name='password']",
+            "action": "fill",
+            "value": "testing-odoo19",
+            "description": "Filling the password input field with the specified value 'testing-odoo19'. The screenshot shows the field is currently empty with a placeholder 'Enter your password'.",
+            "confidence": "high",
+            "step_num": 0.2,
+            "name": "Login Password"
+        },
+        {
+            "selector": "button.btn.btn-primary:has-text(\"Log in\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Log in' button to proceed with authentication.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 0.3,
+            "name": "Click Login"
+        },
+        {
+            "selector": "a.o_app:has-text(\"Purchase\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking on the 'Purchase' module icon on the Odoo home screen.",
+            "confidence": "high",
+            "step_num": 2,
+            "name": "Klik module Purchase"
+        },
+        {
+            "selector": "button.o-dropdown.dropdown-toggle.dropdown:has-text(\"Orders\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Orders' menu item in the navigation bar, identified by its text content and class.",
+            "confidence": "high",
+            "wait_for": null,
+            "step_num": 3,
+            "name": "Klik Orders pada navbar"
+        },
+        {
+            "selector": "a.o-dropdown-item.dropdown-item:has-text(\"Purchase Order\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the 'Purchase Order' menu item under 'Orders' in the dropdown.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 4,
+            "name": "Klik Purchase Order"
+        },
+        {
+            "selector": "button.o_list_button_add",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'New' button to create a new Purchase Order, as identified by the CSS selector button.o_list_button_add.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 5,
+            "name": "Klik New"
+        },
+        {
+            "selector": "div[name='type_id'] input",
+            "action": "fill_and_choose",
+            "value": "Manual PO",
+            "description": "Filling the 'Purchase Type' field with 'Manual PO' as requested. The field appears empty in the screenshot.",
+            "confidence": "high",
+            "step_num": 6.1,
+            "name": "Input Purchase Type"
+        },
+        {
+            "selector": "div[name='po_type'] label:has-text('Local')",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the radio button labeled 'Local' for PO Type.",
+            "confidence": "high",
+            "step_num": 6.2,
+            "name": "Pilih PO Type Local"
+        },
+        {
+            "selector": "div[name='partner_id'] input",
+            "action": "fill_and_choose",
+            "value": "Abadi Mitra Teknologi PT",
+            "description": "Fills the 'Vendor' input field with 'Abadi Mitra Teknologi PT' and chooses it from the autocomplete suggestions.",
+            "confidence": "high",
+            "step_num": 6.3,
+            "name": "Input Vendor"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Currency' field already contains the value 'IDR' as seen in the screenshot.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 6.4,
+            "name": "Input Currency"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Currency Rate' field already contains the value '1.00' as seen in the screenshot and DOM analysis.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 6.5,
+            "name": "Input Currency Rate"
+        },
+        {
+            "selector": "div[name='dp_type'] input",
+            "action": "fill_and_choose",
+            "value": "Percentage",
+            "description": "Filling the 'Down Payment Info' selection field with 'Percentage' by targeting the input element within the div named 'dp_type'.",
+            "confidence": "high",
+            "step_num": 6.6,
+            "name": "Input Down Payment Info"
+        },
+        {
+            "selector": "div[name=\"dp_amount\"] input",
+            "action": "fill",
+            "value": "5.00",
+            "description": "Filling the 'Down Payment Percentage' field, which corresponds to the input element within the 'dp_amount' field.",
+            "confidence": "high",
+            "step_num": 6.7,
+            "name": "Input Down Payment Percentage"
+        },
+        {
+            "selector": "div[name=\"date_planned\"] input",
+            "action": "fill_and_enter",
+            "value": "05/12/2026",
+            "description": "Filling the 'Expected Arrival' date field with '05/12/2026' because the field is currently empty as seen in the DOM.",
+            "confidence": "high",
+            "step_num": 6.8,
+            "name": "Input Expected Arrival"
+        },
+        {
+            "selector": "div[name='payment_term_id'] input",
+            "action": "fill_and_choose",
+            "value": "30 Days",
+            "description": "The 'Payment Terms' field is empty, so filling it with '30 Days' and choosing the option from the dropdown.",
+            "confidence": "high",
+            "step_num": 6.9,
+            "name": "Input Payment Terms"
+        },
+        {
+            "selector": "div[name='address_id'] input",
+            "action": "fill_and_choose",
+            "value": "Depo SBY",
+            "description": "Found the 'Delivery To' field identified by div[name='address_id'] and its input. The screenshot shows the field is empty, so filling it with 'Depo SBY'.",
+            "confidence": "high",
+            "step_num": 6.1,
+            "name": "Input Delivery To"
+        },
+        {
+            "selector": "div[name='unit_company_id'] input",
+            "action": "fill_and_choose",
+            "value": "PT Porto Indonesia Sejahtera",
+            "description": "Filling the 'Unit Company' field with 'PT Porto Indonesia Sejahtera' as it is currently empty based on the screenshot and DOM.",
+            "confidence": "high",
+            "step_num": 6.11,
+            "name": "Input Unit Company"
+        },
+        {
+            "selector": "div[name=\"etd_date\"] input",
+            "action": "fill_and_enter",
+            "value": "05/27/2026",
+            "description": "Filling the 'Estimated Time Delivery' field, identified by div[name='etd_date'] and its input child, with the specified date '05/27/2026'. The field is currently empty.",
+            "confidence": "high",
+            "step_num": 6.12,
+            "name": "Input Estimated Time Delivery"
+        },
+        {
+            "selector": "div[name='eta_date'] input",
+            "action": "fill_and_enter",
+            "value": "05/25/2026",
+            "description": "Filling the 'Estimated Time Arrival' field with the specified date '05/25/2026'. The field is identified by its div container with name 'eta_date' and the input element within it.",
+            "confidence": "high",
+            "step_num": 6.13,
+            "name": "Input Estimated Time Arrival"
+        },
+        {
+            "selector": "div[name='is_spje'] input[type='checkbox']",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the checkbox associated with the label 'SPJE'. The input has id 'is_spje_0' and is contained within a div with name 'is_spje'.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 6.14,
+            "name": "Centang SPJE"
+        },
+        {
+            "selector": "a:has-text(\"Add a product\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the 'Add a product' link to add a new product line to the purchase order.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 6.15,
+            "name": "Klik Add a product"
+        },
+        {
+            "selector": "div[name='product_id'] input",
+            "action": "fill_and_choose",
+            "value": "[PSM-B0091] Karung Bagor (Lebar 150 cm)",
+            "description": "Filling the 'Product' field in the 'Create Order Lines' modal with the specified product name and choosing it from the autocomplete suggestions.",
+            "confidence": "high",
+            "step_num": 6.16,
+            "name": "Input Product"
+        },
+        {
+            "selector": "div[name='product_qty'] input",
+            "action": "fill",
+            "value": "20",
+            "description": "Fills the 'Quantity' input field within the 'product_qty' div with the value '20'. The current value is '1.00', so the action is necessary.",
+            "confidence": "high",
+            "step_num": 6.17,
+            "name": "Input Quantity"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'UoM' field already contains the value 'Meter' as seen in the screenshot, so no action is needed.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 6.18,
+            "name": "Input UoM"
+        },
+        {
+            "selector": "div[name='price_unit'] input",
+            "action": "fill",
+            "value": "200000",
+            "description": "Filling the 'Unit Price' field with the value '200000' as it currently displays '2,050.00'.",
+            "confidence": "high",
+            "step_num": 6.19,
+            "name": "Input Unit Price"
+        },
+        {
+            "selector": "button.o_form_button_save:has-text(\"Save & Close\")",
+            "action": "click",
+            "value": null,
+            "description": "The 'Create Order Lines' modal is currently open. To save the changes made within the modal and proceed, the 'Save & Close' button is the appropriate interactive element. While the task specifies 'Save' for the 'Purchase Order', this button also saves the order line, which is part of the Purchase Order, and is currently the only interactable save-like button.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 7,
+            "name": "Klik Save"
+        },
+        {
+            "selector": "button[name=\"action_confirm\"]:has-text(\"Confirm\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Confirm' button to confirm the Purchase Order.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 8,
+            "name": "Klik Confirm"
+        },
+        {
+            "selector": "button.btn-primary:has-text(\"Ok\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Ok' button in the confirmation dialog as requested.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": false,
+            "step_num": 9,
+            "name": "Klik Ok"
+        },
+        {
+            "selector": "button:has-text(\"First Approval\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'First Approval' button as requested.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 10,
+            "name": "Klik First Approval"
+        },
+        {
+            "selector": "footer.modal-footer button:has-text(\"Ok\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Ok' button in the confirmation modal dialog.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 11,
+            "name": "Klik Ok"
+        },
+        {
+            "selector": "button:has-text(\"Second Approval\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Second Approval' button to proceed with the second approval step for the purchase order.",
+            "confidence": "high",
+            "wait_for": null,
+            "step_num": 12,
+            "name": "Klik Second Approval"
+        },
+        {
+            "selector": "button:has-text(\"Ok\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Ok' button in the confirmation dialog as requested.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 13,
+            "name": "Klik Ok"
+        },
+        {
+            "selector": "div.o_form_statusbar div[name='state'] button.o_arrow_button_current:has-text('Process')",
+            "action": "verify",
+            "value": null,
+            "description": "Verified that the Purchase Order status is 'Process' by checking the text of the currently active status button in the statusbar.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 14,
+            "name": "Verifikasi Status Purchase Order"
+        }
+    ]
+}

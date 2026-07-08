@@ -1,0 +1,571 @@
+{
+    "test_case_id": "MIGRASI19-P2P-001-2",
+    "saved_at": "2026-07-07T18:51:19.431166",
+    "planned_steps": [
+        {
+            "step_num": 2,
+            "name": "Klik module Inventory",
+            "task": "Klik pada modul 'Inventory' di navigasi utama Odoo.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 2.1,
+            "name": "Klik menu Operation",
+            "task": "Klik pada menu 'Operation' di dalam modul Inventory.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 2.2,
+            "name": "Klik menu Receive Item",
+            "task": "Klik pada menu item 'Receive Item' di bawah Operation.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 3,
+            "name": "Klik 'New'",
+            "task": "Klik tombol 'New' untuk membuat entri baru. Gunakan selector: button.o_list_button_add",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 4,
+            "name": "Pilih Warehouse 'HO'",
+            "task": "Klik pada field Warehouse dan pilih 'HO' dari daftar dropdown. Gunakan selector: div[name='warehouse_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "HO",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 5,
+            "name": "Pilih Document 'HO - Logistic'",
+            "task": "Klik pada field Document dan pilih 'HO - Logistic' dari daftar dropdown. Gunakan selector: div[name='document_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "HO - Logistic",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6,
+            "name": "Pilih Operation Type 'HO: Receive Item To Cross Dock MT AKR'",
+            "task": "Klik pada field Operation Type dan pilih 'HO: Receive Item To Cross Dock MT AKR' dari daftar dropdown. Gunakan selector: div[name='picking_type_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "HO: Receive Item To Cross Dock MT AKR",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 7,
+            "name": "Pilih Supplier 'Abadi Mitra Teknologi PT'",
+            "task": "Klik pada field Supplier dan pilih 'Abadi Mitra Teknologi PT' dari daftar dropdown. Gunakan selector: div[name='partner_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "Abadi Mitra Teknologi PT",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 8,
+            "name": "Pilih Purchase Order '11/HO/PO/26/07/00152'",
+            "task": "Klik pada field Purchase Order dan pilih '11/HO/PO/26/07/00152' dari daftar dropdown. Gunakan selector: div[name='purchase_order_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "11/HO/PO/26/07/00152",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 9,
+            "name": "Input No. Polisi 'B 9503 UXY'",
+            "task": "Isi field No. Polisi dengan 'B 9503 UXY'. Gunakan selector: div[name='plat_nomor'] input",
+            "action_hint": "fill",
+            "value": "B 9503 UXY",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 9.1,
+            "name": "Input Nama Supir 'IMAN'",
+            "task": "Isi field Nama Supir dengan 'IMAN'. Gunakan selector: div[name='driver_name'] input",
+            "action_hint": "fill",
+            "value": "IMAN",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 10,
+            "name": "Input Receiver Name 'NIDA (ADMIN LOG)'",
+            "task": "Isi field Receiver Name dengan 'NIDA (ADMIN LOG)'. Gunakan selector: div[name='receiver_name'] input",
+            "action_hint": "fill",
+            "value": "NIDA (ADMIN LOG)",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 11,
+            "name": "Input Packing List '11/SPL/26/05/00010'",
+            "task": "Klik pada field Packing List dan pilih '11/SPL/26/05/00010' dari daftar dropdown. Gunakan selector: div[name='packing_list_id'] input",
+            "action_hint": "fill_and_choose",
+            "value": "11/SPL/26/05/00010",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 12,
+            "name": "Klik 'Generate PO Item'",
+            "task": "Klik tombol 'Generate PO Item'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 12.1,
+            "name": "Klik Tab Attachment",
+            "task": "Klik pada tab 'Attachment'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 12.2,
+            "name": "Klik 'Select a File'",
+            "task": "Klik tombol 'Select a File' untuk membuka dialog upload.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 14,
+            "name": "Input Type: Evidence",
+            "task": "Klik pada field Type dan pilih 'Evidence' dari daftar dropdown. Gunakan selector: div[name='type'] input",
+            "action_hint": "fill_and_choose",
+            "value": "Evidence",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 14.1,
+            "name": "Klik 'Upload your File'",
+            "task": "Klik tombol 'Upload your File'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 14.2,
+            "name": "Upload File 'Surat keterangan gambar.pdf'",
+            "task": "Upload file 'Surat keterangan gambar.pdf'.",
+            "action_hint": "upload_file",
+            "value": "Surat keterangan gambar.pdf",
+            "expected_result": null,
+            "optional": false,
+            "file_path": "data\\flows\\p2p-migration\\files\\Surat keterangan gambar.pdf"
+        },
+        {
+            "step_num": 14.3,
+            "name": "Klik Save",
+            "task": "Klik tombol 'Save'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 14.4,
+            "name": "Klik Confirm",
+            "task": "Klik tombol 'Confirm'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 15,
+            "name": "Klik Ok",
+            "task": "Klik tombol 'Ok' pada dialog konfirmasi.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 16,
+            "name": "Klik Validate",
+            "task": "Klik tombol 'Validate'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 17,
+            "name": "Klik Ok",
+            "task": "Klik tombol 'Ok' pada dialog konfirmasi.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 18,
+            "name": "Klik Validate",
+            "task": "Klik tombol 'Validate'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 19,
+            "name": "Klik Ok",
+            "task": "Klik tombol 'Ok' pada dialog konfirmasi.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 19.1,
+            "name": "Klik button Stock Journal",
+            "task": "Klik tombol 'Stock Journal'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 20,
+            "name": "Verifikasi halaman menampilkan dokumen jurnal",
+            "task": "Verifikasi bahwa halaman saat ini menampilkan dokumen jurnal.",
+            "action_hint": "verify",
+            "value": null,
+            "expected_result": "halaman menampilkan dokumen jurnal",
+            "optional": false
+        }
+    ],
+    "executed_actions": [
+        {
+            "selector": "input#login",
+            "action": "fill",
+            "value": "it@porto.co.id",
+            "description": "Filling the email login field with 'it@porto.co.id'. The input element has an id 'login' and a placeholder 'Enter your email', confirming it's the correct field.",
+            "confidence": "high",
+            "step_num": 0.1,
+            "name": "Login Email"
+        },
+        {
+            "selector": "input[name='password']",
+            "action": "fill",
+            "value": "testing-odoo19",
+            "description": "Found the password input field by its name attribute and filled it with the provided value.",
+            "confidence": "high",
+            "step_num": 0.2,
+            "name": "Login Password"
+        },
+        {
+            "selector": "button.btn-primary:has-text(\"Log in\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Log in' button to proceed with authentication.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 0.3,
+            "name": "Click Login"
+        },
+        {
+            "selector": "a.o_app.o_menuitem:has-text(\"Inventory\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking on the 'Inventory' application icon in the main navigation.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": false,
+            "step_num": 2,
+            "name": "Klik module Inventory"
+        },
+        {
+            "selector": "button.dropdown:has-text(\"Operations\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the 'Operations' menu button in the Inventory module.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 2.1,
+            "name": "Klik menu Operation"
+        },
+        {
+            "selector": "a.o-dropdown-item:has-text(\"Receive Item\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the 'Receive Item' menu item from the dropdown under 'Operations'.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 2.2,
+            "name": "Klik menu Receive Item"
+        },
+        {
+            "selector": "button.o_list_button_add",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'New' button to create a new entry, as identified by its class 'o_list_button_add' and text 'New'.",
+            "confidence": "high",
+            "wait_for": null,
+            "step_num": 3,
+            "name": "Klik 'New'"
+        },
+        {
+            "selector": null,
+            "action": "none",
+            "value": null,
+            "description": "The 'Warehouse' field already contains the value 'HO' as seen in the screenshot and implicitly in the DOM (although the input itself doesn't explicitly have a value attribute, the OCR and visual representation confirm 'HO' is present).",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 4,
+            "name": "Pilih Warehouse 'HO'"
+        },
+        {
+            "selector": "div[name='picking_document_id'] input",
+            "action": "fill_and_choose",
+            "value": "HO - Logistic",
+            "description": "The task requires filling the 'Document' field with 'HO - Logistic'. The DOM shows that the input field corresponding to the 'Document' label has a `name` attribute of 'picking_document_id'. The screenshot confirms the field is empty, so 'fill_and_choose' is the appropriate action. The provided selector `div[name='document_id'] input` does not exist in the DOM, so `div[name='picking_document_id'] input` is used to target the correct element.",
+            "confidence": "high",
+            "step_num": 5,
+            "name": "Pilih Document 'HO - Logistic'"
+        },
+        {
+            "selector": "div[name='picking_type_id'] input",
+            "action": "fill_and_choose",
+            "value": "HO: Receive Item To Cross Dock MT AKR",
+            "description": "Clicked on the 'Operation Type' field and selected 'HO: Receive Item To Cross Dock MT AKR' from the dropdown.",
+            "confidence": "high",
+            "step_num": 6,
+            "name": "Pilih Operation Type 'HO: Receive Item To Cross Dock MT AKR'"
+        },
+        {
+            "selector": "div[name='partner_id'] input",
+            "action": "fill_and_choose",
+            "value": "Abadi Mitra Teknologi PT",
+            "description": "Mengisi bidang 'Supplier' dengan 'Abadi Mitra Teknologi PT' dan memilihnya dari daftar dropdown.",
+            "confidence": "high",
+            "step_num": 7,
+            "name": "Pilih Supplier 'Abadi Mitra Teknologi PT'"
+        },
+        {
+            "selector": "div[name='po_id'] input",
+            "action": "fill_and_choose",
+            "value": "11/HO/PO/26/07/00152",
+            "description": "The task requires clicking on the 'Purchase Order' field and selecting '11/HO/PO/26/07/00152'. Based on the DOM, the correct selector for the 'Purchase Order' field is div[name='po_id'] input. The field is currently empty, so 'fill_and_choose' is appropriate.",
+            "confidence": "high",
+            "wait_for": null,
+            "step_num": 8,
+            "name": "Pilih Purchase Order '11/HO/PO/26/07/00152'"
+        },
+        {
+            "selector": "div[name='plat_nomor'] input",
+            "action": "fill",
+            "value": "B 9503 UXY",
+            "description": "Found the input field for 'No. Polisi' using the provided selector and filled it with the specified value, as the field was empty.",
+            "confidence": "high",
+            "wait_for": null,
+            "step_num": 9,
+            "name": "Input No. Polisi 'B 9503 UXY'"
+        },
+        {
+            "selector": "div[name='driver_name'] input",
+            "action": "fill",
+            "value": "IMAN",
+            "description": "Filling the 'Nama Supir' field (driver_name) with 'IMAN' as instructed. The field is currently empty in the screenshot and DOM.",
+            "confidence": "high",
+            "step_num": 9.1,
+            "name": "Input Nama Supir 'IMAN'"
+        },
+        {
+            "selector": "div[name='receiver_name'] input",
+            "action": "fill",
+            "value": "NIDA (ADMIN LOG)",
+            "description": "Filling the 'Receiver Name' field with 'NIDA (ADMIN LOG)' as it is currently empty.",
+            "confidence": "high",
+            "step_num": 10,
+            "name": "Input Receiver Name 'NIDA (ADMIN LOG)'"
+        },
+        {
+            "selector": "div[name='packing_list_id'] input",
+            "action": "fill_and_choose",
+            "value": "11/SPL/26/05/00010",
+            "description": "Click on the 'Packing List' field and fill it with '11/SPL/26/05/00010', then choose the value from the dropdown. The screenshot shows the field is currently empty.",
+            "confidence": "high",
+            "step_num": 11,
+            "name": "Input Packing List '11/SPL/26/05/00010'"
+        },
+        {
+            "selector": "button:has-text(\"Generate PO Item\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Generate PO Item' button as requested by the task.",
+            "confidence": "high",
+            "wait_for": null,
+            "step_num": 12,
+            "name": "Klik 'Generate PO Item'"
+        },
+        {
+            "selector": "a.nav-link[name='attachments']",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the 'Attachments' tab to view or manage attachments.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 12.1,
+            "name": "Klik Tab Attachment"
+        },
+        {
+            "selector": "button:has-text(\"Select File\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Select File' button to open the file upload dialog, as indicated by the task.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": false,
+            "step_num": 12.2,
+            "name": "Klik 'Select a File'"
+        },
+        {
+            "selector": "div[name='doc_type'] input",
+            "action": "fill_and_choose",
+            "value": "Evidence",
+            "description": "Clicking on the 'Type' field and selecting 'Evidence' from the dropdown list. The provided DOM indicates the input is within `div[name='doc_type']` for the 'Type' field.",
+            "confidence": "high",
+            "step_num": 14,
+            "name": "Input Type: Evidence"
+        },
+        {
+            "selector": "div[name=\"datas\"] label.o_select_file_button:has-text(\"Upload your file\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Upload your file' button within the 'File Content (base64)' field in the Attachment modal.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 14.1,
+            "name": "Klik 'Upload your File'"
+        },
+        {
+            "selector": "div.modal-body input[type='file'].o_input_file",
+            "action": "upload_file",
+            "value": "Surat keterangan gambar.pdf",
+            "description": "Found the file input element within the 'Attachment' modal, associated with 'File Content (base64)' field, and will upload the specified file.",
+            "confidence": "high",
+            "step_num": 14.2,
+            "name": "Upload File 'Surat keterangan gambar.pdf'"
+        },
+        {
+            "selector": "footer.modal-footer button.o_form_button_save:has-text(\"Save\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Save' button within the currently open 'Attachment' modal dialog.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 14.3,
+            "name": "Klik Save"
+        },
+        {
+            "selector": "button.btn-primary:has-text(\"Confirm\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Confirm' button to confirm the action.",
+            "confidence": "high",
+            "step_num": 14.4,
+            "name": "Klik Confirm"
+        },
+        {
+            "selector": "footer.modal-footer button:has-text(\"Ok\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Ok' button in the confirmation modal to proceed.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 15,
+            "name": "Klik Ok"
+        },
+        {
+            "selector": "button.btn-primary[name='button_validate']",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Validate' button to proceed with the stock picking validation.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 16,
+            "name": "Klik Validate"
+        },
+        {
+            "selector": "button:has-text(\"Ok\")",
+            "action": "click",
+            "value": null,
+            "description": "Klik tombol 'Ok' pada dialog konfirmasi.",
+            "confidence": "high",
+            "step_num": 17,
+            "name": "Klik Ok"
+        },
+        {
+            "selector": "div.modal-footer button[name='button_validate']",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Validate' button inside the 'Confirmation' modal dialog.",
+            "confidence": "high",
+            "step_num": 18,
+            "name": "Klik Validate"
+        },
+        {
+            "selector": "button:has-text(\"Ok\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked the 'Ok' button in the confirmation modal dialog.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 19,
+            "name": "Klik Ok"
+        },
+        {
+            "selector": "button[name='action_open_stock_journal']",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Stock Journal' button as requested.",
+            "confidence": "high",
+            "wait_for": null,
+            "step_num": 19.1,
+            "name": "Klik button Stock Journal"
+        },
+        {
+            "selector": null,
+            "action": "verify",
+            "value": null,
+            "description": "The page title and the presence of `o_account_move_form_view` class, a 'Journal' field with 'Inventory Valuation', and an active 'Journal Items' tab with a table containing 'Account', 'Debit', and 'Credit' columns all confirm that this page displays a journal document.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 20,
+            "name": "Verifikasi halaman menampilkan dokumen jurnal"
+        }
+    ]
+}

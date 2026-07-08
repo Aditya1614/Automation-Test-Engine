@@ -1,0 +1,370 @@
+[
+    {
+        "id": "MIGRASI19-P2P-001",
+        "type": "Positive",
+        "scenario": "P2P Full Flow: PO -> RI -> Journal RI -> Vendor Bill -> Journal PI",
+        "title": "P2P Migration Validation - Full Flow",
+        "pre_conditions": "User it@porto.co.id sudah login ke Odoo 19",
+        "scenarios": [
+            {
+                "name": "Create PO",
+                "test_step_detail": "1. Login dengan akun user it@porto.co.id\n2. Klik module 'Purchase'\n3. Klik 'Orders' pada navbar\n4. Klik 'Purchase Order'\n5. Klik 'New'\n6. Input data {\nPurchase Type: Manual PO\nPo type: Local\nVendor: Abadi Mitra Teknologi PT\nCurrency: IDR\nCurrency Rate: 1.00\nDown Payment Info: Percentage/5.00%\nExpected Arrival: 12/05/2026\nPayment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nCentang SPJE\nDeliver To: EVA1: Receive Item RM\nIsi product: [PSM-B0091] Karung Bagor (Lebar 150 cm) dengan qty 20 meter\nIsi unit price: 200000\n}\n7. Klik 'Save'\n8. Klik 'Confirm'\n9. Klik 'Ok'",
+                "test_data": "Purchase Type: Manual PO\nPO Type: Local\nVendor: Abadi Mitra Teknologi PT\nCurrency: IDR\nCurrency Rate: 1.00\nDown Payment Info: Percentage\nDown Payment Percentage: 5.00%\nExpected Arrival: 12/05/2026\nPayment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nSPJE: Yes\nDeliver To: EVA1: Receive Item RM\nProduct: [PSM-B0091] Karung Bagor (Lebar 150 cm)\nQty: 20\nUoM: meter\nUnit Price: 200000",
+                "expected_results": "PO: Sistem berhasil membuat Purchase Order tanpa melalui jalur PR.",
+                "test_steps": "-"
+            },
+            {
+                "name": "Create RI",
+                "test_step_detail": "1. Login dengan akun user it@porto.co.id\n2. Klik module Inventory > Operation > Receive Item\n3. Klik 'New'\n4. Klik Warehouse dan pilih 'HO'\n5. Klik Document Owner dan pilih 'HO - Logistic'\n6. Klik Operation Type dan pilih 'Receive Item To Cross Dock MT AKR'\n7. Klik Supplier dan pilih 'Abadi Mitra Teknologi PT'\n8. Klik Purchase Order dan pilih '11/HO/PO/26/05/00062'\n9. Input No. Polisi / Nama Supir dengan 'B 9503 UXY / IMAN'\n10. Input Receiver Name 'NIDA (ADMIN LOG)'\n11. Klik To Department dan pilih 'HO/Cross Dock MT AKR'\n12. Input Packing List '11/SPL/26/05/00010'\n13. Klik 'Generate PO Item'\n14. Input Attachment\n15. Klik Confirm\n16. Klik Validate\n17. Klik Validate",
+                "test_data": "Warehouse: HO\nDocument Owner: HO - Logistic\nOperation Type: Receive Item To Cross Dock MT AKR\nSupplier: Abadi Mitra Teknologi PT\nPurchase Order: 11/HO/PO/26/05/00062\nNo. Polisi / Nama Supir: B 9503 UXY / IMAN\nReceiver Name: NIDA (ADMIN LOG)\nTo Department: HO/Cross Dock MT AKR\nPacking List: 11/SPL/26/05/00010",
+                "expected_results": "RI: Sistem akan membuat dan mengubah status dokumen dari draft ke proces ketika sudah di confirm dan akan menjadi done ketika sudah divalidate",
+                "test_steps": "-"
+            },
+            {
+                "name": "Jurnal RI checking",
+                "test_step_detail": "1. Buka dokumen RI yang sudah Done.\n2. Klik smart button 'Stock Journal'.\n3. Periksa Credit\n4. Periksa Debit",
+                "test_data": "-",
+                "expected_results": "Jurnal RI: Sistem berhasil mengarahkan user ke entri jurnal akuntansi (account.move) terkait. Sistem mendebit akun Stock Valuation sesuai pengaturan pada Product Category. Sistem mengkredit akun Stock Interim (Hutang belum ditagih).",
+                "test_steps": "-"
+            },
+            {
+                "name": "Vendor Bill",
+                "test_step_detail": "1. Buka module Accounting\n2. Buka Vendors > Bill\n3. Klik 'Create'\n4. Isi setiap fields\n5. Klik 'Generate from RI' pada bagian Invoice Items\n6. Simpan\n7. Klik Confirm",
+                "test_data": "-",
+                "expected_results": "Vendor Bill: Invoice item line hanya terisi dengan jumlah barang yang sudah divalidasi di dokumen Receive Item dan dokumen Vendor Bill baru terbuat dan tersimpan",
+                "test_steps": "-"
+            },
+            {
+                "name": "Jurnal PI",
+                "test_step_detail": "1. Login dengan akun user it@porto.co.id\n2. Buka module Accounting\n3. Klik 'Vendors'\n4. Klik 'Bills'\n5. Pilih dokumen Vendor Bill yang telah di confirm\n6. Klik tab Journal Items \n8. Periksa kesamaan total Debit dan Credit",
+                "test_data": "-",
+                "expected_results": "Jurnal Vendor Bill: Sistem menampilkan nilai total debit dan credit yang sama",
+                "test_steps": "-"
+            }
+        ],
+        "test_steps": "[Create PO]\n-\n\n[Create RI]\n-\n\n[Jurnal RI checking]\n-\n\n[Vendor Bill]\n-\n\n[Jurnal PI]\n-",
+        "test_step_detail": "[Create PO]\n1. Login dengan akun user it@porto.co.id\n2. Klik module 'Purchase'\n3. Klik 'Orders' pada navbar\n4. Klik 'Purchase Order'\n5. Klik 'New'\n6. Input data {\nPurchase Type: Manual PO\nPo type: Local\nVendor: Abadi Mitra Teknologi PT\nCurrency: IDR\nCurrency Rate: 1.00\nDown Payment Info: Percentage/5.00%\nExpected Arrival: 12/05/2026\nPayment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nCentang SPJE\nDeliver To: EVA1: Receive Item RM\nIsi product: [PSM-B0091] Karung Bagor (Lebar 150 cm) dengan qty 20 meter\nIsi unit price: 200000\n}\n7. Klik 'Save'\n8. Klik 'Confirm'\n9. Klik 'Ok'\n\n[Create RI]\n1. Login dengan akun user it@porto.co.id\n2. Klik module Inventory > Operation > Receive Item\n3. Klik 'New'\n4. Klik Warehouse dan pilih 'HO'\n5. Klik Document Owner dan pilih 'HO - Logistic'\n6. Klik Operation Type dan pilih 'Receive Item To Cross Dock MT AKR'\n7. Klik Supplier dan pilih 'Abadi Mitra Teknologi PT'\n8. Klik Purchase Order dan pilih '11/HO/PO/26/05/00062'\n9. Input No. Polisi / Nama Supir dengan 'B 9503 UXY / IMAN'\n10. Input Receiver Name 'NIDA (ADMIN LOG)'\n11. Klik To Department dan pilih 'HO/Cross Dock MT AKR'\n12. Input Packing List '11/SPL/26/05/00010'\n13. Klik 'Generate PO Item'\n14. Input Attachment\n15. Klik Confirm\n16. Klik Validate\n17. Klik Validate\n\n[Jurnal RI checking]\n1. Buka dokumen RI yang sudah Done.\n2. Klik smart button 'Stock Journal'.\n3. Periksa Credit\n4. Periksa Debit\n\n[Vendor Bill]\n1. Buka module Accounting\n2. Buka Vendors > Bill\n3. Klik 'Create'\n4. Isi setiap fields\n5. Klik 'Generate from RI' pada bagian Invoice Items\n6. Simpan\n7. Klik Confirm\n\n[Jurnal PI]\n1. Login dengan akun user it@porto.co.id\n2. Buka module Accounting\n3. Klik 'Vendors'\n4. Klik 'Bills'\n5. Pilih dokumen Vendor Bill yang telah di confirm\n6. Klik tab Journal Items \n8. Periksa kesamaan total Debit dan Credit",
+        "test_data": "[Create PO]\nPurchase Type: Manual PO\nPO Type: Local\nVendor: Abadi Mitra Teknologi PT\nCurrency: IDR\nCurrency Rate: 1.00\nDown Payment Info: Percentage\nDown Payment Percentage: 5.00%\nExpected Arrival: 12/05/2026\nPayment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nSPJE: Yes\nDeliver To: EVA1: Receive Item RM\nProduct: [PSM-B0091] Karung Bagor (Lebar 150 cm)\nQty: 20\nUoM: meter\nUnit Price: 200000\n\n[Create RI]\nWarehouse: HO\nDocument Owner: HO - Logistic\nOperation Type: Receive Item To Cross Dock MT AKR\nSupplier: Abadi Mitra Teknologi PT\nPurchase Order: 11/HO/PO/26/05/00062\nNo. Polisi / Nama Supir: B 9503 UXY / IMAN\nReceiver Name: NIDA (ADMIN LOG)\nTo Department: HO/Cross Dock MT AKR\nPacking List: 11/SPL/26/05/00010\n\n[Jurnal RI checking]\n-\n\n[Vendor Bill]\n-\n\n[Jurnal PI]\n-",
+        "expected_results": "[Create PO]\nPO: Sistem berhasil membuat Purchase Order tanpa melalui jalur PR.\n\n[Create RI]\nRI: Sistem akan membuat dan mengubah status dokumen dari draft ke proces ketika sudah di confirm dan akan menjadi done ketika sudah divalidate\n\n[Jurnal RI checking]\nJurnal RI: Sistem berhasil mengarahkan user ke entri jurnal akuntansi (account.move) terkait. Sistem mendebit akun Stock Valuation sesuai pengaturan pada Product Category. Sistem mengkredit akun Stock Interim (Hutang belum ditagih).\n\n[Vendor Bill]\nVendor Bill: Invoice item line hanya terisi dengan jumlah barang yang sudah divalidasi di dokumen Receive Item dan dokumen Vendor Bill baru terbuat dan tersimpan\n\n[Jurnal PI]\nJurnal Vendor Bill: Sistem menampilkan nilai total debit dan credit yang sama",
+        "upload_history": [
+            {
+                "date": "2026-07-07 14:20:17",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 14:41:31",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 14:45:48",
+                "user": "admin",
+                "action": "updated"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "2026-07-07 14:45:48"
+    },
+    {
+        "id": "MIGRASI19-P2P-001-1",
+        "type": "Positive",
+        "scenario": "Create PO",
+        "title": "P2P Migration Validation - Full Flow - Create PO",
+        "pre_conditions": "User it@porto.co.id sudah login ke Odoo 19",
+        "test_steps": "",
+        "test_step_detail": "1. Login dengan akun user it@porto.co.id\n2. Klik module 'Purchase'\n3. Klik 'Orders' pada navbar\n4. Klik 'Purchase Order'\n5. Klik 'New'\n6. Input data {\nPurchase Type: Manual PO\nPo type: Local\nVendor: Abadi Mitra Teknologi PT\nCurrency: IDR\nCurrency Rate: 1.00\nDown Payment Info: Percentage/5.00%\nExpected Arrival: 12/05/2026\nPayment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nCentang SPJE\nIsi product: [PSM-B0091] Karung Bagor (Lebar 150 cm) dengan qty 20 meter\nIsi unit price: 200000\n}\n7. Klik 'Save'\n8. Klik 'Confirm'\n9. Klik 'Ok'\n10. Klik 'First Approval'\n11. Klik 'Ok'\n12. Klik 'Second Approval'\n13. Klik 'Ok'",
+        "test_data": "Purchase Type: Manual PO\nPO Type: Local\nVendor: Abadi Mitra Teknologi PT\nCurrency: IDR\nCurrency Rate: 1.00\nDown Payment Info: Percentage\nDown Payment Percentage: 5.00%\nExpected Arrival: 12/05/2026\nPayment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nSPJE: Yes\nProduct: [PSM-B0091] Karung Bagor (Lebar 150 cm)\nQty: 20\nUoM: meter\nUnit Price: 200000",
+        "expected_results": "PO: Sistem berhasil membuat Purchase Order tanpa melalui jalur PR. Ditunjukan dengan status saat ini 'Process' pada statusbar",
+        "upload_history": [
+            {
+                "date": "2026-07-07 15:13:58",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 15:42:44",
+                "user": "admin",
+                "action": "updated"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "2026-07-07 15:42:44"
+    },
+    {
+        "id": "MIGRASI19-P2P-001-2",
+        "type": "Positive",
+        "scenario": "Create RI",
+        "title": "P2P Migration Validation - Full Flow - Create RI",
+        "pre_conditions": "User it@porto.co.id sudah login ke Odoo 19",
+        "test_steps": "",
+        "test_step_detail": "1. Login dengan akun user it@porto.co.id\n2. Klik module Inventory > Operation > Receive Item\n3. Klik 'New'\n4. Klik Warehouse dan pilih 'HO'\n5. Klik Document dan pilih 'HO - Logistic'\n6. Klik Operation Type dan pilih 'HO: Receive Item To Cross Dock MT AKR'\n7. Klik Supplier dan pilih 'Abadi Mitra Teknologi PT'\n8. Klik Purchase Order dan pilih '11/HO/PO/26/07/00152'\n9. Input No. Polisi / Nama Supir dengan 'B 9503 UXY / IMAN'\n10. Input Receiver Name 'NIDA (ADMIN LOG)'\n11. Input Packing List '11/SPL/26/05/00010'\n12. Klik 'Generate PO Item'\nKlik Tab Attachment\nklik Select a File\n14. Input Type: Evidence\nKlik Upload your FIle\n14. Input File : 'Surat keterangan gambar.pdf' \nKlik Save\n14. Klik Confirm\n15. Klik Ok\n16. Klik Validate\n17. Klik Ok\n18. Klik Validate\n19. Klik Ok\nKlik button Stock Journal",
+        "test_data": "Warehouse: HO\nDocument: HO - Logistic\nOperation Type: HO: Receive Item To Cross Dock MT AKR\nSupplier: Abadi Mitra Teknologi PT\nPurchase Order: 11/HO/PO/26/07/00152\nNo. Polisi / Nama Supir: B 9503 UXY / IMAN\nReceiver Name: NIDA (ADMIN LOG)\nPacking List: 11/SPL/26/05/00010\nType: Evidence\nAttachment File: Surat keterangan gambar.pdf",
+        "expected_results": "halaman menampilkan dokumen jurnal",
+        "upload_history": [
+            {
+                "date": "2026-07-07 15:24:52",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 15:31:21",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 15:43:22",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 15:52:02",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 17:06:20",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 17:23:29",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 17:30:45",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 17:43:02",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 17:43:16",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 17:52:45",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 18:00:20",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 18:01:51",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 18:29:12",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 18:43:49",
+                "user": "admin",
+                "action": "updated"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "2026-07-07 18:43:49"
+    },
+    {
+        "id": "MIGRASI19-P2P-001-3",
+        "type": "Positive",
+        "scenario": "Jurnal RI checking",
+        "title": "P2P Migration Validation - Full Flow - Jurnal RI checking",
+        "pre_conditions": "User it@porto.co.id sudah login ke Odoo 19",
+        "test_steps": "",
+        "test_step_detail": "1. Klik modul Inventory\n2. Klik navbar Operations\n3. Klik Receive Item \n4. Buka dokumen RI yang sudah Done (HO/RCV Trial/00003).\n5. Klik smart button 'Stock Journal'.\n6. Periksa Credit\n7. Periksa Debit",
+        "test_data": "Dokumen: HO/RCV Trial/00003",
+        "expected_results": "Jurnal RI: Sistem berhasil mengarahkan user ke entri jurnal akuntansi (account.move) terkait. Sistem mendebit akun Stock Valuation sesuai pengaturan pada Product Category. Sistem mengkredit akun Stock Interim (Hutang belum ditagih). Ditunjukan dengan nilai Credit di akun pertama dan Debit di akun kedua bernilai sama begitupun sebaliknya",
+        "upload_history": [
+            {
+                "date": "2026-07-07 16:18:16",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 16:19:45",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 16:21:17",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 16:24:34",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 16:25:18",
+                "user": "admin",
+                "action": "updated"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "2026-07-07 16:25:18"
+    },
+    {
+        "id": "MIGRASI19-P2P-001-4",
+        "type": "Positive",
+        "scenario": "Vendor Bill",
+        "title": "P2P Migration Validation - Full Flow - Vendor Bill",
+        "pre_conditions": "User it@porto.co.id sudah login ke Odoo 19",
+        "test_steps": "",
+        "test_step_detail": "1. Buka module Accounting\n2. Klik Vendors pada navbar lalu klik Bills\n3. Klik 'Create'\n4. Isi setiap fields {Vendor: Abadi Mitra Teknologi PT; Bill date: 06/19/2026; Surat Jalan (RI): PIS/RIL/26/00001}\n5. Klik 'Generate from RI' pada bagian Invoice Items\n6. Simpan\n7. Klik Confirm",
+        "test_data": "",
+        "expected_results": "Vendor Bill: Invoice item line hanya terisi dengan jumlah barang yang sudah divalidasi di dokumen Receive Item dan dokumen Vendor Bill baru terbuat dan tersimpan",
+        "upload_history": [
+            {
+                "date": "2026-07-07 16:28:21",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-07 17:18:53",
+                "user": "admin",
+                "action": "updated"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "2026-07-07 17:18:53"
+    },
+    {
+        "id": "MIGRASI19-P2P-001-5",
+        "type": "Positive",
+        "scenario": "Jurnal PI",
+        "title": "P2P Migration Validation - Full Flow - Jurnal PI",
+        "pre_conditions": "User it@porto.co.id sudah login ke Odoo 19",
+        "test_steps": "-",
+        "test_step_detail": "1. Login dengan akun user it@porto.co.id\n2. Buka module Accounting\n3. Klik 'Vendors'\n4. Klik 'Bills'\n5. Pilih dokumen Vendor Bill yang telah di confirm\n6. Klik tab Journal Items \n8. Periksa kesamaan total Debit dan Credit",
+        "test_data": "-",
+        "expected_results": "Jurnal Vendor Bill: Sistem menampilkan nilai total debit dan credit yang sama"
+    },
+    {
+        "id": "MIGRASI19-P2P-001-COMBINED-detailed",
+        "type": "Positive",
+        "scenario": "Combined Create PO and Create RI with Variables",
+        "title": "P2P Migration Validation - Combined",
+        "pre_conditions": "User it@porto.co.id sudah login ke Odoo 19",
+        "test_steps": "[Create PO]\n-\n\n[Create RI]\n-",
+        "test_step_detail": "[Create PO]\n1. Login dengan akun user it@porto.co.id\n2. Klik module 'Purchase'\n3. Klik 'Orders' pada navbar\n4. Klik 'Purchase Order'\n5. Klik 'New'\n6. fill_and_choose Purchase Type: Manual PO\n7. klik Po type: Local\n8. fill_and_choose Vendor: Abadi Mitra Teknologi PT\n9. fill_and_choose Currency: IDR\n10. fill Currency Rate: 1.00\n11. fill_and_choose & fillDown Payment Info: Percentage/5.00%\n12. fill_and_enter Expected Arrival: 12/05/2026\n13. fill_and_choose Payment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nCentang SPJE\nIsi product: [PSM-B0091] Karung Bagor (Lebar 150 cm) dengan qty 20 meter\nIsi unit price: 200000\n}\n7. Klik 'Save'\n8. Klik 'Confirm'\n9. Klik 'Ok'\n10. Klik 'First Approval'\n11. Klik 'Ok'\n12. Klik 'Second Approval'\n13. Klik 'Ok'\n14. Simpan nomor dokumen Purchase Order sebagai variable PO_NUMBER\n15. Klik logo Odoo / Home menu untuk kembali ke halaman awal\n\n[Create RI]\n1. Login dengan akun user it@porto.co.id\n2. Klik module Inventory > Operation > Receive Item\n3. Klik 'New'\n4. Klik Warehouse dan pilih 'HO'\n5. Klik Document dan pilih 'HO - Logistic'\n6. Klik Operation Type dan pilih 'HO: Receive Item To Cross Dock MT AKR'\n7. Klik Supplier dan pilih 'Abadi Mitra Teknologi PT'\n8. Klik Purchase Order dan pilih '{{PO_NUMBER}}'\n9. Input No. Polisi / Nama Supir dengan 'B 9503 UXY / IMAN'\n10. Input Receiver Name 'NIDA (ADMIN LOG)'\n11. Input Packing List '11/SPL/26/05/00010'\n12. Klik 'Generate PO Item'\n13. Klik Tab Attachment\n14. klik Select a File\n15. Input Type: Evidence\n16. Klik Upload your FIle\n17. Input File : 'Surat keterangan gambar.pdf' \n18. Klik Save\n19. Klik Confirm\n20. Klik Ok\n21. Klik Validate\n22. Klik Ok\n23. Klik Validate\n24. Klik Ok\n25. Klik button Stock Journal",
+        "test_data": "[Create PO]\nPurchase Type: Manual PO\nPO Type: Local\nVendor: Abadi Mitra Teknologi PT\nCurrency: IDR\nCurrency Rate: 1.00\nDown Payment Info: Percentage\nDown Payment Percentage: 5.00%\nExpected Arrival: 12/05/2026\nPayment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nSPJE: Yes\nProduct: [PSM-B0091] Karung Bagor (Lebar 150 cm)\nQty: 20\nUoM: meter\nUnit Price: 200000\n\n[Create RI]\nWarehouse: HO\nDocument: HO - Logistic\nOperation Type: HO: Receive Item To Cross Dock MT AKR\nSupplier: Abadi Mitra Teknologi PT\nPurchase Order: {{PO_NUMBER}}\nNo. Polisi / Nama Supir: B 9503 UXY / IMAN\nReceiver Name: NIDA (ADMIN LOG)\nPacking List: 11/SPL/26/05/00010\nType: Evidence\nAttachment File: Surat keterangan gambar.pdf",
+        "expected_results": "PO: Sistem berhasil membuat Purchase Order tanpa melalui jalur PR. Ditunjukan dengan status saat ini 'Process' pada statusbar\nRI: halaman menampilkan dokumen jurnal",
+        "upload_history": [
+            {
+                "date": "2026-07-08 10:27:56",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:28:09",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:30:37",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:32:44",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:33:59",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:34:42",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 11:27:32",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 11:48:47",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 11:53:18",
+                "user": "admin",
+                "action": "updated"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "2026-07-08 11:53:18"
+    },
+    {
+        "id": "MIGRASI19-P2P-001-COMBINED",
+        "type": "Positive",
+        "scenario": "Combined Create PO and Create RI with Variables",
+        "title": "P2P Migration Validation - Combined",
+        "pre_conditions": "User it@porto.co.id sudah login ke Odoo 19",
+        "test_steps": "[Create PO]\n-\n\n[Create RI]\n-",
+        "test_step_detail": "[Create PO]\n1. Login dengan akun user it@porto.co.id\n2. Klik module 'Purchase'\n3. Klik 'Orders' pada navbar\n4. Klik 'Purchase Order'\n5. Klik 'New'\n6. Input data {\nPurchase Type: Manual PO\nPo type: Local\nVendor: Abadi Mitra Teknologi PT\nCurrency: IDR\nCurrency Rate: 1.00\nDown Payment Info: Percentage/5.00%\nExpected Arrival: 12/05/2026\nPayment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nCentang SPJE\nIsi product: [PSM-B0091] Karung Bagor (Lebar 150 cm) dengan qty 20 meter\nIsi unit price: 200000\n}\n7. Klik 'Save'\n8. Klik 'Confirm'\n9. Klik 'Ok'\n10. Klik 'First Approval'\n11. Klik 'Ok'\n12. Klik 'Second Approval'\n13. Klik 'Ok'\n14. Simpan nomor dokumen Purchase Order sebagai variable PO_NUMBER\n15. Klik logo Odoo / Home menu untuk kembali ke halaman awal\n\n[Create RI]\n1. Login dengan akun user it@porto.co.id\n2. Klik module Inventory > Operation > Receive Item\n3. Klik 'New'\n4. Klik Warehouse dan pilih 'HO'\n5. Klik Document dan pilih 'HO - Logistic'\n6. Klik Operation Type dan pilih 'HO: Receive Item To Cross Dock MT AKR'\n7. Klik Supplier dan pilih 'Abadi Mitra Teknologi PT'\n8. Klik Purchase Order dan pilih '{{PO_NUMBER}}'\n9. Input No. Polisi / Nama Supir dengan 'B 9503 UXY / IMAN'\n10. Input Receiver Name 'NIDA (ADMIN LOG)'\n11. Input Packing List '11/SPL/26/05/00010'\n12. Klik 'Generate PO Item'\n13. Klik Tab Attachment\n14. klik Select a File\n15. Input pilih Type: Evidence\n16. Klik Upload your FIle\n17. Input File : 'Surat keterangan gambar.pdf' \n18. Klik Save\n19. Klik Confirm\n20. Klik Ok\n21. Klik Validate\n22. Klik Ok\n23. Klik Validate\n24. Klik Ok\n25. Klik button Stock Journal",
+        "test_data": "[Create PO]\nPurchase Type: Manual PO\nPO Type: Local\nVendor: Abadi Mitra Teknologi PT\nCurrency: IDR\nCurrency Rate: 1.00\nDown Payment Info: Percentage\nDown Payment Percentage: 5.00%\nExpected Arrival: 12/05/2026\nPayment Terms: 30 Days\nDelivery To: Depo SBY\nUnit Company: PT Porto Indonesia Sejahtera\nEstimated Time Delivery: 27/05/2026\nEstimated Time Arrival: 25/05/2026\nSPJE: Yes\nProduct: [PSM-B0091] Karung Bagor (Lebar 150 cm)\nQty: 20\nUoM: meter\nUnit Price: 200000\n\n[Create RI]\nWarehouse: HO\nDocument: HO - Logistic\nOperation Type: HO: Receive Item To Cross Dock MT AKR\nSupplier: Abadi Mitra Teknologi PT\nPurchase Order: {{PO_NUMBER}}\nNo. Polisi / Nama Supir: B 9503 UXY / IMAN\nReceiver Name: NIDA (ADMIN LOG)\nPacking List: 11/SPL/26/05/00010\nType: Evidence\nAttachment File: Surat keterangan gambar.pdf",
+        "expected_results": "PO: Sistem berhasil membuat Purchase Order tanpa melalui jalur PR. Ditunjukan dengan status saat ini 'Process' pada statusbar\nRI: halaman menampilkan dokumen jurnal",
+        "upload_history": [
+            {
+                "date": "2026-07-08 10:27:56",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:28:09",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:30:37",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:32:44",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:33:59",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 10:34:42",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 11:27:32",
+                "user": "admin",
+                "action": "updated"
+            },
+            {
+                "date": "2026-07-08 11:55:53",
+                "user": "admin",
+                "action": "updated"
+            }
+        ],
+        "uploaded_by": "admin",
+        "uploaded_at": "2026-07-08 11:55:53"
+    }
+]

@@ -35,7 +35,8 @@ Rules & Odoo 19 Knowledge:
    - Type = 'type'
    - Order Date = 'date_order'
    - Expiration Date = 'validity_date'
-   - Quantity = 'product_uom_qty'
+   - Quantity (Sales) = 'product_uom_qty'
+   - Quantity (Purchase) = 'product_qty'
    - LIST VIEW SEARCHES: If the step involves finding or selecting a record immediately after opening a menu (which implies a list view), you MUST generate TWO SEPARATE STEPS:
      1. Search step: action_hint="fill_and_enter", using the main search bar selector `input.o_searchview_input` with the search value.
      2. Click result step: action_hint="click", with a task description to click the specific record in the search results to open its form view.
@@ -61,8 +62,51 @@ Rules & Odoo 19 Knowledge:
    - value: "<exact filename>" (e.g., "MIGRASI19-P2P-VENDCLASS-005.csv")
    - task: Description of the upload action and the file input selector to target.
    The automation engine will resolve the file path from the flow's managed file store.
-10. CHECKBOXES: If the step says "centang" or "check" a specific field, use action_hint "click" and specifically mention in the task to "Klik checkbox [Name of Checkbox]". Do NOT use the partner_id or other input selectors for checkboxes.
-11. Return ONLY the JSON array.
+64. CHECKBOXES: If the step says "centang" or "check" a specific field, use action_hint "click" and specifically mention in the task to "Klik checkbox [Name of Checkbox]". Do NOT use the partner_id or other input selectors for checkboxes.
+11. P2P (PURCHASE/INVENTORY/ACCOUNTING) FIELD RULES:
+    PURCHASE MODULE FIELDS:
+    - Purchase Type -> dropdown (fill_and_choose): div[name='type_id'] input
+    - PO Type -> radio button (click): Use action_hint "click" and instruct to click the specific radio option.
+    - Vendor -> Many2one dropdown (fill_and_choose): div[name='partner_id'] input
+    - Currency -> dropdown (fill_and_choose): div[name='currency_id'] input
+    - Currency Rate -> number input (fill)
+    - Down Payment Info -> dropdown or selection (fill_and_choose)
+    - Down Payment Percentage -> number input (fill)
+    - Expected Arrival -> datepicker (fill_and_enter with MM/DD/YYYY format)
+    - Payment Terms -> dropdown (fill_and_choose): div[name='payment_term_id'] input
+    - Delivery To (Destination) -> dropdown (fill_and_choose): div[name='dest_address_id'] input OR div[name='partner_shipping_id'] input
+    - Unit Company -> dropdown (fill_and_choose): div[name='company_id'] input
+    - Estimated Time Delivery -> datepicker (fill_and_enter)
+    - Estimated Time Arrival -> datepicker (fill_and_enter)
+    - SPJE -> checkbox (click)
+    - Deliver To (Operation Type) -> dropdown (fill_and_choose): div[name='picking_type_id'] input
+    
+    PURCHASE ORDER LINE FIELDS:
+    - Product -> Many2one (fill_and_choose): div[name='product_id'] input
+    - Quantity -> number input (fill): div[name='product_qty'] input
+    - UoM -> dropdown (fill_and_choose): div[name='product_uom'] input
+    - Unit Price -> number input (fill): div[name='price_unit'] input
+    
+    INVENTORY MODULE FIELDS (Receive Items):
+    - Warehouse -> dropdown (fill_and_choose)
+    - Document Owner -> dropdown (fill_and_choose)
+    - Operation Type -> dropdown (fill_and_choose)
+    - Supplier -> Many2one (fill_and_choose)
+    - Purchase Order -> dropdown (fill_and_choose)
+    - No. Polisi / Nama Supir -> If the value contains '/', split it into TWO separate steps: 
+      1. Fill `div[name='plat_nomor'] input` with the first part (No. Polisi).
+      2. Fill `div[name='driver_name'] input` with the second part (Nama Supir).
+    - Receiver Name -> text input (fill)
+    - To Department -> dropdown (fill_and_choose)
+    - Packing List -> Many2one (fill_and_choose): div[name='packing_list_id'] input
+    
+    ACCOUNTING MODULE FIELDS:
+    - Bill Date -> datepicker (fill_and_enter)
+12. "Klik ... dan pilih" pattern: This means a dropdown selection -> use fill_and_choose.
+13. EXTRACT VARIABLES: If a step says "Simpan ... sebagai variable XYZ" or "Save ... as variable XYZ", use `action_hint: "extract"`, and `value: "XYZ"`. Tell the DOM analyzer to find the field containing the value to extract.
+14. "Input data {...}" blocks: When test_step_detail contains "Input data {field1: value1, ...}" or a block listing multiple field:value pairs, you MUST expand this into INDIVIDUAL steps for each field. Determine the correct action_hint based on the field type rules above.
+15. LOGIN SKIP: If the test_step_detail starts with 'Login dengan akun user' at the beginning of a scenario (not mid-flow), SKIP it. The engine auto-handles initial login.
+16. Return ONLY the JSON array.
 """
 
 class StepPlannerAgent:
@@ -75,13 +119,14 @@ class StepPlannerAgent:
         current_date_str = datetime.now().strftime("%m/%d/%Y")
         
         dynamic_instruction = PLANNER_INSTRUCTION + f"""
-12. DATE vs DROPDOWN RULES (CRITICAL - DO NOT VIOLATE):
-   - 'Order Date' (date_order): This is a DATE PICKER. Current date = {current_date_str}. Use action_hint "fill_and_enter" with the date in MM/DD/YYYY format so the picker popup closes.
+16. DATE vs DROPDOWN RULES (CRITICAL - DO NOT VIOLATE):
+   - For ANY Datepicker fields (like Order Date, Estimated Time Delivery, Expected Arrival), you MUST convert the date from the Test Data (which is usually DD/MM/YYYY) into MM/DD/YYYY format for the 'value' field. If Test Data says '27/05/2026', the value MUST be '05/27/2026'.
+   - DO NOT generate a step to fill 'Order Date' unless the user explicitly provided it in the 'Input data' or 'Test Data'.
    - 'Valid Date' / 'Expiration' (validity_date): This is a DROPDOWN, NOT a date picker! NEVER compute a date for this field!
      You MUST use action_hint "fill_and_enter" with the LITERAL dropdown option text from the test case (e.g., "14 Days", "30 Days").
      If the test says "14 Days", use value "14 Days". If it says "30 Days", use value "30 Days".
-     WRONG: "value": "06/16/2026"  ← NEVER DO THIS for Valid Date!
-     CORRECT: "value": "14 Days"   ← Always use the literal text!
+     WRONG: "value": "06/16/2026"  <- NEVER DO THIS for Valid Date!
+     CORRECT: "value": "14 Days"   <- Always use the literal text!
 """
         
         prompt = f"""
@@ -123,3 +168,30 @@ class StepPlannerAgent:
         except Exception as e:
             print(f"Failed to parse Planner AI response: {response.text}")
             raise e
+
+    async def plan_steps_for_scenarios(self, scenarios: list[dict]) -> list[dict]:
+        """Plan steps for multiple scenarios, returning a flat list with scenario markers."""
+        all_steps = []
+        step_offset = 0
+        for idx, scenario in enumerate(scenarios):
+            scenario_tc = {
+                "test_step_detail": scenario["test_step_detail"],
+                "test_data": scenario.get("test_data", ""),
+                "expected_results": scenario["expected_results"],
+                "pre_conditions": scenario.get("pre_conditions", ""),
+                "test_steps": scenario.get("test_steps", ""),
+            }
+            planned = await self.plan_steps(scenario_tc)
+            
+            # Add scenario metadata to each step
+            for step in planned:
+                step["step_num"] = step["step_num"] + step_offset
+                step["scenario_index"] = idx
+                step["scenario_name"] = scenario["name"]
+            
+            all_steps.extend(planned)
+            if planned:
+                step_offset = max(s["step_num"] for s in planned) + 1
+        
+        return all_steps
+

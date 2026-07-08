@@ -157,6 +157,14 @@ class TestExecutor:
             action_hint = task_details.get('action_hint')
             task_val = task_details.get('value')
             
+            if isinstance(task_val, str) and "{{" in task_val:
+                import re
+                def repl(match):
+                    var_name = match.group(1)
+                    return str(self.variables.get(var_name, match.group(0)))
+                task_val = re.sub(r"\{\{([^}]+)\}\}", repl, task_val)
+                task_details['value'] = task_val
+            
             if action_hint and task_val:
                 ai_task += f"\nCRITICAL HINT: You MUST choose action '{action_hint}' and use value '{task_val}'. EXCEPTION: If the screenshot shows that the field ALREADY contains the value '{task_val}', you MUST choose action 'none' to skip."
             elif action_hint:
@@ -260,6 +268,11 @@ class TestExecutor:
                     loc = page.locator(sel).first
                     await loc.click(timeout=timeout_ms)
                     await loc.fill("", timeout=timeout_ms)
+                    
+                    if not val_to_fill:
+                        await page.keyboard.press("Tab")
+                        return
+                        
                     # Simulate human typing to trigger Odoo's autocomplete event listeners
                     await loc.press_sequentially(val_to_fill, delay=50)
                     await page.wait_for_timeout(2000)
@@ -303,9 +316,10 @@ class TestExecutor:
                         options_loc = page.locator(dropdown_items_sel)
                         count = await options_loc.count()
                         for i in range(count):
-                            text = await options_loc.nth(i).text_content()
-                            if text and "No records" not in text and "Search more" not in text:
-                                found_options.append(text.strip())
+                            if await options_loc.nth(i).is_visible():
+                                text = await options_loc.nth(i).text_content()
+                                if text and "No records" not in text and "Search more" not in text:
+                                    found_options.append(text.strip())
                                 
                         if not found_options:
                             # Try typing words
@@ -316,9 +330,10 @@ class TestExecutor:
                                 await page.wait_for_timeout(1500)
                                 count = await options_loc.count()
                                 for i in range(count):
-                                    text = await options_loc.nth(i).text_content()
-                                    if text and "No records" not in text and "Search more" not in text:
-                                        found_options.append(text.strip())
+                                    if await options_loc.nth(i).is_visible():
+                                        text = await options_loc.nth(i).text_content()
+                                        if text and "No records" not in text and "Search more" not in text:
+                                            found_options.append(text.strip())
                                 if found_options:
                                     break
                                     
@@ -330,7 +345,8 @@ class TestExecutor:
                                 matched_text = found_options[lower_options.index(best_match[0])]
                                 print(f"  [Fallback] Fuzzy matched '{val_to_fill}' to '{matched_text}'")
                                 # Click the matched item
-                                await page.locator(f'{dropdown_items_sel}:has-text("{matched_text}")').first.click(timeout=timeout_ms)
+                                fuzzy_sel = ', '.join([f'{s.strip()}:has-text("{matched_text}")' for s in dropdown_items_sel.split(',')])
+                                await page.locator(fuzzy_sel).first.click(timeout=timeout_ms)
                                 clicked = True
                                 
                         if not clicked:
@@ -357,6 +373,23 @@ class TestExecutor:
                 async def do_upload(sel):
                     await page.locator(sel).first.set_input_files(file_path, timeout=timeout_ms)
                 used_sel = await try_action(do_upload, selector)
+                if used_sel != selector:
+                    print(f"  [Fallback] Used selector: {used_sel}")
+            elif action == "extract":
+                var_name = task_details.get('value')
+                if not var_name:
+                    raise Exception("Extract action requires a variable name in 'value'")
+                async def do_extract(sel):
+                    loc = page.locator(sel).first
+                    text = await loc.text_content(timeout=timeout_ms)
+                    if not text or not text.strip():
+                        try:
+                            text = await loc.input_value(timeout=1000)
+                        except:
+                            pass
+                    self.variables[var_name] = text.strip() if text else ""
+                    print(f"  [Extract] Saved '{self.variables[var_name]}' to variable '{var_name}'")
+                used_sel = await try_action(do_extract, selector)
                 if used_sel != selector:
                     print(f"  [Fallback] Used selector: {used_sel}")
             elif action == "verify":
@@ -452,6 +485,7 @@ class TestExecutor:
 
     async def execute(self, test_case: dict, mode: str = "ai", saved_flow: dict = None, history_file: str = "test-results/history.json", files_dir: str = None) -> dict:
         video_dir = None
+        self.variables = {}
         try:
             test_id = test_case.get('id', 'Unknown')
             test_title = test_case.get('title', test_case.get('scenario', 'Unknown Test'))
@@ -525,8 +559,28 @@ class TestExecutor:
             all_passed = True
             final_actual_result = ""
             
+            scenarios = test_case.get('_scenarios_meta', [])
+            current_scenario_name = None
+            scenario_passed = True
+            
             for step in steps:
                 step_num = step.get('step_num')
+                scenario_name = step.get('scenario_name')
+                scenario_index = step.get('scenario_index')
+                
+                # Detect scenario transition
+                if scenario_name and scenario_name != current_scenario_name:
+                    if current_scenario_name is not None:
+                        # Close previous scenario in report
+                        if hasattr(self.report, 'end_scenario'):
+                            self.report.end_scenario(current_scenario_name, scenario_passed, final_actual_result)
+                    
+                    current_scenario_name = scenario_name
+                    scenario_passed = True
+                    final_actual_result = "" # Reset for new scenario
+                    if hasattr(self.report, 'start_scenario') and scenarios and scenario_index is not None:
+                        expected = scenarios[scenario_index].get("expected_results", "")
+                        self.report.start_scenario(scenario_name, expected)
                 
                 if step.get('action_hint') == 'switch_user':
                     target_user = step.get('value', '')
@@ -535,6 +589,10 @@ class TestExecutor:
                     continue
                     
                 saved_act = saved_actions_map.get(step_num) if mode == "replay" else None
+                
+                # Inform report generator of the current scenario for this step
+                if hasattr(self.report, 'set_current_step_scenario'):
+                    self.report.set_current_step_scenario(current_scenario_name)
                 
                 passed, desc, ai_act = await self.run_step(
                     step_num=step_num,
@@ -553,8 +611,14 @@ class TestExecutor:
                     
                 if not passed:
                     all_passed = False
-                    break
-                    
+                    scenario_passed = False
+                    # Do not break in multi-scenario, we want to try continuing or fail scenario
+                    # Wait, if one step fails, the rest of the scenario might fail. But we can continue.
+            
+            if current_scenario_name is not None:
+                if hasattr(self.report, 'end_scenario'):
+                    self.report.end_scenario(current_scenario_name, scenario_passed, final_actual_result)
+            
             self.report.test_info['actual_results'] = final_actual_result
             self.report.test_info['total_tokens'] = self.total_tokens_session
             

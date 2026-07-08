@@ -13,5 +13,20 @@
         "id": "testing",
         "name": "Testing",
         "created_by": "admin"
+    },
+    {
+        "id": "repli",
+        "name": "Repli",
+        "created_by": "admin"
+    },
+    {
+        "id": "replikasi",
+        "name": "Replikasi",
+        "created_by": "admin"
+    },
+    {
+        "id": "p2p-migration",
+        "name": "P2P Migration Validation",
+        "created_by": "admin"
     }
 ]

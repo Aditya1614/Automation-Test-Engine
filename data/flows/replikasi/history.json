@@ -1,0 +1,72 @@
+[
+    {
+        "date": "06 Jul 2026, 09:33:57",
+        "test_id": "MIGRASI19/TESTING/DETAIL",
+        "scenario": "Input Sales Offer dengan 2 produk lebih detail",
+        "status": "PASS",
+        "report_path": "test-results/report-20260706_093357.html"
+    },
+    {
+        "date": "03 Jul 2026, 17:56:00",
+        "test_id": "MIGRASI19/TESTING/DETAIL",
+        "scenario": "Input Sales Offer dengan 2 produk lebih detail",
+        "status": "PASS",
+        "report_path": "test-results/report-20260703_175600.html"
+    },
+    {
+        "date": "03 Jul 2026, 17:45:35",
+        "test_id": "MIGRASI19/TESTING/DETAIL",
+        "scenario": "Input Sales Offer dengan 2 produk lebih detail",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260703_174535.html"
+    },
+    {
+        "date": "03 Jul 2026, 17:39:21",
+        "test_id": "MIGRASI19/TESTING/DETAIL",
+        "scenario": "Input Sales Offer dengan 2 produk lebih detail",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260703_173921.html"
+    },
+    {
+        "date": "03 Jul 2026, 17:33:00",
+        "test_id": "MIGRASI19/TESTING/DETAIL",
+        "scenario": "Input Sales Offer dengan 2 produk lebih detail",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260703_173300.html"
+    },
+    {
+        "date": "03 Jul 2026, 17:14:24",
+        "test_id": "MIGRASI19/TESTING/DETAIL",
+        "scenario": "Input Sales Offer dengan 2 produk lebih detail",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260703_171424.html"
+    },
+    {
+        "date": "03 Jul 2026, 17:07:40",
+        "test_id": "MIGRASI19/TESTING/DETAIL",
+        "scenario": "Input Sales Offer dengan 2 produk lebih detail",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260703_170740.html"
+    },
+    {
+        "date": "03 Jul 2026, 17:03:04",
+        "test_id": "MIGRASI19/TESTING/DETAIL",
+        "scenario": "Input Sales Offer dengan 2 produk lebih detail",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260703_170304.html"
+    },
+    {
+        "date": "03 Jul 2026, 16:29:28",
+        "test_id": "MIGRASI19/TESTING",
+        "scenario": "Testing",
+        "status": "PASS",
+        "report_path": "test-results/report-20260703_162928.html"
+    },
+    {
+        "date": "03 Jul 2026, 16:21:28",
+        "test_id": "MIGRASI19/TESTING",
+        "scenario": "Testing",
+        "status": "FAIL",
+        "report_path": "test-results/report-20260703_162128.html"
+    }
+]

@@ -1,0 +1,175 @@
+{
+    "test_case_id": "MIGRASI19-P2P-001-3",
+    "saved_at": "2026-07-07T16:27:20.915135",
+    "planned_steps": [
+        {
+            "step_num": 1,
+            "name": "Klik modul Inventory",
+            "task": "Klik modul 'Inventory' dari halaman utama Odoo.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 2,
+            "name": "Klik navbar Operations",
+            "task": "Klik menu 'Operations' pada navigation bar.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 3,
+            "name": "Klik Receive Item",
+            "task": "Klik menu 'Receive Item'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 4.1,
+            "name": "Cari Dokumen RI",
+            "task": "Cari dokumen RI dengan nomor 'HO/RCV Trial/00003' pada search bar list view. Gunakan selector `input.o_searchview_input`.",
+            "action_hint": "fill_and_enter",
+            "value": "HO/RCV Trial/00003",
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 4.2,
+            "name": "Buka Dokumen RI",
+            "task": "Klik pada dokumen RI dengan nomor 'HO/RCV Trial/00003' di hasil pencarian untuk membukanya.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 5,
+            "name": "Klik smart button Stock Journal",
+            "task": "Klik smart button 'Stock Journal'.",
+            "action_hint": "click",
+            "value": null,
+            "expected_result": null,
+            "optional": false
+        },
+        {
+            "step_num": 6,
+            "name": "Verifikasi Jurnal Akuntansi",
+            "task": "Verifikasi bahwa sistem berhasil mengarahkan user ke entri jurnal akuntansi (account.move) terkait. Pastikan akun Stock Valuation didebit dan akun Stock Interim dikredit, dengan nilai Credit di akun pertama dan Debit di akun kedua bernilai sama.",
+            "action_hint": "verify",
+            "value": null,
+            "expected_result": "Sistem berhasil mengarahkan user ke entri jurnal akuntansi (account.move) terkait. Sistem mendebit akun Stock Valuation sesuai pengaturan pada Product Category. Sistem mengkredit akun Stock Interim (Hutang belum ditagih). Ditunjukan dengan nilai Credit di akun pertama dan Debit di akun kedua bernilai sama begitupun sebaliknya",
+            "optional": false
+        }
+    ],
+    "executed_actions": [
+        {
+            "selector": "input#login",
+            "action": "fill",
+            "value": "it@porto.co.id",
+            "description": "Found the email input field by its id 'login' and name 'login', which is associated with the 'Email' label, and it is currently empty based on the screenshot. Filling it with the requested email.",
+            "confidence": "high",
+            "step_num": 0.1,
+            "name": "Login Email"
+        },
+        {
+            "selector": "input[name='password']",
+            "action": "fill",
+            "value": "testing-odoo19",
+            "description": "Filling the password input field as instructed by the task. The field is currently empty, as seen in the screenshot and DOM.",
+            "confidence": "high",
+            "step_num": 0.2,
+            "name": "Login Password"
+        },
+        {
+            "selector": "button.btn.btn-primary:has-text(\"Log in\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Log in' button to proceed with the login process.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 0.3,
+            "name": "Click Login"
+        },
+        {
+            "selector": "a.o_app.o_menuitem div.o_caption:has-text(\"Inventory\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Inventory' module icon on the Odoo home menu.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 1,
+            "name": "Klik modul Inventory"
+        },
+        {
+            "selector": "button:has-text(\"Operations\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Operations' menu item in the navigation bar as requested by the task.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 2,
+            "name": "Klik navbar Operations"
+        },
+        {
+            "selector": "a.o-dropdown-item:has-text(\"Receive Item\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicking on the 'Receive Item' menu item within the open 'Operations' dropdown menu.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 3,
+            "name": "Klik Receive Item"
+        },
+        {
+            "selector": "input.o_searchview_input",
+            "action": "fill_and_enter",
+            "value": "HO/RCV Trial/00003",
+            "description": "The search bar (input.o_searchview_input) is currently empty. Filling it with 'HO/RCV Trial/00003' and pressing Enter to initiate the search.",
+            "confidence": "high",
+            "step_num": 4.1,
+            "name": "Cari Dokumen RI"
+        },
+        {
+            "selector": "td.o_data_cell.o_list_char.fw-bold:has-text(\"HO/RCV Trial/00003\")",
+            "action": "click",
+            "value": null,
+            "description": "Clicked on the document with reference 'HO/RCV Trial/00003' in the list view to open it.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": null,
+            "step_num": 4.2,
+            "name": "Buka Dokumen RI"
+        },
+        {
+            "selector": "button[name=\"action_open_stock_journal\"]",
+            "action": "click",
+            "value": null,
+            "description": "Clicking the 'Stock Journal' smart button which has the name 'action_open_stock_journal' and text 'Stock Journal'.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 5,
+            "name": "Klik smart button Stock Journal"
+        },
+        {
+            "selector": null,
+            "action": "verify",
+            "value": null,
+            "description": "Successfully navigated to the journal entry for STJ/26/00046. The 'Journal Items' tab is active. The journal entries show '11300180 Other Inventory' (assumed Stock Valuation) debited with Rp 0.34 and '11110010 Petty Cash' (assumed Stock Interim) credited with Rp 0.34. The Debit and Credit values for these entries are equal (Rp 0.34). The total Debit and Credit at the bottom of the table also match at Rp 0.34.",
+            "confidence": "high",
+            "wait_for": null,
+            "result": true,
+            "step_num": 6,
+            "name": "Verifikasi Jurnal Akuntansi"
+        }
+    ]
+}

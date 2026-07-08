@@ -48,18 +48,37 @@ Rules:
    - Avoid adding `.modal-body` or `.o_input` unless necessary, as it often breaks Playwright matching.
    - For clicking buttons (e.g. 'Ok', 'Save & Close'), strongly prefer `button:has-text("Button Name")` over complex structural chains like `div.modal-footer`.
    - For file upload fields, look for `<input type="file">` elements. The selector should target the file input directly (e.g., `input[type="file"]` or `.o_file_input input[type="file"]`).
-4. If you use an XPath, start with `//`. If CSS, use standard CSS.
 5. If the action is "verify", explain in "description" what you checked in the screenshot/DOM and set "result" to true or false.
+6. P2P MODULE SPECIFIC RULES:
+   PURCHASE MODULE:
+   - When filling PO form fields, look for div[name='field_name'] patterns.
+   - For "Deliver To (Operation Type)", use `div[name='picking_type_id'] input`
+   - For "Delivery To (Destination)", use `div[name='dest_address_id'] input` or `div[name='partner_shipping_id'] input`
+   - For custom Porto fields (x_purchase_type, x_po_type, etc.), look for div[name='x_...'] or use the label text.
+   - "Confirm Order" button may be button:has-text("Confirm Order") or button.o_form_button_save equivalent.
+   - For PO line items, click "Add a line" first, then fill product/qty/price.
+   - For clicking submenus in a dropdown (e.g., 'Purchase Order'), use `a.dropdown-item:has-text("Purchase Order")`.
+   INVENTORY MODULE:
+   - "Receive Item" may be under Operations menu.
+   - "Generate PO Item" is a custom button — look for button:has-text("Generate PO Item").
+   - "Validate" button for stock picking.
+   - Done quantity field: div[name='quantity'] input or div[name='qty_done'] input.
+   ACCOUNTING MODULE:
+   - "Create Bill" or "Create" button in Vendor Bills.
+   - "Generate from RI" is a custom button — look for button:has-text("Generate from RI").
+   - Journal Items tab: look for page or notebook tab with text "Journal Items".
+   - Smart buttons: look for div.oe_button_box or button.oe_stat_button.
+   - "Stock Journal" smart button: button:has-text("Stock Journal") or button.oe_stat_button containing text about journal.
 
 You MUST return a JSON object with the following schema:
 {
     "selector": "string, a valid CSS selector or XPath to locate the element (null if action is verify)",
-    "action": "string, one of: 'click', 'fill', 'fill_and_enter', 'fill_and_choose', 'select', 'verify', 'none', 'upload_file'",
-    "value": "string, optional value to fill or type (if action is 'fill' or 'fill_and_enter' or 'fill_and_choose' or 'select')",
+    "action": "string, one of: 'click', 'fill', 'fill_and_enter', 'fill_and_choose', 'select', 'verify', 'none', 'upload_file', 'extract'",
+    "value": "string, optional value to fill or type (if action is 'fill' or 'fill_and_enter' or 'fill_and_choose' or 'select' or 'extract')",
     "description": "string, human readable explanation of why you chose this selector or verification result",
     "confidence": "string, 'high', 'medium', or 'low'",
     "wait_for": "string, optional CSS selector to wait for AFTER the action is performed",
-    "result": "boolean, true if verify condition is met, false otherwise (ONLY if action is 'verify')"
+    "result": "boolean, true if verify condition is met OR if action 'none' is because the task is already satisfied (e.g. field already contains the correct value), false otherwise"
 }
 
 Rules:
@@ -68,9 +87,11 @@ Rules:
 - If you need to match by text, use Playwright's text selector format: `text="Log in"` or `button:has-text("Log in")`, OR use a standard CSS/XPath.
 - If the task requires typing something and then pressing Enter (e.g., to search), use the action 'fill_and_enter'.
 - If the task requires typing something and then choosing it from an autocomplete dropdown, use the action 'fill_and_choose'.
-- If the task is about logging in (e.g., filling email/password or clicking login button), but you can see from the screenshot/DOM that the user is ALREADY logged in (e.g., you see the Odoo dashboard or menu instead of the login screen), you MUST return action 'none' with a description saying 'Already logged in, skipping step'.
-- DO NOT attempt to auto-correct missing navigation steps! If the task tells you to click a button (e.g., 'New') but you don't see it because you are on the wrong page, DO NOT click a random menu item instead. You MUST return action 'none'.
-- If you cannot find a suitable element that exactly matches the intent of the task in the current DOM, you MUST set action to 'none'. Do not guess unrelated elements.
+- If the task is about logging in (e.g., filling email/password or clicking login button), but you can see from the screenshot/DOM that the user is ALREADY logged in (e.g., you see the Odoo dashboard or menu instead of the login screen), you MUST return action 'none' with a description saying 'Already logged in, skipping step' and set result to true.
+- If a task instructs you to fill a field with a specific value, but that field ALREADY contains that exact value, you MUST return action 'none' and set result to true.
+- RADIO BUTTON RULE: Do NOT confuse red dots, asterisks, or colored labels next to text as a "selected" radio button. A selected radio button MUST have a solid filled circle inside the actual radio input element. If the radio circle is hollow, it is NOT selected, and you MUST return action 'click' with the correct selector.
+- DO NOT attempt to auto-correct missing navigation steps! If the task tells you to click a button (e.g., 'New') but you don't see it because you are on the wrong page, DO NOT click a random menu item instead. You MUST return action 'none' and set result to false.
+- If you cannot find a suitable element that exactly matches the intent of the task in the current DOM, you MUST set action to 'none' and set result to false. Do not guess unrelated elements.
 - Your output MUST be valid JSON.
 """
 

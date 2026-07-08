@@ -1695,10 +1695,18 @@
 
             document.getElementById('detailScenario').textContent = tc.scenario || '-';
             document.getElementById('detailPreConditions').textContent = tc.pre_conditions || '-';
-            document.getElementById('detailSteps').textContent = tc.test_steps || '-';
-            document.getElementById('detailStepDetail').textContent = tc.test_step_detail || '-';
-            document.getElementById('detailData').textContent = tc.test_data || '-';
-            document.getElementById('detailExpected').textContent = tc.expected_results || '-';
+            
+            if (tc.scenarios && tc.scenarios.length > 0) {
+                document.getElementById('detailSteps').textContent = tc.scenarios.map(s => `[${s.name}]\n${s.test_steps || '-'}`).join('\n\n');
+                document.getElementById('detailStepDetail').textContent = tc.scenarios.map(s => `[${s.name}]\n${s.test_step_detail || '-'}`).join('\n\n');
+                document.getElementById('detailData').textContent = tc.scenarios.map(s => `[${s.name}]\n${s.test_data || '-'}`).join('\n\n');
+                document.getElementById('detailExpected').textContent = tc.scenarios.map(s => `[${s.name}]\n${s.expected_results || '-'}`).join('\n\n');
+            } else {
+                document.getElementById('detailSteps').textContent = tc.test_steps || '-';
+                document.getElementById('detailStepDetail').textContent = tc.test_step_detail || '-';
+                document.getElementById('detailData').textContent = tc.test_data || '-';
+                document.getElementById('detailExpected').textContent = tc.expected_results || '-';
+            }
 
             const auditSummary = document.getElementById('detailAuditSummary');
             const auditBody = document.getElementById('detailAuditBody');
@@ -1770,6 +1778,27 @@
                 test_data: document.querySelector('#detailData textarea').value,
                 expected_results: document.querySelector('#detailExpected textarea').value
             };
+            
+            if (tc.scenarios && tc.scenarios.length > 0) {
+                updatedData.scenarios = tc.scenarios.map(s => ({ ...s }));
+                
+                const parseField = (text, fieldName) => {
+                    const parts = text.split(/\[(.*?)\]\n/).slice(1);
+                    for (let i = 0; i < parts.length; i += 2) {
+                        const sName = parts[i];
+                        const sContent = parts[i+1].trim();
+                        const s = updatedData.scenarios.find(sc => sc.name === sName);
+                        if (s) {
+                            s[fieldName] = sContent;
+                        }
+                    }
+                };
+                
+                parseField(updatedData.test_steps, 'test_steps');
+                parseField(updatedData.test_step_detail, 'test_step_detail');
+                parseField(updatedData.test_data, 'test_data');
+                parseField(updatedData.expected_results, 'expected_results');
+            }
             
             try {
                 const response = await fetch(`/api/flows/${currentFlowId}/test-cases/${encodeURIComponent(tc.id)}`, {
@@ -1848,7 +1877,8 @@
                                     appendLog(data.message, cssClass);
                                 } else if (data.type === 'done') {
                                     finalData = data;
-                                    appendLog(`> Execution finished. Status: ${data.status}`, data.status === 'PASS' ? 'system' : 'error');
+                                    let tokenMsg = data.total_tokens ? ` | Total Tokens: ${data.total_tokens}` : '';
+                                    appendLog(`> Execution finished. Status: ${data.status}${tokenMsg}`, data.status === 'PASS' ? 'system' : 'error');
                                 }
                             } catch (err) {
                                 console.error("JSON Parse Error on line:", err, line);
